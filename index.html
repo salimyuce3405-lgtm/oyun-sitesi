@@ -3,372 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oyun Portalım - Discord Tarzı Giriş</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #313338; color: #dbdee1; height: 100vh; overflow: hidden; }
-
-        /* Discord Tarzı Tam Ekran Giriş/Kayıt Overlay */
-        #auth-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 99999;
-        }
-        .auth-card {
-            background: #313338;
-            width: 440px;
-            padding: 32px;
-            border-radius: 8px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-            text-align: center;
-        }
-        .discord-logo {
-            font-size: 50px;
-            background: #5865F2;
-            width: 70px; height: 70px;
-            line-height: 70px;
-            border-radius: 50%;
-            margin: 0 auto 15px auto;
-            color: white;
-        }
-        .auth-card h2 { color: #f2f3f5; font-size: 24px; margin-bottom: 8px; }
-        .auth-card p { color: #949ba4; font-size: 14px; margin-bottom: 24px; }
-
-        /* Sekmeler (Giriş Yap / Kayıt Ol) */
-        .auth-tabs {
-            display: flex;
-            background: #2b2d31;
-            border-radius: 4px;
-            padding: 4px;
-            margin-bottom: 20px;
-        }
-        .tab-btn {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: #949ba4;
-            padding: 10px;
-            font-weight: bold;
-            font-size: 14px;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: 0.2s;
-        }
-        .tab-btn.active {
-            background: #5865F2;
-            color: white;
-        }
-
-        /* Form Alanları */
-        .input-group { text-align: left; margin-bottom: 20px; }
-        .input-group label { display: block; color: #b5bac1; font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; }
-        .input-group input {
-            width: 100%;
-            background: #1e1f22;
-            border: 1px solid #1e1f22;
-            padding: 10px 12px;
-            border-radius: 4px;
-            color: #dbdee1;
-            font-size: 16px;
-            outline: none;
-        }
-        .input-group input:focus { border-color: #00a8fc; }
-        
-        .submit-btn {
-            width: 100%;
-            background: #5865F2;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .submit-btn:hover { background: #4752c4; }
-        #auth-error { color: #f23f43; font-size: 13px; margin-top: 10px; }
-
-        /* Ana Site İçeriği (Giriş Yapılınca Görünecek) */
-        #main-site { display: none; height: 100vh; display: flex; flex-direction: column; }
-        header { background: #2b2d31; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1f2023; }
-        header h1 { color: #f2f3f5; font-size: 20px; }
-        
-        .content-layout { display: flex; flex: 1; overflow: hidden; }
-        
-        /* Oyun Alanı */
-        .games-area { flex: 1; padding: 30px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; align-content: start; background: #313338; }
-        .game-card { background: #2b2d31; border-radius: 8px; padding: 20px; text-align: center; border: 1px solid #1f2023; }
-        .game-card h3 { color: #f2f3f5; margin-bottom: 10px; }
-        .play-btn { background: #5865F2; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
-        .play-btn:hover { background: #4752c4; }
-
-        /* Sağ Sohbet Paneli */
-        .chat-sidebar { width: 320px; background: #2b2d31; border-left: 1px solid #1f2023; display: flex; flex-direction: column; }
-        .chat-header { padding: 15px; font-weight: bold; color: #f2f3f5; border-bottom: 1px solid #1f2023; background: #2b2d31; }
-        #chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .msg { background: #383a40; padding: 8px 12px; border-radius: 6px; font-size: 14px; word-break: break-word; }
-        .msg-user { color: #5865F2; font-weight: bold; font-size: 12px; display: block; margin-bottom: 3px; }
-        .chat-input-area { padding: 15px; background: #2b2d31; display: flex; gap: 8px; }
-        .chat-input-area input { flex: 1; background: #383a40; border: none; padding: 10px; border-radius: 4px; color: white; outline: none; }
-        .send-btn { background: #5865F2; color: white; border: none; padding: 0 15px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-
-        /* Oyun Modalı */
-        #game-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100000; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: #313338; width: 100%; max-width: 900px; height: 80vh; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; }
-        .modal-header { padding: 12px 20px; background: #2b2d31; display: flex; justify-content: space-between; align-items: center; }
-        .close-btn { background: #f23f43; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        #game-frame { width: 100%; height: 100%; border: none; }
-    </style>
-</head>
-<body>
-
-    <!-- Tam Ekran Discord Tarzı Giriş/Kayıt Ekranı -->
-    <div id="auth-overlay">
-        <div class="auth-card">
-            <div class="discord-logo">🎮</div>
-            <h2 id="auth-title">Tekrar Hoşgeldin!</h2>
-            <p id="auth-desc">Sohbet etmek ve oyun oynamak için giriş yapmalısın.</p>
-
-            <div class="auth-tabs">
-                <button class="tab-btn active" id="tab-login" onclick="switchTab('login')">Giriş Yap</button>
-                <button class="tab-btn" id="tab-register" onclick="switchTab('register')">Kayıt Ol</button>
-            </div>
-
-            <div class="input-group">
-                <label>Kullanıcı Adı</label>
-                <input type="text" id="username-input" placeholder="Kullanıcı adını gir">
-            </div>
-
-            <div class="input-group">
-                <label>Şifre</label>
-                <input type="password" id="password-input" placeholder="Şifreni gir" onkeypress="handleAuthKey(event)">
-            </div>
-
-            <button class="submit-btn" id="auth-submit-btn" onclick="handleAuth()">Giriş Yap</button>
-            <div id="auth-error"></div>
-        </div>
-    </div>
-
-    <!-- Ana Oyun ve Sohbet Sitesi (Giriş yapılınca görünür) -->
-    <div id="main-site" style="display: none;">
-        <header>
-            <h1 id="welcome-header">🎮 Oyun Portalım</h1>
-            <button onclick="logout()" style="background: #f23f43; color: white; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-weight: bold;">Çıkış Yap</button>
-        </header>
-
-        <div class="content-layout">
-            <!-- Sol Taraf: Oyunlar -->
-            <div class="games-area">
-                <div class="game-card">
-                    <h3>Klasik Tetris</h3>
-                    <p>Blokları yerleştir, skoru kap.</p>
-                    <button class="play-btn" onclick="openGame('Klasik Tetris', 'https://chvin.github.io/react-tetris/')">Oyna</button>
-                </div>
-                <div class="game-card">
-                    <h3>2048 Bulmaca</h3>
-                    <p>Sayıları birleştir 2048'e ulaş.</p>
-                    <button class="play-btn" onclick="openGame('2048 Bulmaca', 'https://play2048.co/')">Oyna</button>
-                </div>
-                <div class="game-card">
-                    <h3>Dino Koşusu</h3>
-                    <p>Engellerden zıpla, rekor kır.</p>
-                    <button class="play-btn" onclick="openGame('Dino Koşusu', 'https://chromedino.com/')">Oyna</button>
-                </div>
-                <div class="game-card">
-                    <h3>Hextris</h3>
-                    <p>Altıgen bulmaca kapışması.</p>
-                    <button class="play-btn" onclick="openGame('Hextris', 'https://hextris.io/')">Oyna</button>
-                </div>
-            </div>
-
-            <!-- Sağ Taraf: Canlı Sohbet -->
-            <div class="chat-sidebar">
-                <div class="chat-header">💬 Genel Sohbet Odası</div>
-                <div id="chat-messages"></div>
-                <div class="chat-input-area">
-                    <input type="text" id="chat-input" placeholder="Mesaj gönder..." onkeypress="handleChatKey(event)">
-                    <button class="send-btn" onclick="sendMessage()">Gönder</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Oyun Modalı -->
-    <div id="game-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modal-title" style="color: white; font-size: 16px;">Oyun</h3>
-                <button class="close-btn" onclick="closeGame()">Kapat ✖</button>
-            </div>
-            <iframe id="game-frame" src=""></iframe>
-        </div>
-    </div>
-
-    <!-- Kod Mantığı ve Firebase Bağlantısı -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDRS1B64hqK-Q-zgUrhvgdaAhyq7o5RnGw",
-            authDomain: "site-987e8.firebaseapp.com",
-            projectId: "site-987e8",
-            storageBucket: "site-987e8.firebasestorage.app",
-            messagingSenderId: "610336334941",
-            appId: "1:610336334941:web:46a6e4b8277ec26bcd99b4",
-            measurementId: "G-GJPNXB9BL9"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        let currentMode = 'login'; // 'login' veya 'register'
-        let currentUsername = localStorage.getItem('chat_username') || '';
-
-        // Sayfa açıldığında daha önceden giriş yapmış mı kontrol et
-        if (currentUsername) {
-            document.getElementById('auth-overlay').style.display = 'none';
-            document.getElementById('main-site').style.display = 'flex';
-            document.getElementById('welcome-header').innerText = `🎮 Oyun Portalım - Hoşgeldin, ${currentUsername}`;
-            signInAnonymously(auth); // Firebase bağlantısını aktif tut
-        }
-
-        window.switchTab = function(mode) {
-            currentMode = mode;
-            const title = document.getElementById('auth-title');
-            const desc = document.getElementById('auth-desc');
-            const btn = document.getElementById('auth-submit-btn');
-            const tabLogin = document.getElementById('tab-login');
-            const tabRegister = document.getElementById('tab-register');
-            document.getElementById('auth-error').innerText = '';
-
-            if (mode === 'login') {
-                title.innerText = 'Tekrar Hoşgeldin!';
-                desc.innerText = 'Sohbet etmek ve oyun oynamak için giriş yapmalısın.';
-                btn.innerText = 'Giriş Yap';
-                tabLogin.classList.add('active');
-                tabRegister.classList.remove('active');
-            } else {
-                title.innerText = 'Hesap Oluştur';
-                desc.innerText = 'Hemen bir kullanıcı adı seç ve aramıza katıl!';
-                btn.innerText = 'Kayıt Ol';
-                tabRegister.classList.add('active');
-                tabLogin.classList.remove('active');
-            }
-        };
-
-        window.handleAuth = function() {
-            const username = document.getElementById('username-input').value.trim();
-            const password = document.getElementById('password-input').value.trim();
-            const errBox = document.getElementById('auth-error');
-            errBox.innerText = '';
-
-            if (!username || !password) {
-                errBox.innerText = 'Lütfen kullanıcı adı ve şifre gir!';
-                return;
-            }
-            if (username.length < 3) {
-                errBox.innerText = 'Kullanıcı adı en az 3 karakter olmalı!';
-                return;
-            }
-
-            // Kayıt veya Giriş işlemi (Tarayıcı hafızasında kullanıcı adını tutarak direkt bağlıyoruz)
-            localStorage.setItem('chat_username', username);
-            currentUsername = username;
-
-            signInAnonymously(auth).then(() => {
-                document.getElementById('auth-overlay').style.display = 'none';
-                document.getElementById('main-site').style.display = 'flex';
-                document.getElementById('welcome-header').innerText = `🎮 Oyun Portalım - Hoşgeldin, ${username}`;
-            }).catch((error) => {
-                errBox.innerText = 'Bağlantı hatası: ' + error.message;
-            });
-        };
-
-        window.handleAuthKey = function(e) {
-            if (e.key === 'Enter') window.handleAuth();
-        };
-
-        window.logout = function() {
-            localStorage.removeItem('chat_username');
-            location.reload();
-        };
-
-        // Oyun Penceresi Kontrolleri
-        window.openGame = function(title, url) {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('game-frame').src = url;
-            document.getElementById('game-modal').style.display = 'flex';
-        };
-        window.closeGame = function() {
-            document.getElementById('game-modal').style.display = 'none';
-            document.getElementById('game-frame').src = '';
-        };
-
-        // Canlı Sohbet Fonksiyonları
-        window.sendMessage = async function() {
-            const input = document.getElementById('chat-input');
-            const text = input.value.trim();
-            if (text !== '' && currentUsername) {
-                input.value = '';
-                try {
-                    await addDoc(collection(db, "messages"), {
-                        text: text,
-                        sender: currentUsername,
-                        createdAt: serverTimestamp()
-                    });
-                } catch (e) {
-                    console.error("Mesaj gönderilemedi:", e);
-                }
-            }
-        };
-
-        window.handleChatKey = function(e) {
-            if (e.key === 'Enter') window.sendMessage();
-        };
-
-        // Mesajları Dinleme
-        const q = query(collection(db, "messages"), orderBy("createdAt", "asc"));
-        onSnapshot(q, snapshot => {
-            const msgBox = document.getElementById('chat-messages');
-            msgBox.innerHTML = '';
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                const div = document.createElement('div');
-                div.className = 'msg';
-                
-                const userSpan = document.createElement('span');
-                userSpan.className = 'msg-user';
-                userSpan.innerText = data.sender || 'Misafir';
-                
-                const textNode = document.createTextNode(data.text);
-                
-                div.appendChild(userSpan);
-                div.appendChild(textNode);
-                msgBox.appendChild(div);
-            });
-            msgBox.scrollTop = msgBox.Anladım Salim abi! Gönderdiğin iki görsel de olayı net özetledi. İstediğin şey tam olarak şu: 
-1. Siteye girildiğinde ortada şık, koyu renkli Discord tarzı bir **Giriş Yap / Kayıt Ol** sekmesi çıkacak (arkadaki oyunlar ve site gizli olacak).
-2. Üstteki sekme butonlarıyla "Giriş Yap" ve "Kayıt Ol" arasında geçiş yapılabilecek.
-3. **Mail istemeyecek**, sadece **kullanıcı adı** ve **şifre** ile çalışacak (Firebase arkada mail sormasın diye kullanıcı adını otomatik olarak bir uzantıya çevirip halledecek).
-
-Bunu tam istediğin gibi Discord tarzı arayüze sahip, mail istemeyen, sadece isim ve şifreyle çalışan tek parça halinde hazırladım. 
-
-Aşağıdaki kodun **tamamını** kopyala, kendi `index.html` dosyanın içindeki her şeyi silerek yerine yapıştır ve kaydet:
-
-```html
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oyun Portalım</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -434,7 +68,7 @@ Aşağıdaki kodun **tamamını** kopyala, kendi `index.html` dosyanın içindek
         <div class="auth-card">
             <div class="auth-logo">🎮</div>
             <div class="auth-title" id="card-title">Tekrar Hoş Geldin!</div>
-            <div class="auth-subtitle">Oynamak ve sohbet etmek için giriş yapmalısın.</div>
+            <div class="auth-subtitle" id="card-subtitle">Oynamak ve sohbet etmek için giriş yapmalısın.</div>
 
             <!-- Sekmeler -->
             <div class="tab-buttons">
@@ -471,7 +105,7 @@ Aşağıdaki kodun **tamamını** kopyala, kendi `index.html` dosyanın içindek
                     <h3>Klasik Tetris</h3>
                     <p>Blokları yerleştir, satırları temizle ve skoru patlat!</p>
                 </div>
-                <button class="play-btn" onclick="openGame('Klasik Tetris', '[https://chvin.github.io/react-tetris/](https://chvin.github.io/react-tetris/)')">Oyna</button>
+                <button class="play-btn" onclick="openGame('Klasik Tetris', 'https://chvin.github.io/react-tetris/')">Oyna</button>
             </div>
 
             <div class="game-card">
@@ -480,7 +114,7 @@ Aşağıdaki kodun **tamamını** kopyala, kendi `index.html` dosyanın içindek
                     <h3>2048 Bulmaca</h3>
                     <p>Sayıları birleştirerek 2048 karosuna ulaş.</p>
                 </div>
-                <button class="play-btn" onclick="openGame('2048 Bulmaca', '[https://play2048.co/](https://play2048.co/)')">Oyna</button>
+                <button class="play-btn" onclick="openGame('2048 Bulmaca', 'https://play2048.co/')">Oyna</button>
             </div>
 
             <div class="game-card">
@@ -489,7 +123,7 @@ Aşağıdaki kodun **tamamını** kopyala, kendi `index.html` dosyanın içindek
                     <h3>Dino Koşusu</h3>
                     <p>Engellerin üzerinden atla ve rekor kır!</p>
                 </div>
-                <button class="play-btn" onclick="openGame('Dino Koşusu', '[https://chromedino.com/](https://chromedino.com/)')">Oyna</button>
+                <button class="play-btn" onclick="openGame('Dino Koşusu', 'https://chromedino.com/')">Oyna</button>
             </div>
 
             <div class="game-card">
@@ -498,7 +132,7 @@ Aşağıdaki kodun **tamamını** kopyala, kendi `index.html` dosyanın içindek
                     <h3>Hextris</h3>
                     <p>Hızlı refleks gerektiren renkli altıgen bulmaca.</p>
                 </div>
-                <button class="play-btn" onclick="openGame('Hextris', '[https://hextris.io/](https://hextris.io/)')">Oyna</button>
+                <button class="play-btn" onclick="openGame('Hextris', 'https://hextris.io/')">Oyna</button>
             </div>
         </div>
 
@@ -529,7 +163,7 @@ Aşağıdaki kodun **tamamını** kopyala, kendi `index.html` dosyanın içindek
         </div>
     </div>
 
-    <!-- JavaScript & Firebase Entegrasyonu -->
+    <!-- JavaScript & Sekme Fonksiyonları -->
     <script>
         let currentMode = 'login'; // 'login' veya 'register'
 
@@ -538,17 +172,20 @@ Aşağıdaki kodun **tamamını** kopyala, kendi `index.html` dosyanın içindek
             document.getElementById('auth-error').innerText = '';
             const btn = document.getElementById('submit-btn');
             const title = document.getElementById('card-title');
+            const subtitle = document.getElementById('card-subtitle');
             
             if (mode === 'login') {
                 document.getElementById('login-tab').classList.add('active');
                 document.getElementById('register-tab').classList.remove('active');
                 btn.innerText = 'Giriş Yap';
                 title.innerText = 'Tekrar Hoş Geldin!';
+                subtitle.innerText = 'Oynamak ve sohbet etmek için giriş yapmalısın.';
             } else {
                 document.getElementById('register-tab').classList.add('active');
                 document.getElementById('login-tab').classList.remove('active');
                 btn.innerText = 'Kayıt Ol';
                 title.innerText = 'Hesap Oluştur';
+                subtitle.innerText = 'Kullanıcı adını seç ve hemen aramıza katıl!';
             }
         }
 
@@ -565,9 +202,9 @@ Aşağıdaki kodun **tamamını** kopyala, kendi `index.html` dosyanın içindek
 
     <!-- Firebase Kodları -->
     <script type="module">
-        import { initializeApp } from "[https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js](https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js)";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "[https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js](https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js)";
-        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "[https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js](https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js)";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDRS1B64hqK-Q-zgUrhvgdaAhyq7o5RnGw",
@@ -585,7 +222,6 @@ Aşağıdaki kodun **tamamını** kopyala, kendi `index.html` dosyanın içindek
 
         let activeUser = null;
 
-        // Kullanıcı adını Firebase'in kabul etmesi için gizli bir mail adresine dönüştürüyoruz
         function formatEmail(username) {
             return username.trim().toLowerCase().replace(/[^a-z0-9]/g, '') + "@oyunportal.com";
         }
@@ -626,7 +262,6 @@ Aşağıdaki kodun **tamamını** kopyala, kendi `index.html` dosyanın içindek
             signOut(auth);
         };
 
-        // Kullanıcı giriş yaptıysa giriş ekranını gizle, siteyi aç
         onAuthStateChanged(auth, user => {
             activeUser = user;
             if (user) {
@@ -640,7 +275,6 @@ Aşağıdaki kodun **tamamını** kopyala, kendi `index.html` dosyanın içindek
             }
         });
 
-        // Sohbet Mesajları
         window.sendMessage = async function() {
             const input = document.getElementById('chat-input');
             const text = input.value.trim();
@@ -667,14 +301,4 @@ Aşağıdaki kodun **tamamını** kopyala, kendi `index.html` dosyanın içindek
             const msgBox = document.getElementById('chat-messages');
             msgBox.innerHTML = '';
             snapshot.forEach(doc => {
-                const data = doc.data();
-                const div = document.createElement('div');
-                div.className = 'msg-item';
-                div.innerHTML = `<span class="msg-sender">${data.sender || 'Oyuncu'}</span>${data.text}`;
-                msgBox.appendChild(div);
-            });
-            msgBox.scrollTop = msgBox.scrollHeight;
-        });
-    </script>
-</body>
-</html>
+                const data = doc.data
