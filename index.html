@@ -6,12 +6,27 @@
     <title>Oyun Portalım - Online Oyun & Sohbet</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #0f172a; color: #f8fafc; padding-bottom: 80px; }
+        body { background-color: #0f172a; color: #f8fafc; min-height: 100vh; overflow-x: hidden; }
         
+        /* Tam Ekran Giriş/Kayıt Duvarı (Modal Overlay) */
+        #auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); z-index: 99999; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .auth-card { background: #1e293b; width: 100%; max-width: 420px; padding: 40px; border-radius: 16px; border: 2px solid #ef4444; box-shadow: 0 15px 35px rgba(0,0,0,0.7); text-align: center; }
+        .auth-card h2 { color: #ef4444; font-size: 28px; margin-bottom: 8px; }
+        .auth-card p { color: #94a3b8; font-size: 14px; margin-bottom: 25px; }
+        .auth-inputs { display: flex; flex-direction: column; gap: 15px; }
+        .auth-inputs input { width: 100%; padding: 14px; background: #0f172a; border: 1px solid #334155; color: white; border-radius: 8px; outline: none; font-size: 15px; }
+        .auth-inputs input:focus { border-color: #ef4444; }
+        .auth-btn { width: 100%; padding: 14px; background: #ef4444; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; transition: background 0.2s; margin-top: 5px; }
+        .auth-btn:hover { background: #dc2626; }
+        .switch-auth { background: none; border: none; color: #94a3b8; font-size: 13px; cursor: pointer; margin-top: 15px; text-decoration: underline; }
+        .switch-auth:hover { color: #fff; }
+        #auth-error { color: #f87171; font-size: 13px; margin-top: 12px; }
+
         /* Üst Menü */
-        header { background: #1e293b; padding: 20px; text-align: center; border-bottom: 2px solid #ef4444; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
-        header h1 { color: #ef4444; font-size: 28px; letter-spacing: 1px; }
-        header p { color: #94a3b8; font-size: 14px; margin-top: 5px; }
+        header { background: #1e293b; padding: 20px; text-align: center; border-bottom: 2px solid #ef4444; box-shadow: 0 4px 15px rgba(0,0,0,0.4); display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; }
+        header h1 { color: #ef4444; font-size: 26px; letter-spacing: 1px; }
+        .user-info { display: flex; align-items: center; gap: 15px; font-size: 14px; color: #cbd5e1; }
+        .logout-link { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px; }
 
         /* Oyun Kartları Alanı */
         .game-container { max-width: 1100px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
@@ -30,138 +45,27 @@
         .close-btn { background: #ef4444; color: white; border: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; }
         #game-frame { width: 100%; height: 100%; border: none; background: #000; }
 
-        /* Sağ Alt Canlı Sohbet & Giriş Paneli */
-        #auth-chat-box { position: fixed; bottom: 20px; right: 20px; z-index: 9999; background: #1e293b; border: 1px solid #334155; border-radius: 12px; width: 330px; box-shadow: 0 8px 25px rgba(0,0,0,0.6); overflow: hidden; }
-        .box-header { background: #ef4444; color: white; padding: 12px 15px; font-weight: bold; font-size: 14px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-        .box-body { padding: 15px; }
-        input { width: 100%; padding: 10px; margin-bottom: 10px; background: #0f172a; border: 1px solid #334155; color: white; border-radius: 6px; outline: none; font-size: 13px; }
-        input:focus { border-color: #ef4444; }
-        button.action-btn { width: 100%; padding: 10px; background: #ef4444; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px; }
-        button.action-btn:hover { background: #dc2626; }
-        #chat-messages { height: 220px; overflow-y: auto; font-size: 13px; color: #e2e8f0; display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; padding-right: 5px; }
+        /* Sağ Altta Sabit Canlı Sohbet Kutusu */
+        #chat-box { position: fixed; bottom: 20px; right: 20px; z-index: 9998; background: #1e293b; border: 1px solid #334155; border-radius: 12px; width: 330px; box-shadow: 0 8px 25px rgba(0,0,0,0.6); overflow: hidden; display: none; }
+        .chat-header { background: #ef4444; color: white; padding: 12px 15px; font-weight: bold; font-size: 14px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+        .chat-body { padding: 15px; }
+        #chat-messages { height: 200px; overflow-y: auto; font-size: 13px; color: #e2e8f0; display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; padding-right: 5px; }
         .msg-item { background: #0f172a; padding: 8px 10px; border-radius: 8px; border-left: 3px solid #ef4444; word-wrap: break-word; }
         .msg-sender { color: #ef4444; font-weight: bold; font-size: 11px; display: block; margin-bottom: 2px; }
+        .chat-input-row { display: flex; gap: 6px; }
+        .chat-input-row input { flex: 1; padding: 10px; background: #0f172a; border: 1px solid #334155; color: white; border-radius: 6px; outline: none; font-size: 13px; }
+        .chat-send-btn { width: 75px; background: #ef4444; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>🎮 OYUN PORTALIM</h1>
-        <p>Ücretsiz tarayıcı oyunları oyna, sağ alttan giriş yapıp oyuncularla sohbet et!</p>
-    </header>
-
-    <!-- Oyun Listesi -->
-    <div class="game-container">
-        <div class="game-card">
-            <div>
-                <div class="game-icon">🧱</div>
-                <h3>Klasik Tetris</h3>
-                <p>Blokları yerleştir, satırları temizle ve en yüksek skoru yap!</p>
-            </div>
-            <button class="play-btn" onclick="openGame('Klasik Tetris', 'https://chvin.github.io/react-tetris/')">Oyna</button>
-        </div>
-
-        <div class="game-card">
-            <div>
-                <div class="game-icon">🔢</div>
-                <h3>2048 Bulmaca</h3>
-                <p>Sayıları birleştirerek 2048 karosuna ulaşmaya çalış.</p>
-            </div>
-            <button class="play-btn" onclick="openGame('2048 Bulmaca', 'https://play2048.co/')">Oyna</button>
-        </div>
-
-        <div class="game-card">
-            <div>
-                <div class="game-icon">🦖</div>
-                <h3>Dino Koşusu</h3>
-                <p>Engellerin üzerinden atla ve rekorunu kır!</p>
-            </div>
-            <button class="play-btn" onclick="openGame('Dino Koşusu', 'https://chromedino.com/')">Oyna</button>
-        </div>
-
-        <div class="game-card">
-            <div>
-                <div class="game-icon">🏎️</div>
-                <h3>Hextris</h3>
-                <p>Hızlı refleks gerektiren renkli altıgen bulmaca oyunu.</p>
-            </div>
-            <button class="play-btn" onclick="openGame('Hextris', 'https://hextris.io/')">Oyna</button>
-        </div>
-    </div>
-
-    <!-- Oyun Ekranı Modalı -->
-    <div id="game-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modal-game-title" style="color: #fff;">Oyun</h3>
-                <button class="close-btn" onclick="closeGame()">Kapat ✖</button>
-            </div>
-            <iframe id="game-frame" src="" allowfullscreen></iframe>
-        </div>
-    </div>
-
-    <!-- Firebase Canlı Sohbet ve Üyelik Kutusu -->
-    <div id="auth-chat-box">
-        <div class="box-header" onclick="toggleChat()">
-            <span id="box-title">💬 Oyuncu Sohbeti - Giriş Yap</span>
-            <span id="toggle-icon">▼</span>
-        </div>
-        
-        <div id="box-content">
-            <!-- Giriş / Kayıt Ekranı -->
-            <div id="auth-section" class="box-body">
-                <input type="email" id="email" placeholder="E-posta adresin (örn: ali@gmail.com)">
+    <!-- TAM EKRAN GİRİŞ / KAYIT DUVARI -->
+    <div id="auth-overlay">
+        <div class="auth-card">
+            <h2 id="auth-form-title">Giriş Yap</h2>
+            <p id="auth-form-desc">Oynamak ve sohbet etmek için giriş yapmalısın.</p>
+            
+            <div class="auth-inputs">
+                <input type="text" id="username" placeholder="Kullanıcı Adın">
                 <input type="password" id="password" placeholder="Şifren (En az 6 karakter)">
-                <button class="action-btn" onclick="login()">Giriş Yap</button>
-                <button class="action-btn" onclick="register()" style="background: #334155; margin-top: 8px;">Yeni Hesap Oluştur (Kayıt Ol)</button>
-                <p id="auth-error" style="color: #f87171; font-size: 12px; margin-top: 8px; text-align: center;"></p>
-            </div>
-
-            <!-- Sohbet Ekranı -->
-            <div id="chat-section" class="box-body" style="display: none;">
-                <div id="chat-messages"></div>
-                <div style="display: flex; gap: 6px;">
-                    <input type="text" id="chat-input" placeholder="Mesajını yaz..." style="margin-bottom: 0;" onkeypress="handleKeyPress(event)">
-                    <button class="action-btn" onclick="sendMessage()" style="width: 75px;">Gönder</button>
-                </div>
-                <button onclick="logout()" style="background: none; border: none; color: #94a3b8; font-size: 11px; cursor: pointer; margin-top: 10px; width: 100%; text-align: center; text-decoration: underline;">Hesaptan Çıkış Yap</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Oyun Penceresi Kontrolleri -->
-    <script>
-        function openGame(title, url) {
-            document.getElementById('modal-game-title').innerText = title;
-            document.getElementById('game-frame').src = url;
-            document.getElementById('game-modal').style.display = 'flex';
-        }
-        function closeGame() {
-            document.getElementById('game-modal').style.display = 'none';
-            document.getElementById('game-frame').src = '';
-        }
-        function toggleChat() {
-            const content = document.getElementById('box-content');
-            const icon = document.getElementById('toggle-icon');
-            if (content.style.display === 'none') {
-                content.style.display = 'block';
-                icon.innerText = '▼';
-            } else {
-                content.style.display = 'none';
-                icon.innerText = '▲';
-            }
-        }
-    </script>
-
-    <!-- Firebase SDK ve Gerçek Zamanlı Sohbet Sistemi -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        // Senin Firebase Proje Bilgilerin
-        const firebaseConfig = {
-            apiKey: "AIzaSyDRS1B64hqK-Q-zgUrhvgdaAhyq7o5RnGw",
-            authDomain: "site-987e8.firebaseapp.com",
-            projectId: "site-987e8",
-            storageBucket: "site
+                <button
