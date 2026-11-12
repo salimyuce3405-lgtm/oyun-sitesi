@@ -72,8 +72,8 @@
 
             <!-- Sekmeler -->
             <div class="tab-buttons">
-                <button class="tab-btn active" id="login-tab" onclick="switchTab('login')">Giriş Yap</button>
-                <button class="tab-btn" id="register-tab" onclick="switchTab('register')">Kayıt Ol</button>
+                <button class="tab-btn active" id="login-tab" onclick="window.switchTab('login')">Giriş Yap</button>
+                <button class="tab-btn" id="register-tab" onclick="window.switchTab('register')">Kayıt Ol</button>
             </div>
 
             <div class="input-group">
@@ -82,11 +82,11 @@
             </div>
             
             <div class="input-group">
-                <label>Şifre</label>
-                <input type="password" id="password" placeholder="Şifreni gir" onkeypress="handleAuthKey(event)">
+                <label>Şifre (En az 6 karakter)</label>
+                <input type="password" id="password" placeholder="Şifreni gir" onkeypress="window.handleAuthKey(event)">
             </div>
 
-            <button class="submit-btn" id="submit-btn" onclick="handleAuth()">Giriş Yap</button>
+            <button class="submit-btn" id="submit-btn" onclick="window.handleAuth()">Giriş Yap</button>
             <p id="auth-error"></p>
         </div>
     </div>
@@ -105,7 +105,7 @@
                     <h3>Klasik Tetris</h3>
                     <p>Blokları yerleştir, satırları temizle ve skoru patlat!</p>
                 </div>
-                <button class="play-btn" onclick="openGame('Klasik Tetris', 'https://chvin.github.io/react-tetris/')">Oyna</button>
+                <button class="play-btn" onclick="window.openGame('Klasik Tetris', 'https://chvin.github.io/react-tetris/')">Oyna</button>
             </div>
 
             <div class="game-card">
@@ -114,7 +114,7 @@
                     <h3>2048 Bulmaca</h3>
                     <p>Sayıları birleştirerek 2048 karosuna ulaş.</p>
                 </div>
-                <button class="play-btn" onclick="openGame('2048 Bulmaca', 'https://play2048.co/')">Oyna</button>
+                <button class="play-btn" onclick="window.openGame('2048 Bulmaca', 'https://play2048.co/')">Oyna</button>
             </div>
 
             <div class="game-card">
@@ -123,7 +123,7 @@
                     <h3>Dino Koşusu</h3>
                     <p>Engellerin üzerinden atla ve rekor kır!</p>
                 </div>
-                <button class="play-btn" onclick="openGame('Dino Koşusu', 'https://chromedino.com/')">Oyna</button>
+                <button class="play-btn" onclick="window.openGame('Dino Koşusu', 'https://chromedino.com/')">Oyna</button>
             </div>
 
             <div class="game-card">
@@ -132,7 +132,7 @@
                     <h3>Hextris</h3>
                     <p>Hızlı refleks gerektiren renkli altıgen bulmaca.</p>
                 </div>
-                <button class="play-btn" onclick="openGame('Hextris', 'https://hextris.io/')">Oyna</button>
+                <button class="play-btn" onclick="window.openGame('Hextris', 'https://hextris.io/')">Oyna</button>
             </div>
         </div>
 
@@ -141,7 +141,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 id="modal-game-title" style="color: #fff;">Oyun</h3>
-                    <button class="close-btn" onclick="closeGame()">Kapat ✖</button>
+                    <button class="close-btn" onclick="window.closeGame()">Kapat ✖</button>
                 </div>
                 <iframe id="game-frame" src="" allowfullscreen></iframe>
             </div>
@@ -155,52 +155,15 @@
             <div class="chat-body">
                 <div id="chat-messages"></div>
                 <div style="display: flex; gap: 6px;">
-                    <input type="text" id="chat-input" placeholder="Mesaj yaz..." style="width: 100%; padding: 8px; background: #1e1f22; border: 1px solid #1f2023; color: white; border-radius: 4px; outline: none; font-size: 13px;" onkeypress="handleChatKey(event)">
-                    <button onclick="sendMessage()" style="background: #5865f2; color: white; border: none; padding: 0 12px; border-radius: 4px; font-weight: bold; cursor: pointer;"> > </button>
+                    <input type="text" id="chat-input" placeholder="Mesaj yaz..." style="width: 100%; padding: 8px; background: #1e1f22; border: 1px solid #1f2023; color: white; border-radius: 4px; outline: none; font-size: 13px;" onkeypress="window.handleChatKey(event)">
+                    <button onclick="window.sendMessage()" style="background: #5865f2; color: white; border: none; padding: 0 12px; border-radius: 4px; font-weight: bold; cursor: pointer;"> > </button>
                 </div>
-                <button class="logout-link" onclick="logout()">Hesaptan Çıkış Yap</button>
+                <button class="logout-link" onclick="window.logout()">Hesaptan Çıkış Yap</button>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript & Sekme Fonksiyonları -->
-    <script>
-        let currentMode = 'login'; // 'login' veya 'register'
-
-        function switchTab(mode) {
-            currentMode = mode;
-            document.getElementById('auth-error').innerText = '';
-            const btn = document.getElementById('submit-btn');
-            const title = document.getElementById('card-title');
-            const subtitle = document.getElementById('card-subtitle');
-            
-            if (mode === 'login') {
-                document.getElementById('login-tab').classList.add('active');
-                document.getElementById('register-tab').classList.remove('active');
-                btn.innerText = 'Giriş Yap';
-                title.innerText = 'Tekrar Hoş Geldin!';
-                subtitle.innerText = 'Oynamak ve sohbet etmek için giriş yapmalısın.';
-            } else {
-                document.getElementById('register-tab').classList.add('active');
-                document.getElementById('login-tab').classList.remove('active');
-                btn.innerText = 'Kayıt Ol';
-                title.innerText = 'Hesap Oluştur';
-                subtitle.innerText = 'Kullanıcı adını seç ve hemen aramıza katıl!';
-            }
-        }
-
-        function openGame(title, url) {
-            document.getElementById('modal-game-title').innerText = title;
-            document.getElementById('game-frame').src = url;
-            document.getElementById('game-modal').style.display = 'flex';
-        }
-        function closeGame() {
-            document.getElementById('game-modal').style.display = 'none';
-            document.getElementById('game-frame').src = '';
-        }
-    </script>
-
-    <!-- Firebase Kodları -->
+    <!-- Firebase Kodları ve Fonksiyon Bağlantıları -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -221,6 +184,41 @@
         const db = getFirestore(app);
 
         let activeUser = null;
+        let currentMode = 'login';
+
+        // Fonksiyonları window nesnesine atıyoruz (Referans hatasını tamamen çözer)
+        window.switchTab = function(mode) {
+            currentMode = mode;
+            document.getElementById('auth-error').innerText = '';
+            const btn = document.getElementById('submit-btn');
+            const title = document.getElementById('card-title');
+            const subtitle = document.getElementById('card-subtitle');
+            
+            if (mode === 'login') {
+                document.getElementById('login-tab').classList.add('active');
+                document.getElementById('register-tab').classList.remove('active');
+                btn.innerText = 'Giriş Yap';
+                title.innerText = 'Tekrar Hoş Geldin!';
+                subtitle.innerText = 'Oynamak ve sohbet etmek için giriş yapmalısın.';
+            } else {
+                document.getElementById('register-tab').classList.add('active');
+                document.getElementById('login-tab').classList.remove('active');
+                btn.innerText = 'Kayıt Ol';
+                title.innerText = 'Hesap Oluştur';
+                subtitle.innerText = 'Kullanıcı adını seç ve hemen aramıza katıl!';
+            }
+        };
+
+        window.openGame = function(title, url) {
+            document.getElementById('modal-game-title').innerText = title;
+            document.getElementById('game-frame').src = url;
+            document.getElementById('game-modal').style.display = 'flex';
+        };
+
+        window.closeGame = function() {
+            document.getElementById('game-modal').style.display = 'none';
+            document.getElementById('game-frame').src = '';
+        };
 
         function formatEmail(username) {
             return username.trim().toLowerCase().replace(/[^a-z0-9]/g, '') + "@oyunportal.com";
@@ -234,6 +232,11 @@
 
             if (!username || !password) {
                 errBox.innerText = 'Lütfen kullanıcı adı ve şifre girin.';
+                return;
+            }
+
+            if (password.length < 6) {
+                errBox.innerText = 'Şifre en az 6 karakter olmalıdır!';
                 return;
             }
 
@@ -301,4 +304,14 @@
             const msgBox = document.getElementById('chat-messages');
             msgBox.innerHTML = '';
             snapshot.forEach(doc => {
-                const data = doc.data
+                const data = doc.data();
+                const div = document.createElement('div');
+                div.className = 'msg-item';
+                div.innerHTML = `<span class="msg-sender">${data.sender || 'Oyuncu'}</span>${data.text}`;
+                msgBox.appendChild(div);
+            });
+            msgBox.scrollTop = msgBox.scrollHeight;
+        });
+    </script>
+</body>
+</html>
