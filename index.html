@@ -2,29 +2,18 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="İstediğin gibi **Slope** oyununu ve gönderdiğin kodun tamamını tek bir dosyada kusursuz bir şekilde birleştirdim Salim abi. 
-
-Aşağıdaki kodun **hepsini kopyala**, bilgisayarındaki `index.html` dosyasının içindekilerin **tamamını silerek yerine yapıştır** ve kaydet (`Ctrl + S`):
-
-```html
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oyun Portalım</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: #0f172a; color: #f8fafc; height: 100vh; overflow: hidden; }
         
-        /* Tüm Ekranı Kaplayan Discord Tarzı Giriş/Kayıt Alanı */
         #auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0b0f19; z-index: 99999; display: flex; justify-content: center; align-items: center; }
         .auth-card { background: #313338; width: 420px; padding: 32px; border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); text-align: center; }
         .auth-logo { font-size: 40px; margin-bottom: 10px; }
         .auth-title { color: #f2f3f5; font-size: 22px; font-weight: 600; margin-bottom: 6px; }
         .auth-subtitle { color: #949ba4; font-size: 14px; margin-bottom: 24px; }
         
-        /* Sekme Butonları (Giriş Yap / Kayıt Ol) */
         .tab-buttons { display: flex; background: #1e1f22; border-radius: 4px; margin-bottom: 20px; padding: 4px; }
         .tab-btn { flex: 1; background: transparent; border: none; color: #949ba4; padding: 10px; font-weight: 600; cursor: pointer; border-radius: 4px; font-size: 14px; transition: 0.2s; }
         .tab-btn.active { background: #5865f2; color: white; }
@@ -38,7 +27,6 @@ Aşağıdaki kodun **hepsini kopyala**, bilgisayarındaki `index.html` dosyasın
         .submit-btn:hover { background: #4752c4; }
         #auth-error { color: #f23f43; font-size: 13px; margin-top: 12px; }
 
-        /* Ana Site İçeriği (Giriş Yapılınca Görünecek) */
         #main-content { display: none; height: 100vh; overflow-y: auto; padding-bottom: 80px; position: relative; }
         header { background: #1e293b; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #5865f2; }
         header h1 { color: #5865f2; font-size: 24px; }
@@ -57,14 +45,12 @@ Aşağıdaki kodun **hepsini kopyala**, bilgisayarındaki `index.html` dosyasın
         .play-btn { background: #5865f2; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; }
         .play-btn:hover { background: #4752c4; }
 
-        /* Oyun Modalı */
         #game-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
         .modal-content { background: #1e293b; width: 100%; max-width: 900px; height: 80vh; border-radius: 14px; border: 2px solid #5865f2; display: flex; flex-direction: column; overflow: hidden; }
         .modal-header { background: #0f172a; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
         .close-btn { background: #f23f43; color: white; border: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; }
         #game-frame { width: 100%; height: 100%; border: none; background: #000; }
 
-        /* Discord Tarzı Açılır Sohbet Modalı */
         #chat-modal { display: none; position: fixed; bottom: 20px; right: 20px; width: 360px; height: 450px; background: #313338; border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.6); z-index: 9999; flex-direction: column; overflow: hidden; border: 1px solid #1f2023; }
         .chat-modal-header { background: #2b2d31; color: #f2f3f5; padding: 14px; font-weight: bold; font-size: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1f2023; }
         .chat-modal-close { background: none; border: none; color: #949ba4; font-size: 18px; cursor: pointer; font-weight: bold; }
@@ -83,7 +69,6 @@ Aşağıdaki kodun **hepsini kopyala**, bilgisayarındaki `index.html` dosyasın
 </head>
 <body>
 
-    <!-- DISCORD TARZI GİRİŞ / KAYIT EKRANI -->
     <div id="auth-overlay">
         <div class="auth-card">
             <div class="auth-logo">🎮</div>
@@ -110,7 +95,262 @@ Aşağıdaki kodun **hepsini kopyala**, bilgisayarındaki `index.html` dosyasın
         </div>
     </div>
 
-    <!-- ANA OYUN SİTESİ -->
     <div id="main-content">
         <header>
-            <h1 id="welcome-title">🎮 OYUN PORT
+            <h1 id="welcome-title">🎮 OYUN PORTALIM</h1>
+            <div class="header-right">
+                <button class="chat-toggle-btn" onclick="window.toggleChat()">💬 Sohbeti Aç</button>
+                <button class="logout-btn" onclick="window.logout()">Çıkış Yap</button>
+            </div>
+        </header>
+
+        <div class="game-container">
+            <!-- SLOPE OYUNU -->
+            <div class="game-card">
+                <div>
+                    <div class="game-icon">🟩</div>
+                    <h3>Slope Oyunu</h3>
+                    <p>Neon dünyasında topu kontrol et, engellerden kaç ve rekoru kır!</p>
+                </div>
+                <button class="play-btn" onclick="window.openGame('Slope Oyunu', 'https://portal.dersarasi.workers.dev/game/slope')">Oyna</button>
+            </div>
+
+            <div class="game-card">
+                <div>
+                    <div class="game-icon">🧱</div>
+                    <h3>Klasik Tetris</h3>
+                    <p>Blokları yerleştir, satırları temizle ve skoru patlat!</p>
+                </div>
+                <button class="play-btn" onclick="window.openGame('Klasik Tetris', 'https://chvin.github.io/react-tetris/')">Oyna</button>
+            </div>
+
+            <div class="game-card">
+                <div>
+                    <div class="game-icon">🔢</div>
+                    <h3>2048 Bulmaca</h3>
+                    <p>Sayıları birleştirerek 2048 karosuna ulaş.</p>
+                </div>
+                <button class="play-btn" onclick="window.openGame('2048 Bulmaca', 'https://play2048.co/')">Oyna</button>
+            </div>
+
+            <div class="game-card">
+                <div>
+                    <div class="game-icon">🦖</div>
+                    <h3>Dino Koşusu</h3>
+                    <p>Engellerin üzerinden atla ve rekor kır!</p>
+                </div>
+                <button class="play-btn" onclick="window.openGame('Dino Koşusu', 'https://chromedino.com/')">Oyna</button>
+            </div>
+
+            <div class="game-card">
+                <div>
+                    <div class="game-icon">🏎️</div>
+                    <h3>Hextris</h3>
+                    <p>Hızlı refleks gerektiren renkli altıgen bulmaca.</p>
+                </div>
+                <button class="play-btn" onclick="window.openGame('Hextris', 'https://hextris.io/')">Oyna</button>
+            </div>
+        </div>
+
+        <div id="game-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-game-title" style="color: #fff;">Oyun</h3>
+                    <button class="close-btn" onclick="window.closeGame()">Kapat ✖</button>
+                </div>
+                <iframe id="game-frame" src="" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div id="chat-modal">
+            <div class="chat-modal-header">
+                <span id="chat-title">💬 Küresel Sohbet</span>
+                <button class="chat-modal-close" onclick="window.toggleChat()">✕</button>
+            </div>
+            <div id="chat-messages"></div>
+            <div class="chat-modal-footer">
+                <input type="text" id="chat-input" placeholder="Mesaj yaz..." onkeypress="window.handleChatKey(event)">
+                <button onclick="window.sendMessage()">Gönder</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDRS1B64hqK-Q-zgUrhvgdaAhyq7o5RnGw",
+            authDomain: "site-987e8.firebaseapp.com",
+            projectId: "site-987e8",
+            storageBucket: "site-987e8.firebasestorage.app",
+            messagingSenderId: "610336334941",
+            appId: "1:610336334941:web:46a6e4b8277ec26bcd99b4",
+            measurementId: "G-GJPNXB9BL9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Tarayıcıda oturumu açık tut (Kalıcı Hafıza)
+        setPersistence(auth, browserLocalPersistence).catch((error) => {
+            console.error("Oturum kalıcılığı hatası:", error);
+        });
+
+        let activeUser = null;
+        let currentMode = 'login';
+
+        window.switchTab = function(mode) {
+            currentMode = mode;
+            document.getElementById('auth-error').innerText = '';
+            const btn = document.getElementById('submit-btn');
+            const title = document.getElementById('card-title');
+            const subtitle = document.getElementById('card-subtitle');
+            
+            if (mode === 'login') {
+                document.getElementById('login-tab').classList.add('active');
+                document.getElementById('register-tab').classList.remove('active');
+                btn.innerText = 'Giriş Yap';
+                title.innerText = 'Tekrar Hoş Geldin!';
+                subtitle.innerText = 'Oynamak ve sohbet etmek için giriş yapmalısın.';
+            } else {
+                document.getElementById('register-tab').classList.add('active');
+                document.getElementById('login-tab').classList.remove('active');
+                btn.innerText = 'Kayıt Ol';
+                title.innerText = 'Hesap Oluştur';
+                subtitle.innerText = 'Kullanıcı adını seç ve hemen aramıza katıl!';
+            }
+        };
+
+        window.openGame = function(title, url) {
+            document.getElementById('modal-game-title').innerText = title;
+            document.getElementById('game-frame').src = url;
+            document.getElementById('game-modal').style.display = 'flex';
+        };
+
+        window.closeGame = function() {
+            document.getElementById('game-modal').style.display = 'none';
+            document.getElementById('game-frame').src = '';
+        };
+
+        window.toggleChat = function() {
+            const modal = document.getElementById('chat-modal');
+            if (modal.style.display === 'flex') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'flex';
+                const msgBox = document.getElementById('chat-messages');
+                msgBox.scrollTop = msgBox.scrollHeight;
+            }
+        };
+
+        function formatEmail(username) {
+            return username.trim().toLowerCase().replace(/[^a-z0-9]/g, '') + "@oyunportal.com";
+        }
+
+        window.handleAuth = async function() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const errBox = document.getElementById('auth-error');
+            errBox.innerText = '';
+
+            if (!username || !password) {
+                errBox.innerText = 'Lütfen kullanıcı adı ve şifre girin.';
+                return;
+            }
+            if (password.length < 6) {
+                errBox.innerText = 'Şifre en az 6 karakter olmalıdır!';
+                return;
+            }
+
+            const fakeEmail = formatEmail(username);
+
+            try {
+                if (currentMode === 'register') {
+                    await createUserWithEmailAndPassword(auth, fakeEmail, password);
+                } else {
+                    await signInWithEmailAndPassword(auth, fakeEmail, password);
+                }
+            } catch (error) {
+                if (error.code === 'auth/email-already-in-use') {
+                    errBox.innerText = 'Bu kullanıcı adı zaten alınmış!';
+                } else if (error.code === 'auth/weak-password') {
+                    errBox.innerText = 'Şifre en az 6 karakter olmalı!';
+                } else if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+                    errBox.innerText = 'Kullanıcı adı veya şifre hatalı!';
+                } else {
+                    errBox.innerText = 'İşlem hatası: ' + error.message;
+                }
+            }
+        };
+
+        window.handleAuthKey = function(e) {
+            if (e.key === 'Enter') window.handleAuth();
+        };
+
+        window.logout = function() {
+            signOut(auth);
+        };
+
+        onAuthStateChanged(auth, user => {
+            activeUser = user;
+            if (user) {
+                document.getElementById('auth-overlay').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                const realUsername = user.email.split('@')[0];
+                document.getElementById('welcome-title').innerText = `🎮 OYUN PORTALIM - Hoş geldin, ${realUsername}`;
+            } else {
+                document.getElementById('auth-overlay').style.display = 'flex';
+                document.getElementById('main-content').style.display = 'none';
+            }
+        });
+
+        window.sendMessage = async function() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (text !== '' && activeUser) {
+                input.value = '';
+                try {
+                    await addDoc(collection(db, "messages"), {
+                        text: text,
+                        sender: activeUser.email.split('@')[0],
+                        createdAt: serverTimestamp()
+                    });
+                } catch (e) {
+                    console.error("Mesaj gönderilemedi:", e);
+                }
+            }
+        };
+
+        window.handleChatKey = function(e) {
+            if (e.key === 'Enter') window.sendMessage();
+        };
+
+        const q = query(collection(db, "messages"), orderBy("createdAt", "asc"));
+        onSnapshot(q, snapshot => {
+            const msgBox = document.getElementById('chat-messages');
+            msgBox.innerHTML = '';
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const div = document.createElement('div');
+                div.className = 'msg-item';
+                
+                const userSpan = document.createElement('span');
+                userSpan.className = 'msg-sender';
+                userSpan.innerText = data.sender || 'Oyuncu';
+                
+                const textSpan = document.createElement('span');
+                textSpan.className = 'msg-text';
+                textSpan.innerText = data.text;
+                
+                div.appendChild(userSpan);
+                div.appendChild(textSpan);
+                msgBox.appendChild(div);
+            });
+            msgBox.scrollTop = msgBox.scrollHeight;
+        });
+    </script>
+</body>
+</html>
