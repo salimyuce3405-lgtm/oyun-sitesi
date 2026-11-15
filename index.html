@@ -188,7 +188,7 @@ body {
 .section-view { display: none; }
 .section-view.active { display: block; }
 
-/* KLANLAR (DİSLORD TAM EKRAN TARZI) */
+/* SOHBET ODASI ALANI */
 .clan-main-wrapper {
     display: grid; grid-template-columns: 260px 1fr; background: var(--panel-bg); border: 1px solid var(--border-color);
     border-radius: 18px; overflow: hidden; height: calc(100vh - 140px); backdrop-filter: blur(15px); box-shadow: 0 20px 40px rgba(0,0,0,0.6);
@@ -353,10 +353,11 @@ body {
             <button type="button" class="nav-item" data-sec="leaderboard" onclick="window.switchSection('leaderboard')">Skor Tablosu</button>
             <button type="button" class="nav-item" data-sec="ticket" onclick="window.switchSection('ticket')">🎟️ Gişe</button>
             <button type="button" class="nav-item" data-sec="shop" onclick="window.switchSection('shop')">🛍️ Siber Dükkan</button>
-            <button type="button" class="nav-item" data-sec="clans" onclick="window.switchSection('clans')">Klanlar</button>
+            <button type="button" class="nav-item" data-sec="clans" onclick="window.switchSection('clans')">💬 Sohbet</button>
             <button type="button" class="nav-item" data-sec="stats" onclick="window.switchSection('stats')">📊 İstatistik</button>
             <button type="button" class="nav-item" style="color:var(--gold-light);" onclick="window.openAdminSelectModal()">💬 Admin Sohbeti</button>
             <button type="button" class="nav-item admin-pill" id="admin-nav-btn" onclick="window.promptAdminPassword()">👑 Admin Paneli</button>
+            <button type="button" class="nav-item admin-pill" id="admin-dm-nav-btn" data-sec="admin-dm" onclick="window.switchSection('admin-dm')" style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); color: #fde047; display: none;">📥 DM</button>
             <button type="button" class="nav-item dev-pill" id="dev-nav-btn" onclick="window.promptDevPassword()">🛠️ Geliştirici Paneli</button>
         </div>
     </div>
@@ -381,7 +382,7 @@ body {
             </div>
             <div class="showcase-content">
                 <h1>Yeni Nesil<br><span>Oyun Deneyimi</span></h1>
-                <p>Klanını kur, klan sohbetinde arkadaşlarınla yazış, skor tablosunda zirveye oyna ve ödülleri topla.</p>
+                <p>Genel sohbette arkadaşlarınla yazış, skor tablosunda zirveye oyna ve ödülleri topla.</p>
             </div>
             <div style="font-size: 11px; color: #fde68a; font-weight: 700; letter-spacing: 2px; opacity: 0.7;">VIP PORTAL SYSTEM</div>
         </section>
@@ -655,38 +656,17 @@ body {
                 </div>
             </div>
 
-            <!-- 5. KLANLAR (DİSLORD TAM EKRAN TARZI) -->
+            <!-- 5. SOHBET -->
             <div id="sec-clans" class="section-view">
-                <!-- Klan Listesi Seçim Ekranı -->
-                <div id="clan-list-view">
-                    <div class="section-header">
-                        <div>
-                            <h2>🛡️ Klanlar & Dislord Sohbet</h2>
-                            <p>Klanını kur, sol menüden klanına tıkla ve Dislord tarzı odada arkadaşlarınla yazış!</p>
-                        </div>
-                        <button type="button" class="btn-action" onclick="window.openCreateClanModal()">+ Klan Üret</button>
-                    </div>
-                    <div class="clan-grid" id="clan-list"></div>
-                </div>
-
-                <!-- Dislord Tarzı Tam Ekran Sohbet Arayüzü -->
-                <div id="dislord-clan-chat-wrapper" class="clan-main-wrapper" style="display:none;">
-                    <div class="clan-sidebar-left">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span class="clan-sidebar-title">Klan Kanalları</span>
-                            <button type="button" onclick="window.backToClanList()" style="background:transparent; border:none; color:var(--cyan); font-size:11px; cursor:pointer; font-weight:700;">← Geri Dön</button>
-                        </div>
-                        <div id="dislord-channels-list" style="display:flex; flex-direction:column; gap:8px;"></div>
-                    </div>
-                    
+                <div class="clan-main-wrapper" style="grid-template-columns: 1fr;">
                     <div class="dislord-chat-pane">
                         <div class="dislord-chat-header">
-                            <span id="dislord-active-room-title"># klan-sohbeti</span>
-                            <span id="dislord-active-clan-tag" style="font-size:12px; color:var(--gold);">---</span>
+                            <span>💬 Sohbet</span>
+                            <span style="font-size:12px; color:#4ade80;">● Çevrimiçi</span>
                         </div>
                         <div class="dislord-messages-area" id="dislord-messages-container"></div>
                         <div class="dislord-input-area">
-                            <input type="text" id="dislord-message-input" placeholder="Klan odasına kalıcı mesajınızı yazın..." onkeydown="window.handleDislordChatKey(event)">
+                            <input type="text" id="dislord-message-input" placeholder="Mesajınızı yazın..." onkeydown="window.handleDislordChatKey(event)">
                             <button type="button" class="dislord-send-btn" onclick="window.sendDislordMessage()">Gönder</button>
                         </div>
                     </div>
@@ -791,7 +771,8 @@ body {
                         <button type="button" class="submit-btn" style="background:linear-gradient(135deg, #ef4444, #991b1b);" onclick="window.adminSaveBadWords()">Yasaklı Kelimeleri Güncelle</button>
                     </div>
 
-                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px; backdrop-filter:blur(10px); grid-column: 1 / -1;">
+                    
+<div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px; backdrop-filter:blur(10px); grid-column: 1 / -1;">
                         <h3 style="font-size:16px; color:#f87171; margin-bottom:14px;">⛔ Hesap & IP Engelleme (Ban) Yönetimi</h3>
                         <div class="input-group">
                             <label>HEDEF OYUNCU</label>
@@ -808,7 +789,24 @@ body {
                 </div>
             </div>
 
-            <!-- 8. KISITLI GELİŞTİRİCİ PANELİ -->
+            
+            <!-- ADMIN DM KUTUSU PANELİ -->
+            <div id="sec-admin-dm" class="section-view">
+                <div class="section-header">
+                    <div>
+                        <h2>📥 Admin Gelen DM Kutusu</h2>
+                        <p>Sohbetten sana özel mesaj gönderen tüm oyuncuların listesi ve son mesajları.</p>
+                    </div>
+                </div>
+                <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px; backdrop-filter:blur(10px);">
+                    <h3 style="font-size:16px; color:#fde047; margin-bottom:14px;">💬 Gelen Özel Mesajlar</h3>
+                    <div id="admin-dm-inbox-list" style="display:flex; flex-direction:column; gap:12px; max-height:550px; overflow-y:auto;">
+                        <div style="color:#94a3b8; font-size:13px; text-align:center; padding:20px;">Yükleniyor...</div>
+                    </div>
+                </div>
+            </div>
+
+<!-- 8. KISITLI GELİŞTİRİCİ PANELİ -->
             <div id="sec-dev-panel" class="section-view">
                 <div class="section-header">
                     <div>
@@ -907,40 +905,6 @@ body {
     </div>
 </div>
 
-<!-- KLAN ÜRET MODALI -->
-<div id="create-clan-modal" class="modal-backdrop">
-    <div class="modal-box">
-        <h3 style="font-size:19px; font-weight:800; margin-bottom:16px; text-align:center;">🛡️ Yeni Klan Üret</h3>
-        <div class="input-group">
-            <label>KLAN ADI</label>
-            <input type="text" id="new-clan-name" placeholder="Örn: Gölge Avcıları" maxlength="24">
-        </div>
-        <div class="row-group">
-            <div class="input-group">
-                <label>KLAN ETİKETİ (TAG)</label>
-                <input type="text" id="new-clan-tag" placeholder="Örn: GLG" maxlength="5">
-            </div>
-            <div class="input-group">
-                <label>KLAN SİMGESİ</label>
-                <select id="new-clan-icon">
-                    <option value="⚔️">⚔️ Kılıç</option>
-                    <option value="🐉">🐉 Ejderha</option>
-                    <option value="🦅">🦅 Kartal</option>
-                    <option value="🐺">🐺 Kurt</option>
-                    <option value="🔥">🔥 Ateş</option>
-                    <option value="⚡">⚡ Yıldırım</option>
-                </select>
-            </div>
-        </div>
-        <div class="input-group">
-            <label>KLAN AÇIKLAMASI</label>
-            <input type="text" id="new-clan-desc" placeholder="Kısa klan mottosu..." maxlength="60">
-        </div>
-        <button type="button" class="submit-btn" onclick="window.createClan()">Klanı Oluştur</button>
-        <button type="button" class="submit-btn" style="background:#1e293b; color:#fff;" onclick="window.closeCreateClanModal()">Vazgeç</button>
-    </div>
-</div>
-
 <!-- PROFİL DÜZENLEME MODALI -->
 <div id="profile-modal" class="modal-backdrop">
     <div class="modal-box">
@@ -1033,10 +997,7 @@ let isAfk = false;
 let allUsersCache = [];
 let allClansCache = [];
 let globalBadWords = [];
-let activeDislordClanId = null;
-let activeDislordClanName = "";
-let activeDislordClanTag = "";
-let activeDislordUnsub = null;
+
 let activeAdminChatUnsub = null;
 let selectedAdminKey = "salim_xy66";
 let broadcastTimeout = null;
@@ -1112,7 +1073,7 @@ window.handleCyberPromptKey = function(e) {
 
 window.switchSection = function(secName) {
     if (!activeUser) return;
-    if (secName === 'admin-panel' && !checkIfAdmin()) {
+    if ((secName === 'admin-panel' || secName === 'admin-dm') && !checkIfAdmin()) {
         alert("Bu alana yalnızca admin erişebilir!");
         return;
     }
@@ -1128,6 +1089,14 @@ window.switchSection = function(secName) {
         btn.classList.toggle("active", btn.getAttribute("data-sec") === secName);
     });
 
+    if (secName === 'clans') {
+        window.openGlobalChat();
+        document.getElementById("app-layout").classList.add("clan-chat-active");
+        document.getElementById("right-sidebar-panel").style.display = "none";
+    } else {
+        document.getElementById("app-layout").classList.remove("clan-chat-active");
+        document.getElementById("right-sidebar-panel").style.display = "block";
+    }
     if (secName === 'stats') {
         updateStatsView();
     }
@@ -1136,7 +1105,7 @@ window.switchSection = function(secName) {
 window.promptAdminPassword = async function() {
     const pwd = await showCyberPrompt("👑 Admin Paneli Doğrulama", "Lütfen Admin Paneli şifresini girin:", "Şifre (123321)");
     if (pwd === ADMIN_MASTER_PASSWORD) {
-        window.switchSection('admin-panel');
+        window.switchSection('admin-panel'); loadAdminInbox();
     } else if (pwd !== null) {
         alert("Hatalı admin şifresi!");
     }
@@ -1329,10 +1298,14 @@ onAuthStateChanged(auth, async user => {
 
         if (checkIfAdmin()) {
             adminBtn.style.display = "flex";
+            const adminDmBtn = document.getElementById("admin-dm-nav-btn");
+            if (adminDmBtn) adminDmBtn.style.display = "flex";
             devBtn.style.display = "none";
             populateAdminDropdowns();
         } else {
             adminBtn.style.display = "none";
+            const adminDmBtnHide = document.getElementById("admin-dm-nav-btn");
+            if (adminDmBtnHide) adminDmBtnHide.style.display = "none";
             if (checkIfDev()) {
                 devBtn.style.display = "flex";
                 populateDevDropdowns();
@@ -2029,256 +2002,93 @@ onSnapshot(doc(db, "settings", "config"), docSnap => {
     if (docSnap.exists()) { globalBadWords = docSnap.data().badWords || []; }
 });
 
-window.openCreateClanModal = function() { document.getElementById("create-clan-modal").style.display = "flex"; };
-window.closeCreateClanModal = function() { document.getElementById("create-clan-modal").style.display = "none"; };
+let globalChatUnsub = null;
 
-window.createClan = async function() {
+window.openGlobalChat = function() {
     if (!activeUser) return;
-    const name = document.getElementById("new-clan-name").value.trim();
-    const tag = document.getElementById("new-clan-tag").value.trim().toUpperCase();
-    const icon = document.getElementById("new-clan-icon").value;
-    const desc = document.getElementById("new-clan-desc").value.trim() || "Portal klanı";
-
-    if (!name || name.length < 2) { alert("Klan adı en az 2 karakter olmalı."); return; }
-    if (!tag || tag.length < 2 || tag.length > 5) { alert("Klan etiketi 2-5 karakter olmalı."); return; }
-    if (userProfileData.clanId) {
-        alert("Zaten bir klandasın. Önce mevcut klanından ayrıl.");
-        return;
-    }
-
-    try {
-        const docRef = await addDoc(collection(db, "clans"), {
-            name: name, tag: tag, icon: icon, desc: desc,
-            leaderUid: activeUser.uid,
-            leaderName: getCleanDisplayName(userProfileData.username),
-            members: [activeUser.uid],
-            createdAt: serverTimestamp()
-        });
-        userProfileData.clanId = docRef.id;
-        await updateDoc(doc(db, "users", activeUser.uid), { clanId: docRef.id });
-        window.closeCreateClanModal();
-        document.getElementById("new-clan-name").value = "";
-        document.getElementById("new-clan-tag").value = "";
-        document.getElementById("new-clan-desc").value = "";
-        alert("🛡️ Klan oluşturuldu!");
-    } catch (e) {
-        console.error("Klan oluşturma hatası:", e);
-        alert("Klan oluşturulurken hata oluştu.");
-    }
-};
-
-window.joinClan = async function(clanId) {
-    if (!activeUser || !clanId) return;
-    if (userProfileData.clanId && userProfileData.clanId !== clanId) {
-        if (!confirm("Zaten bir klandasın. Önce mevcut klanından ayrılmak ister misin?")) return;
-        try {
-            await updateDoc(doc(db, "clans", userProfileData.clanId), { members: arrayRemove(activeUser.uid) });
-        } catch (e) {}
-    }
-    try {
-        await updateDoc(doc(db, "clans", clanId), { members: arrayUnion(activeUser.uid) });
-        userProfileData.clanId = clanId;
-        await updateDoc(doc(db, "users", activeUser.uid), { clanId: clanId });
-        renderClans();
-        alert("Klana katıldın!");
-    } catch (e) {
-        console.error("Klan katılma hatası:", e);
-        alert("Klana katılırken hata oluştu.");
-    }
-};
-
-window.leaveClan = async function(clanId) {
-    if (!activeUser || !clanId) return;
-    if (!confirm("Klandan ayrılmak istediğine emin misin?")) return;
-    try {
-        await updateDoc(doc(db, "clans", clanId), { members: arrayRemove(activeUser.uid) });
-        userProfileData.clanId = "";
-        await updateDoc(doc(db, "users", activeUser.uid), { clanId: "" });
-        if (activeDislordClanId === clanId) window.backToClanList();
-        renderClans();
-        alert("Klandan ayrıldın.");
-    } catch (e) {
-        console.error("Klan ayrılma hatası:", e);
-        alert("Ayrılırken hata oluştu.");
-    }
-};
-
-window.deleteClan = async function(clanId) {
-    if (!clanId || !activeUser) return;
-    if (!confirm("Bu klanı kalıcı olarak silmek istediğine emin misin?")) return;
-    try {
-        // Üyelerin clanId alanını temizle
-        const clanSnap = await getDoc(doc(db, "clans", clanId));
-        if (clanSnap.exists()) {
-            const members = clanSnap.data().members || [];
-            const cleanPromises = members.map(uid =>
-                updateDoc(doc(db, "users", uid), { clanId: "" }).catch(() => {})
-            );
-            await Promise.all(cleanPromises);
-        }
-        await deleteDoc(doc(db, "clans", clanId));
-        if (userProfileData.clanId === clanId) {
-            userProfileData.clanId = "";
-        }
-        if (activeDislordClanId === clanId) {
-            window.backToClanList();
-        }
-        alert("Klan silindi.");
-    } catch (e) {
-        console.error("Klan silme hatası:", e);
-        alert("Klan silinirken hata oluştu.");
-    }
-};
-
-window.openDislordClanChat = function(clanId, clanName, clanTag) {
-    activeDislordClanId = clanId;
-    activeDislordClanName = clanName;
-    activeDislordClanTag = clanTag;
-
-    document.getElementById("clan-list-view").style.display = "none";
-    document.getElementById("dislord-clan-chat-wrapper").style.display = "grid";
-
-    document.getElementById("right-sidebar-panel").style.display = "none";
-    document.getElementById("app-layout").classList.add("clan-chat-active");
-
-    const safeClanName = String(clanName || "klan");
-    const safeClanTag = String(clanTag || "---");
-    document.getElementById("dislord-active-room-title").innerText = `# ${safeClanName.toLowerCase().replace(/\s+/g, '-')}-sohbet`;
-    document.getElementById("dislord-active-clan-tag").innerText = `[${safeClanTag}]`;
-
-    const channelsList = document.getElementById("dislord-channels-list");
-    channelsList.innerHTML = "";
-    const chItem = document.createElement("div");
-    chItem.className = "clan-room-item active";
-    const chSpan = document.createElement("span");
-    chSpan.style.cssText = "font-size:13px; font-weight:700; color:#fff;";
-    chSpan.textContent = "# " + safeClanName;
-    chItem.appendChild(chSpan);
-    channelsList.appendChild(chItem);
-
-    if (activeDislordUnsub) { activeDislordUnsub(); activeDislordUnsub = null; }
+    if (globalChatUnsub) { globalChatUnsub(); globalChatUnsub = null; }
 
     const msgBox = document.getElementById("dislord-messages-container");
     if (msgBox) msgBox.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:30px; font-size:13px;">Mesajlar yükleniyor...</div>`;
 
-    // Önce orderBy ile dene; index yoksa orderBy olmadan fallback
-    function attachClanListener(useOrderBy) {
-        let q;
-        try {
-            if (useOrderBy) {
-                q = query(collection(db, "clan_messages"), where("clanId", "==", clanId), orderBy("createdAt", "asc"));
-            } else {
-                q = query(collection(db, "clan_messages"), where("clanId", "==", clanId));
-            }
-        } catch (e) {
-            console.error("Query oluşturma hatası:", e);
-            q = query(collection(db, "clan_messages"), where("clanId", "==", clanId));
-            useOrderBy = false;
+    const q = query(collection(db, "clan_messages"), where("clanId", "==", "genel_sohbet"));
+
+    globalChatUnsub = onSnapshot(q, snapshot => {
+        const box = document.getElementById("dislord-messages-container");
+        if (!box) return;
+        box.innerHTML = "";
+        const isAdminOrDev = checkIfAdmin() || checkIfDev();
+
+        let docs = [];
+        snapshot.forEach(docSnap => {
+            docs.push({ id: docSnap.id, ...docSnap.data() });
+        });
+
+        docs.sort((a, b) => {
+            const ta = a.createdAt?.toMillis ? a.createdAt.toMillis() : (a.createdAt || 0);
+            const tb = b.createdAt?.toMillis ? b.createdAt.toMillis() : (b.createdAt || 0);
+            return ta - tb;
+        });
+
+        if (docs.length === 0) {
+            box.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:30px; font-size:13px;">Henüz mesaj yok. İlk mesajı sen yaz!</div>`;
+            return;
         }
 
-        activeDislordUnsub = onSnapshot(q, snapshot => {
-            const box = document.getElementById("dislord-messages-container");
-            if (!box) return;
-            box.innerHTML = "";
-            const isAdminOrDev = checkIfAdmin() || checkIfDev();
-
-            let docs = [];
-            snapshot.forEach(docSnap => {
-                docs.push({ id: docSnap.id, ...docSnap.data() });
+        docs.forEach(data => {
+            let msgText = String(data.text || "");
+            (globalBadWords || []).forEach(word => {
+                if (!word) return;
+                try {
+                    const escaped = String(word).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                    msgText = msgText.replace(new RegExp(escaped, 'gi'), '***');
+                } catch (e) {}
             });
 
-            // orderBy yoksa client tarafında sırala
-            if (!useOrderBy) {
-                docs.sort((a, b) => {
-                    const ta = a.createdAt?.toMillis ? a.createdAt.toMillis() : (a.createdAt || 0);
-                    const tb = b.createdAt?.toMillis ? b.createdAt.toMillis() : (b.createdAt || 0);
-                    return ta - tb;
-                });
+            const safeSender = escapeHtml(data.sender || "Oyuncu");
+            const safeText = escapeHtml(msgText);
+            const div = document.createElement("div");
+            div.className = "dislord-message-card";
+            div.innerHTML = `
+                <div>
+                    <span style="color:var(--gold); font-weight:700; font-size:12px; display:block; margin-bottom:3px;">${safeSender}</span>
+                    <span style="color:#e2e8f0; font-size:13.5px; word-break:break-word;">${safeText}</span>
+                </div>
+                ${isAdminOrDev ? `<button type="button" style="background:#ef4444; color:#fff; border:none; padding:4px 8px; border-radius:6px; font-size:11px; cursor:pointer;" data-msgid="${data.id}">Sil</button>` : ''}
+            `;
+            if (isAdminOrDev) {
+                const btn = div.querySelector("button");
+                if (btn) btn.onclick = () => window.deleteDislordMessage(data.id);
             }
-
-            if (docs.length === 0) {
-                box.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:30px; font-size:13px;">Bu kanalda henüz mesaj yok. İlk mesajı sen yaz!</div>`;
-                return;
-            }
-
-            docs.forEach(data => {
-                let msgText = String(data.text || "");
-                (globalBadWords || []).forEach(word => {
-                    if (!word) return;
-                    try {
-                        const escaped = String(word).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                        msgText = msgText.replace(new RegExp(escaped, 'gi'), '***');
-                    } catch (e) {}
-                });
-
-                const safeSender = escapeHtml(data.sender || "Oyuncu");
-                const safeText = escapeHtml(msgText);
-                const div = document.createElement("div");
-                div.className = "dislord-message-card";
-                div.innerHTML = `
-                    <div>
-                        <span style="color:var(--gold); font-weight:700; font-size:12px; display:block; margin-bottom:3px;">${safeSender}</span>
-                        <span style="color:#e2e8f0; font-size:13.5px; word-break:break-word;">${safeText}</span>
-                    </div>
-                    ${isAdminOrDev ? `<button type="button" style="background:#ef4444; color:#fff; border:none; padding:4px 8px; border-radius:6px; font-size:11px; cursor:pointer;" data-msgid="${data.id}">Sil</button>` : ''}
-                `;
-                if (isAdminOrDev) {
-                    const btn = div.querySelector("button");
-                    if (btn) btn.onclick = () => window.deleteDislordMessage(data.id);
-                }
-                box.appendChild(div);
-            });
-            box.scrollTop = box.scrollHeight;
-        }, err => {
-            console.error("Klan sohbet dinleme hatası:", err);
-            // Composite index yoksa orderBy olmadan tekrar dene
-            if (useOrderBy && (err.code === "failed-precondition" || String(err.message || "").includes("index"))) {
-                console.warn("Composite index yok, orderBy olmadan devam ediliyor.");
-                if (activeDislordUnsub) { activeDislordUnsub(); activeDislordUnsub = null; }
-                attachClanListener(false);
-                return;
-            }
-            const box = document.getElementById("dislord-messages-container");
-            if (box) {
-                box.innerHTML = `<div style="text-align:center; color:#f87171; padding:20px; font-size:13px;">
-                    Sohbet yüklenemedi.<br><small style="color:#94a3b8;">${escapeHtml(err.message || "Bilinmeyen hata")}</small><br>
-                    <small style="color:#94a3b8;">Firebase Console → Firestore → Indexes bölümünden index oluşturman gerekebilir.</small>
-                </div>`;
-            }
+            box.appendChild(div);
         });
-    }
-
-    attachClanListener(true);
-};
-
-window.backToClanList = function() {
-    if (activeDislordUnsub) { activeDislordUnsub(); activeDislordUnsub = null; }
-    activeDislordClanId = null;
-    document.getElementById("dislord-clan-chat-wrapper").style.display = "none";
-    document.getElementById("clan-list-view").style.display = "block";
-
-    document.getElementById("right-sidebar-panel").style.display = "block";
-    document.getElementById("app-layout").classList.remove("clan-chat-active");
+        box.scrollTop = box.scrollHeight;
+    }, err => {
+        console.error("Sohbet dinleme hatası:", err);
+        const box = document.getElementById("dislord-messages-container");
+        if (box) {
+            box.innerHTML = `<div style="text-align:center; color:#f87171; padding:20px; font-size:13px;">
+                Sohbet yüklenemedi.<br><small style="color:#94a3b8;">${escapeHtml(err.message || "Bilinmeyen hata")}</small>
+            </div>`;
+        }
+    });
 };
 
 window.sendDislordMessage = async function() {
-    if (!activeUser || !activeDislordClanId) return;
-    
-    // Mute kontrolü (süre de kontrol ediliyor)
+    if (!activeUser) return;
+
     const now = Date.now();
     if (userProfileData.isMuted && (userProfileData.mutedUntil || 0) > now) {
         const kalanDk = Math.ceil(((userProfileData.mutedUntil || 0) - now) / 60000);
         alert(`Susturuldun! Kalan süre: ~${kalanDk} dakika`);
         return;
     }
-    // Süre dolmuşsa mute flag'ini temizle
     if (userProfileData.isMuted && (userProfileData.mutedUntil || 0) <= now) {
         userProfileData.isMuted = false;
         userProfileData.mutedUntil = 0;
         updateDoc(doc(db, "users", activeUser.uid), { isMuted: false, mutedUntil: 0 }).catch(() => {});
     }
 
-    // Rate limit: 1.2 saniyede bir mesaj
     const nowMsg = Date.now();
     if (nowMsg - lastClanMsgAt < 1200) {
         alert("Çok hızlı mesaj gönderiyorsun. Biraz bekle.");
@@ -2295,20 +2105,14 @@ window.sendDislordMessage = async function() {
     try {
         const senderName = getCleanDisplayName(userProfileData.username);
         await addDoc(collection(db, "clan_messages"), {
-            clanId: activeDislordClanId,
+            clanId: "genel_sohbet",
             text: text,
             sender: senderName,
             createdAt: serverTimestamp()
         });
     } catch (e) {
         console.error("Mesaj gönderme hatası:", e);
-        let msg = "Mesaj gönderilemedi.";
-        if (e.code === "permission-denied") {
-            msg = "Mesaj gönderilemedi: Firestore kuralları engelliyor. Rules'ı kontrol et.";
-        } else if (e.message) {
-            msg = "Mesaj gönderilemedi: " + e.message;
-        }
-        alert(msg);
+        alert("Mesaj gönderilemedi: " + (e.message || "Hata"));
         input.value = text;
     }
 };
@@ -2323,114 +2127,6 @@ window.deleteDislordMessage = async function(msgId) {
         alert("Mesaj silinemedi.");
     }
 };
-
-onSnapshot(query(collection(db, "clans"), orderBy("createdAt", "desc")), snapshot => {
-    allClansCache = [];
-    snapshot.forEach(docSnap => { allClansCache.push({ id: docSnap.id, ...docSnap.data() }); });
-    renderClans();
-});
-
-function renderClans() {
-    const container = document.getElementById("clan-list");
-    if (!container) return;
-    container.innerHTML = "";
-    if (allClansCache.length === 0) {
-        container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 48px; background: var(--card-bg); border-radius: 16px;"><p>Henüz klan yok.</p></div>`;
-        return;
-    }
-    const isAdminOrDev = checkIfAdmin() || checkIfDev();
-    allClansCache.forEach(clan => {
-        const membersArr = clan.members || [];
-        const isMember = activeUser && membersArr.includes(activeUser.uid);
-        const isLeader = activeUser && clan.leaderUid === activeUser.uid;
-
-        const card = document.createElement("div");
-        card.className = "clan-card";
-
-        // Top section
-        const top = document.createElement("div");
-        top.className = "clan-top";
-
-        const badge = document.createElement("div");
-        badge.className = "clan-badge";
-        badge.textContent = clan.icon || "🛡️";
-        top.appendChild(badge);
-
-        const info = document.createElement("div");
-        info.style.flex = "1";
-
-        const titleRow = document.createElement("div");
-        titleRow.style.cssText = "display:flex; justify-content:space-between; align-items:center;";
-
-        const h3 = document.createElement("h3");
-        h3.style.color = "#fff";
-        h3.textContent = (clan.name || "Klan") + " ";
-        const tagSpan = document.createElement("span");
-        tagSpan.className = "clan-tag";
-        tagSpan.textContent = "[" + (clan.tag || "???") + "]";
-        h3.appendChild(tagSpan);
-        titleRow.appendChild(h3);
-
-        if (isLeader || isAdminOrDev) {
-            const delBtn = document.createElement("button");
-            delBtn.type = "button";
-            delBtn.textContent = "Sil";
-            delBtn.style.cssText = "background:#ef4444; color:#fff; border:none; padding:2px 6px; border-radius:6px; font-size:10px; cursor:pointer;";
-            delBtn.onclick = () => window.deleteClan(clan.id);
-            titleRow.appendChild(delBtn);
-        }
-        info.appendChild(titleRow);
-
-        const desc = document.createElement("p");
-        desc.style.cssText = "font-size:12px; color:#94a3b8;";
-        desc.textContent = clan.desc || "";
-        info.appendChild(desc);
-        top.appendChild(info);
-        card.appendChild(top);
-
-        const meta = document.createElement("div");
-        meta.className = "clan-meta";
-        const leaderSpan = document.createElement("span");
-        leaderSpan.textContent = "👑 Lider: " + getCleanDisplayName(clan.leaderName);
-        const countSpan = document.createElement("span");
-        countSpan.textContent = "👥 " + membersArr.length + " Üye";
-        meta.appendChild(leaderSpan);
-        meta.appendChild(countSpan);
-        card.appendChild(meta);
-
-        const actions = document.createElement("div");
-        actions.style.cssText = "display:flex; gap:8px;";
-
-        if (isMember) {
-            const leaveBtn = document.createElement("button");
-            leaveBtn.type = "button";
-            leaveBtn.className = "btn-logout";
-            leaveBtn.style.flex = "1";
-            leaveBtn.textContent = "Ayrıl";
-            leaveBtn.onclick = () => window.leaveClan(clan.id);
-            actions.appendChild(leaveBtn);
-        } else {
-            const joinBtn = document.createElement("button");
-            joinBtn.type = "button";
-            joinBtn.className = "btn-action";
-            joinBtn.style.flex = "1";
-            joinBtn.textContent = "Katıl";
-            joinBtn.onclick = () => window.joinClan(clan.id);
-            actions.appendChild(joinBtn);
-        }
-
-        const chatBtn = document.createElement("button");
-        chatBtn.type = "button";
-        chatBtn.className = "btn-secondary";
-        chatBtn.style.cssText = "flex:1; background:var(--primary); color:#fff; border:none;";
-        chatBtn.textContent = "💬 Dislord Odası";
-        chatBtn.onclick = () => window.openDislordClanChat(clan.id, clan.name, clan.tag);
-        actions.appendChild(chatBtn);
-
-        card.appendChild(actions);
-        container.appendChild(card);
-    });
-}
 
 window.openProfile = function() {
     document.getElementById("profile-username-input").value = getCleanDisplayName(userProfileData.username);
@@ -2781,7 +2477,7 @@ window.logout = async function() {
         await updateStatus("offline");
     } catch (e) {}
     try {
-        if (activeDislordUnsub) { activeDislordUnsub(); activeDislordUnsub = null; }
+        if (globalChatUnsub) { globalChatUnsub(); globalChatUnsub = null; }
         if (activeAdminChatUnsub) { activeAdminChatUnsub(); activeAdminChatUnsub = null; }
         stopHeartbeat();
         await signOut(auth);
@@ -2814,6 +2510,132 @@ window.toggleGameFullscreen = function() {
     if (!document.fullscreenElement) elem.requestFullscreen().catch(() => {});
     else document.exitFullscreen().catch(() => {});
 };
+
+let adminInboxUnsub = null;
+
+function loadAdminInbox() {
+    if (!checkIfAdmin()) return;
+    if (adminInboxUnsub) { adminInboxUnsub(); adminInboxUnsub = null; }
+
+    const inboxContainer = document.getElementById("admin-dm-inbox-list");
+    if (!inboxContainer) return;
+
+    // Determine current admin key (salim_xy66 or desiredoue)
+    const cleanName = getCleanDisplayName(userProfileData.username || "").toLowerCase().replace(/\s+/g, "_");
+    const adminKey = cleanName.includes("desiredoue") ? "desiredoue" : "salim_xy66";
+
+    const q = query(collection(db, "admin_chats"), where("adminKey", "==", adminKey));
+
+    adminInboxUnsub = onSnapshot(q, snapshot => {
+        inboxContainer.innerHTML = "";
+        const conversations = {};
+
+        snapshot.forEach(docSnap => {
+            const data = docSnap.data();
+            const uUid = data.userUid;
+            if (!uUid) return;
+            if (!conversations[uUid]) {
+                conversations[uUid] = {
+                    userUid: uUid,
+                    senderName: data.senderName || "Oyuncu",
+                    messages: []
+                };
+            }
+            conversations[uUid].messages.push({
+                id: docSnap.id,
+                text: data.text || "",
+                createdAt: data.createdAt?.toMillis ? data.createdAt.toMillis() : (data.createdAt || 0)
+            });
+        });
+
+        const uids = Object.keys(conversations);
+        if (uids.length === 0) {
+            inboxContainer.innerHTML = `<div style="color:#94a3b8; font-size:13px; text-align:center; padding:15px;">Henüz sana mesaj yazan oyuncu yok.</div>`;
+            return;
+        }
+
+        uids.forEach(uUid => {
+            const conv = conversations[uUid];
+            conv.messages.sort((a, b) => a.createdAt - b.createdAt);
+            const lastMsg = conv.messages[conv.messages.length - 1];
+
+            const item = document.createElement("div");
+            item.style.cssText = "background:rgba(255,255,255,0.03); border:1px solid var(--border-color); border-radius:12px; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; gap:10px;";
+            
+            const infoDiv = document.createElement("div");
+            infoDiv.style.cssText = "flex:1; overflow:hidden;";
+            
+            const nameEl = document.createElement("div");
+            nameEl.style.cssText = "font-weight:700; color:var(--gold); font-size:13.5px; margin-bottom:2px;";
+            nameEl.textContent = conv.senderName;
+            
+            const textEl = document.createElement("div");
+            textEl.style.cssText = "color:#94a3b8; font-size:12.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;";
+            textEl.textContent = lastMsg ? lastMsg.text : "";
+            
+            infoDiv.appendChild(nameEl);
+            infoDiv.appendChild(textEl);
+
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "submit-btn";
+            btn.style.cssText = "width:auto; margin-top:0; padding:8px 16px; font-size:12px;";
+            btn.textContent = "Sohbeti Aç / Yanıtla";
+            btn.onclick = () => {
+                selectedAdminKey = adminKey;
+                // Open admin chat modal for this specific user
+                document.getElementById("admin-chat-title").innerText = `💬 ${conv.senderName} ile Özel Sohbet`;
+                document.getElementById("admin-chat-modal").style.display = "flex";
+                
+                if (activeAdminChatUnsub) activeAdminChatUnsub();
+                const chatRoomId = uUid + "_" + adminKey;
+                const qChat = query(collection(db, "admin_chats"), where("roomId", "==", chatRoomId));
+                
+                activeAdminChatUnsub = onSnapshot(qChat, snap => {
+                    const msgBox = document.getElementById("admin-chat-messages");
+                    if (!msgBox) return;
+                    msgBox.innerHTML = "";
+                    
+                    let docsArray = [];
+                    snap.forEach(dSnap => { docsArray.push({ id: dSnap.id, ...dSnap.data() }); });
+                    docsArray.sort((a, b) => {
+                        const timeA = a.createdAt?.toMillis ? a.createdAt.toMillis() : (a.createdAt || 0);
+                        const timeB = b.createdAt?.toMillis ? b.createdAt.toMillis() : (b.createdAt || 0);
+                        return timeA - timeB;
+                    });
+
+                    if (docsArray.length === 0) {
+                        msgBox.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px; font-size:13px;">Mesaj bulunamadı.</div>`;
+                        return;
+                    }
+
+                    docsArray.forEach(data => {
+                        const div = document.createElement("div");
+                        div.style.cssText = "background:rgba(255,255,255,0.03); border:1px solid var(--border-color); padding:10px 14px; border-radius:12px; display:flex; flex-direction:column; gap:4px;";
+                        const nameEl = document.createElement("span");
+                        nameEl.style.cssText = "color:var(--gold); font-weight:700; font-size:11.5px;";
+                        nameEl.textContent = data.senderName || "Oyuncu";
+                        const textEl = document.createElement("span");
+                        textEl.style.cssText = "color:#e2e8f0; font-size:13.5px; word-break:break-word;";
+                        textEl.textContent = data.text || "";
+                        div.appendChild(nameEl);
+                        div.appendChild(textEl);
+                        msgBox.appendChild(div);
+                    });
+                    msgBox.scrollTop = msgBox.scrollHeight;
+                });
+            };
+
+            item.appendChild(infoDiv);
+            item.appendChild(btn);
+            inboxContainer.appendChild(item);
+        });
+    }, err => {
+        console.error("Admin inbox error:", err);
+        if (inboxContainer) inboxContainer.innerHTML = `<div style="color:#f87171; font-size:12px; text-align:center;">Gelen kutusu yüklenemedi.</div>`;
+    });
+}
+
 </script>
 </body>
 </html>
