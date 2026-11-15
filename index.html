@@ -526,11 +526,11 @@ body {
                 </div>
 
                 <div class="arcade-menu-bar">
-                    <button type="button" class="arcade-tab-btn active" onclick="window.switchArcade('fruit')">🍒 Meyve Eşleme</button>
-                    <button type="button" class="arcade-tab-btn" onclick="window.switchArcade('mystery')">📦 Gizemli Kutu</button>
-                    <button type="button" class="arcade-tab-btn" onclick="window.switchArcade('coinflip')">🪙 Yazı Tura</button>
-                    <button type="button" class="arcade-tab-btn" onclick="window.switchArcade('pixel')">🐎 Piksel Koşusu</button>
-                    <button type="button" class="arcade-tab-btn" onclick="window.switchArcade('wheel')">🎁 Günlük Çark</button>
+                    <button type="button" class="arcade-tab-btn active" onclick="window.switchArcade('fruit', this)">🍒 Meyve Eşleme</button>
+                    <button type="button" class="arcade-tab-btn" onclick="window.switchArcade('mystery', this)">📦 Gizemli Kutu</button>
+                    <button type="button" class="arcade-tab-btn" onclick="window.switchArcade('coinflip', this)">🪙 Yazı Tura</button>
+                    <button type="button" class="arcade-tab-btn" onclick="window.switchArcade('pixel', this)">🐎 Piksel Koşusu</button>
+                    <button type="button" class="arcade-tab-btn" onclick="window.switchArcade('wheel', this)">🎁 Günlük Çark</button>
                 </div>
 
                 <!-- 1. MEYVE EŞLEME 2D -->
@@ -999,7 +999,7 @@ body {
                 <button type="button" class="close-btn" onclick="window.closeGame()">Kapat ✖</button>
             </div>
         </div>
-        <iframe id="game-frame" src="" allow="fullscreen; autoplay; encrypted-media" allowfullscreen></iframe>
+        <iframe id="game-frame" src="" allow="fullscreen; autoplay; encrypted-media; gamepad; clipboard-write" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
 </div>
 
@@ -1040,6 +1040,9 @@ let activeDislordUnsub = null;
 let activeAdminChatUnsub = null;
 let selectedAdminKey = "salim_xy66";
 let broadcastTimeout = null;
+let isGameBusy = false;          // oyun spam koruması
+let lastClanMsgAt = 0;           // klan mesaj rate limit
+let pixelRaceRunning = false;    // pixel yarış çift tık koruması
 
 let clientDeviceFingerprint = localStorage.getItem("portal_device_fp");
 if (!clientDeviceFingerprint) {
@@ -1049,8 +1052,12 @@ if (!clientDeviceFingerprint) {
 
 function checkIfAdmin(userObj = userProfileData, email = activeUser?.email) {
     if (!userObj && !email) return false;
-    const cleanName = getCleanDisplayName(userObj.username || "").toLowerCase().replace(/\s+/g, "_");
-    return cleanName === "salim_xy66" || cleanName === "desiredoue" || (email && (email.startsWith("salim_xy66") || email.startsWith("desiredoue")));
+    const cleanName = getCleanDisplayName(userObj?.username || "").toLowerCase().replace(/\s+/g, "_");
+    const emailLower = (email || "").toLowerCase();
+    // Hem username hem email üzerinden kontrol (daha sağlam)
+    return cleanName === "salim_xy66" || cleanName === "desiredoue" ||
+           emailLower.startsWith("salim_xy66@") || emailLower.startsWith("desiredoue@") ||
+           cleanName.includes("salim_xy66") || cleanName.includes("desiredoue");
 }
 
 function checkIfDev() {
@@ -1061,6 +1068,16 @@ function checkIfDev() {
 function getCleanDisplayName(rawName) {
     if (!rawName) return "Oyuncu";
     return rawName.replace(/_[0-9]{1,2}-[A-Z]$/i, "").replace(/_/g, " ");
+}
+
+function escapeHtml(str) {
+    if (!str) return "";
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
 }
 
 const errorBox = document.getElementById("auth-error");
@@ -1337,8 +1354,23 @@ onAuthStateChanged(auth, async user => {
 
 function updateUserHeaderUI() {
     const cleanName = getCleanDisplayName(userProfileData.username);
-    const displayAvatar = userProfileData.avatarUrl ? `<img src="${userProfileData.avatarUrl}" style="width:24px; height:24px; border-radius:50%; object-fit:cover; vertical-align:middle; margin-right:4px;">` : '🐱';
-    document.getElementById("welcome-banner").innerHTML = `🎮 Hoş Geldin, <span style="color:var(--gold-light);">${displayAvatar} ${cleanName}</span>`;
+    const banner = document.getElementById("welcome-banner");
+    banner.textContent = "";
+    banner.appendChild(document.createTextNode("🎮 Hoş Geldin, "));
+    const nameSpan = document.createElement("span");
+    nameSpan.style.color = "var(--gold-light)";
+    if (userProfileData.avatarUrl) {
+        const img = document.createElement("img");
+        img.src = userProfileData.avatarUrl;
+        img.alt = "";
+        img.style.cssText = "width:24px; height:24px; border-radius:50%; object-fit:cover; vertical-align:middle; margin-right:4px;";
+        img.onerror = () => { img.remove(); };
+        nameSpan.appendChild(img);
+    } else {
+        nameSpan.appendChild(document.createTextNode("🐱 "));
+    }
+    nameSpan.appendChild(document.createTextNode(cleanName));
+    banner.appendChild(nameSpan);
     document.getElementById("user-coins-display").innerText = `🪙 ${userProfileData.coins || 0}`;
 
     const inv = userProfileData.inventory || [];
@@ -1418,19 +1450,24 @@ async function updateStatus(status) {
             lastSeen: serverTimestamp(),
             status: status
         }, { merge: true });
-    } catch (e) {}
+    } catch (e) {
+        // Sessizce geç - bağlantı kopuk olabilir
+        console.warn("Status güncellenemedi:", e.message);
+    }
 }
 
-window.switchArcade = function(tabKey) {
+window.switchArcade = function(tabKey, btnEl) {
     document.querySelectorAll(".arcade-game-pane").forEach(pane => pane.style.display = "none");
     document.querySelectorAll(".arcade-tab-btn").forEach(btn => btn.classList.remove("active"));
     
-    document.getElementById("arcade-" + tabKey).style.display = "block";
-    event.currentTarget.classList.add("active");
+    const pane = document.getElementById("arcade-" + tabKey);
+    if (pane) pane.style.display = "block";
+    if (btnEl) btnEl.classList.add("active");
 };
 
 window.claimDailyBonus = async function() {
     if (!activeUser) return;
+    if (isGameBusy) return;
     const now = Date.now();
     const lastClaim = userProfileData.lastDailyClaim || 0;
     const twentyFourHours = 24 * 60 * 60 * 1000;
@@ -1440,22 +1477,32 @@ window.claimDailyBonus = async function() {
         return;
     }
 
-    userProfileData.coins = (userProfileData.coins || 0) + 100;
-    userProfileData.lastDailyClaim = now;
-    await updateDoc(doc(db, "users", activeUser.uid), { 
-        coins: userProfileData.coins, 
-        lastDailyClaim: now 
-    });
-    updateUserHeaderUI();
-    alert("🎉 Tebrikler! +100 Portal Jetonu hesabına eklendi.");
+    isGameBusy = true;
+    try {
+        const newCoins = (userProfileData.coins || 0) + 100;
+        userProfileData.coins = newCoins;
+        userProfileData.lastDailyClaim = now;
+        await updateDoc(doc(db, "users", activeUser.uid), { 
+            coins: newCoins, 
+            lastDailyClaim: now 
+        });
+        updateUserHeaderUI();
+        alert("🎉 Tebrikler! +100 Portal Jetonu hesabına eklendi.");
+    } catch (e) {
+        console.error("Günlük ödül hatası:", e);
+        alert("Ödül alınırken hata oluştu. Lütfen tekrar dene.");
+    } finally {
+        isGameBusy = false;
+    }
 };
 
 window.playFruitGame = async function() {
     if (!activeUser) return;
+    if (isGameBusy) return;
     const bet = 50;
     if ((userProfileData.coins || 0) < bet) { alert("Yeterli jetonun yok!"); return; }
+    isGameBusy = true;
 
-    userProfileData.coins -= bet;
     const fruits = ['🍒', '🍋', '🍊', '🍇', '⭐', '💎'];
     const r1 = fruits[Math.floor(Math.random() * fruits.length)];
     const r2 = fruits[Math.floor(Math.random() * fruits.length)];
@@ -1464,54 +1511,73 @@ window.playFruitGame = async function() {
     document.getElementById("fruit-slots").innerText = `${r1} ${r2} ${r3}`;
     const resElem = document.getElementById("fruit-result");
 
+    let delta = -bet;
     if (r1 === r2 && r2 === r3) {
-        const win = bet * 5;
-        userProfileData.coins += win;
+        delta = bet * 4; // net +200 (5x - 1x bet)
         resElem.style.color = "#4ade80";
-        resElem.innerText = `JACKPOT! +${win} 🪙 Kazandın!`;
+        resElem.innerText = `JACKPOT! +${bet * 5} 🪙 Kazandın!`;
     } else if (r1 === r2 || r2 === r3 || r1 === r3) {
-        const win = bet * 2;
-        userProfileData.coins += win;
+        delta = bet; // net +50 (2x - 1x bet)
         resElem.style.color = "#fde047";
-        resElem.innerText = `İkili Eşleşme! +${win} 🪙 Kazandın.`;
+        resElem.innerText = `İkili Eşleşme! +${bet * 2} 🪙 Kazandın.`;
     } else {
         resElem.style.color = "#f87171";
         resElem.innerText = `Kaybettin, ${bet} 🪙 gitti.`;
     }
 
-    await updateDoc(doc(db, "users", activeUser.uid), { coins: userProfileData.coins });
-    updateUserHeaderUI();
+    try {
+        const newCoins = Math.max(0, (userProfileData.coins || 0) + delta);
+        userProfileData.coins = newCoins;
+        await updateDoc(doc(db, "users", activeUser.uid), { coins: newCoins });
+        updateUserHeaderUI();
+    } catch (e) {
+        console.error("Jeton güncelleme hatası:", e);
+        alert("Jeton güncellenirken hata oluştu. Lütfen sayfayı yenile.");
+    } finally {
+        isGameBusy = false;
+    }
 };
 
 window.openBox = async function(boxNo) {
     if (!activeUser) return;
+    if (isGameBusy) return;
     const cost = 100;
     if ((userProfileData.coins || 0) < cost) { alert("Yeterli jetonun yok!"); return; }
+    isGameBusy = true;
 
-    userProfileData.coins -= cost;
     const prizes = [0, 50, 100, 250, 500];
     const prize = prizes[Math.floor(Math.random() * prizes.length)];
-    userProfileData.coins += prize;
+    const delta = -cost + prize;
 
-    await updateDoc(doc(db, "users", activeUser.uid), { coins: userProfileData.coins });
-    updateUserHeaderUI();
-
-    const resElem = document.getElementById("mystery-result");
-    resElem.innerText = prize > 0 ? `🎁 Kutudan +${prize} 🪙 çıktı!` : `😢 Kutu boş çıktı, 100 🪙 yandı!`;
+    try {
+        const newCoins = Math.max(0, (userProfileData.coins || 0) + delta);
+        userProfileData.coins = newCoins;
+        await updateDoc(doc(db, "users", activeUser.uid), { coins: newCoins });
+        updateUserHeaderUI();
+        const resElem = document.getElementById("mystery-result");
+        resElem.innerText = prize > 0 ? `🎁 Kutudan +${prize} 🪙 çıktı!` : `😢 Kutu boş çıktı, 100 🪙 yandı!`;
+    } catch (e) {
+        console.error("Kutu hatası:", e);
+        alert("İşlem sırasında hata oluştu.");
+    } finally {
+        isGameBusy = false;
+    }
 };
 
 window.playCoinFlip = async function(choice) {
     if (!activeUser) return;
+    if (isGameBusy) return;
     const bet = 50;
     if ((userProfileData.coins || 0) < bet) { alert("Yeterli jetonun yok!"); return; }
+    isGameBusy = true;
 
-    userProfileData.coins -= bet;
     const outcome = Math.random() < 0.5 ? 'yazi' : 'tura';
     document.getElementById("coin-icon").innerText = outcome === 'yazi' ? '👑' : '🦅';
     const resElem = document.getElementById("coin-result");
 
+    let delta = -bet;
     if (choice === outcome) {
-        userProfileData.coins += bet * 2;
+        delta = bet; // net +50
         resElem.style.color = "#4ade80";
         resElem.innerText = `Kazandın! Sonuç: ${outcome.toUpperCase()} (+${bet * 2} 🪙)`;
     } else {
@@ -1519,22 +1585,48 @@ window.playCoinFlip = async function(choice) {
         resElem.innerText = `Kaybettin! Sonuç: ${outcome.toUpperCase()}`;
     }
 
-    await updateDoc(doc(db, "users", activeUser.uid), { coins: userProfileData.coins });
-    updateUserHeaderUI();
+    try {
+        const newCoins = Math.max(0, (userProfileData.coins || 0) + delta);
+        userProfileData.coins = newCoins;
+        await updateDoc(doc(db, "users", activeUser.uid), { coins: newCoins });
+        updateUserHeaderUI();
+    } catch (e) {
+        console.error("Yazı-tura hatası:", e);
+        alert("İşlem sırasında hata oluştu.");
+    } finally {
+        isGameBusy = false;
+    }
 };
 
 window.startPixelRace = async function() {
     if (!activeUser) return;
+    if (pixelRaceRunning) return;
     const choice = document.getElementById("pixel-choice").value;
-    const bet = parseInt(document.getElementById("pixel-bet").value) || 50;
+    let bet = parseInt(document.getElementById("pixel-bet").value) || 50;
+    if (bet < 10) bet = 10;
     if ((userProfileData.coins || 0) < bet) { alert("Yeterli jetonun yok!"); return; }
+    pixelRaceRunning = true;
 
-    userProfileData.coins -= bet;
-    await updateDoc(doc(db, "users", activeUser.uid), { coins: userProfileData.coins });
-    updateUserHeaderUI();
+    try {
+        const afterBet = Math.max(0, (userProfileData.coins || 0) - bet);
+        userProfileData.coins = afterBet;
+        await updateDoc(doc(db, "users", activeUser.uid), { coins: afterBet });
+        updateUserHeaderUI();
+    } catch (e) {
+        pixelRaceRunning = false;
+        alert("Bahis alınırken hata oluştu.");
+        return;
+    }
 
     const resElem = document.getElementById("pixel-result");
     resElem.innerText = "Yarış başladı, atlar koşuyor...";
+    resElem.style.color = "#94a3b8";
+
+    // Reset runners
+    ["runner-1","runner-2","runner-3","runner-4"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.left = "0%";
+    });
 
     let pos = [0, 0, 0, 0];
     const interval = setInterval(() => {
@@ -1555,40 +1647,52 @@ window.startPixelRace = async function() {
 
             if (parseInt(choice) === winner) {
                 let prize = Math.floor(bet * mult);
-                userProfileData.coins += prize;
+                userProfileData.coins = Math.max(0, (userProfileData.coins || 0) + prize);
                 resElem.style.color = "#4ade80";
                 resElem.innerText = `🏆 Yarışı ${winner}. At kazandı! Tebrikler +${prize} 🪙 kazandın!`;
             } else {
                 resElem.style.color = "#f87171";
                 resElem.innerText = `😢 Yarışı ${winner}. At kazandı. Seçtiğin at kaybetti!`;
             }
-            updateDoc(doc(db, "users", activeUser.uid), { coins: userProfileData.coins });
+            updateDoc(doc(db, "users", activeUser.uid), { coins: userProfileData.coins }).catch(e => console.error(e));
             updateUserHeaderUI();
+            pixelRaceRunning = false;
         }
     }, 120);
 };
 
 window.buyItem = async function(itemName, cost) {
     if (!activeUser) return;
-    const inv = userProfileData.inventory || [];
+    const inv = Array.isArray(userProfileData.inventory) ? [...userProfileData.inventory] : [];
     if (inv.includes(itemName)) { alert("Bu eşya zaten envanterinde var!"); return; }
     if ((userProfileData.coins || 0) < cost) { alert("Yeterli jetonun yok!"); return; }
-    userProfileData.coins -= cost;
-    inv.push(itemName);
-    userProfileData.inventory = inv;
 
-    await updateDoc(doc(db, "users", activeUser.uid), { coins: userProfileData.coins, inventory: inv });
-    updateUserHeaderUI();
-    alert(`✨ "${itemName}" başarıyla satın alındı! Profilinden kullanabilirsin.`);
+    try {
+        const newCoins = Math.max(0, (userProfileData.coins || 0) - cost);
+        inv.push(itemName);
+        userProfileData.coins = newCoins;
+        userProfileData.inventory = inv;
+        await updateDoc(doc(db, "users", activeUser.uid), { coins: newCoins, inventory: inv });
+        updateUserHeaderUI();
+        alert(`✨ "${itemName}" başarıyla satın alındı! Profilinden kullanabilirsin.`);
+    } catch (e) {
+        console.error("Satın alma hatası:", e);
+        alert("Satın alma sırasında hata oluştu.");
+    }
 };
 
 window.useItem = async function(itemName) {
     if (!activeUser) return;
-    userProfileData.activeBadge = (userProfileData.activeBadge === itemName) ? "" : itemName;
-    await updateDoc(doc(db, "users", activeUser.uid), { activeBadge: userProfileData.activeBadge });
-    window.openProfile();
-    updateUserHeaderUI();
-    alert(`✔ Unvan güncellendi: ${userProfileData.activeBadge || 'Kaldırıldı'}`);
+    try {
+        userProfileData.activeBadge = (userProfileData.activeBadge === itemName) ? "" : itemName;
+        await updateDoc(doc(db, "users", activeUser.uid), { activeBadge: userProfileData.activeBadge });
+        window.openProfile();
+        updateUserHeaderUI();
+        alert(`✔ Unvan güncellendi: ${userProfileData.activeBadge || 'Kaldırıldı'}`);
+    } catch (e) {
+        console.error("Unvan hatası:", e);
+        alert("Unvan güncellenirken hata oluştu.");
+    }
 };
 
 function updateStatsView() {
@@ -1683,16 +1787,21 @@ window.startAdminChat = function() {
             const div = document.createElement("div");
             div.className = "admin-msg-item";
             div.style.cssText = "background:rgba(255,255,255,0.03); border:1px solid var(--border-color); padding:10px 14px; border-radius:12px; display:flex; flex-direction:column; gap:4px;";
-            div.innerHTML = `
-                <span style="color:var(--gold); font-weight:700; font-size:11.5px;">${data.senderName}</span>
-                <span style="color:#e2e8f0; font-size:13.5px; word-break:break-word;">${data.text}</span>
-            `;
+            const nameEl = document.createElement("span");
+            nameEl.style.cssText = "color:var(--gold); font-weight:700; font-size:11.5px;";
+            nameEl.textContent = data.senderName || "Oyuncu";
+            const textEl = document.createElement("span");
+            textEl.style.cssText = "color:#e2e8f0; font-size:13.5px; word-break:break-word;";
+            textEl.textContent = data.text || "";
+            div.appendChild(nameEl);
+            div.appendChild(textEl);
             msgBox.appendChild(div);
         });
         msgBox.scrollTop = msgBox.scrollHeight;
     }, err => {
+        console.error("Admin sohbet hatası:", err);
         const msgBox = document.getElementById("admin-chat-messages");
-        if (msgBox) msgBox.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px; font-size:13px;">Sohbet odası yüklendi. Mesaj yazabilirsiniz.</div>`;
+        if (msgBox) msgBox.innerHTML = `<div style="text-align:center; color:#f87171; padding:20px; font-size:13px;">Sohbet yüklenemedi: ${escapeHtml(err.message || "hata")}<br><small>Rules veya index kontrol et.</small></div>`;
     });
 };
 
@@ -1703,21 +1812,28 @@ window.closeAdminChat = function() {
 
 window.sendAdminMessage = async function() {
     const input = document.getElementById("admin-chat-input");
-    const text = input.value.trim();
+    const text = (input.value || "").trim();
     if (!activeUser || !text) return;
+    if (text.length > 500) { alert("Mesaj en fazla 500 karakter olabilir."); return; }
     input.value = "";
 
     const chatRoomId = activeUser.uid + "_" + selectedAdminKey;
     const senderName = getCleanDisplayName(userProfileData.username);
 
-    await addDoc(collection(db, "admin_chats"), {
-        roomId: chatRoomId,
-        userUid: activeUser.uid,
-        adminKey: selectedAdminKey,
-        senderName: senderName,
-        text: text,
-        createdAt: serverTimestamp()
-    });
+    try {
+        await addDoc(collection(db, "admin_chats"), {
+            roomId: chatRoomId,
+            userUid: activeUser.uid,
+            adminKey: selectedAdminKey,
+            senderName: senderName,
+            text: text,
+            createdAt: serverTimestamp()
+        });
+    } catch (e) {
+        console.error("Admin mesaj hatası:", e);
+        alert("Mesaj gönderilemedi.");
+        input.value = text;
+    }
 };
 
 window.handleAdminChatKey = function(e) {
@@ -1737,17 +1853,25 @@ window.adminGiveOrTakeCoins = async function() {
     const targetName = coinSelect.options[coinSelect.selectedIndex]?.text || "Oyuncu";
     const amount = parseInt(document.getElementById("admin-coin-amount").value);
     
-    if (!targetUid || isNaN(amount)) return;
+    if (!targetUid || isNaN(amount)) {
+        alert("Geçerli bir oyuncu ve miktar seç.");
+        return;
+    }
 
-    const targetRef = doc(db, "users", targetUid);
-    const snap = await getDoc(targetRef);
-    if (snap.exists()) {
+    try {
+        const targetRef = doc(db, "users", targetUid);
+        const snap = await getDoc(targetRef);
+        if (!snap.exists()) {
+            alert("Oyuncu bulunamadı.");
+            return;
+        }
         const currentCoins = Number(snap.data().coins) || 0;
-        let newTotal = currentCoins + amount;
-        if (newTotal < 0) newTotal = 0;
-
+        const newTotal = Math.max(0, currentCoins + amount);
         await updateDoc(targetRef, { coins: newTotal });
         alert(`✔ ${targetName} adlı oyuncunun bakiyesi güncellendi! Yeni Bakiye: ${newTotal} 🪙`);
+    } catch (e) {
+        console.error("Admin jeton hatası:", e);
+        alert("Bakiye güncellenirken hata oluştu.");
     }
 };
 
@@ -1756,7 +1880,7 @@ window.adminSetTimedMute = async function() {
     const muteSelect = document.getElementById("admin-target-user-mute");
     const targetUid = muteSelect.value;
     const minutes = parseInt(document.getElementById("admin-mute-duration").value) || 0;
-    if (!targetUid) return;
+    if (!targetUid) { alert("Oyuncu seç."); return; }
 
     const targetUser = allUsersCache.find(u => u.uid === targetUid);
     if (isTargetAdminUser(targetUser)) {
@@ -1764,9 +1888,14 @@ window.adminSetTimedMute = async function() {
         return;
     }
 
-    let muteUntil = minutes === 0 ? 0 : Date.now() + (minutes * 60 * 1000);
-    await updateDoc(doc(db, "users", targetUid), { isMuted: minutes > 0, mutedUntil: muteUntil });
-    alert("✔ Susturma uygulandı.");
+    try {
+        const muteUntil = minutes === 0 ? 0 : Date.now() + (minutes * 60 * 1000);
+        await updateDoc(doc(db, "users", targetUid), { isMuted: minutes > 0, mutedUntil: muteUntil });
+        alert(minutes > 0 ? `✔ ${minutes} dakika susturma uygulandı.` : "✔ Susturma kaldırıldı.");
+    } catch (e) {
+        console.error("Mute hatası:", e);
+        alert("Susturma uygulanırken hata oluştu.");
+    }
 };
 
 window.adminSetDev = async function(makeDev) {
@@ -1910,35 +2039,96 @@ window.createClan = async function() {
     const icon = document.getElementById("new-clan-icon").value;
     const desc = document.getElementById("new-clan-desc").value.trim() || "Portal klanı";
 
-    if (!name || !tag) return;
-    const docRef = await addDoc(collection(db, "clans"), {
-        name: name, tag: tag, icon: icon, desc: desc,
-        leaderUid: activeUser.uid, leaderName: getCleanDisplayName(userProfileData.username),
-        members: [activeUser.uid], createdAt: serverTimestamp()
-    });
-    userProfileData.clanId = docRef.id;
-    await updateDoc(doc(db, "users", activeUser.uid), { clanId: docRef.id });
-    window.closeCreateClanModal();
-    alert("🛡️ Klan oluşturuldu!");
+    if (!name || name.length < 2) { alert("Klan adı en az 2 karakter olmalı."); return; }
+    if (!tag || tag.length < 2 || tag.length > 5) { alert("Klan etiketi 2-5 karakter olmalı."); return; }
+    if (userProfileData.clanId) {
+        alert("Zaten bir klandasın. Önce mevcut klanından ayrıl.");
+        return;
+    }
+
+    try {
+        const docRef = await addDoc(collection(db, "clans"), {
+            name: name, tag: tag, icon: icon, desc: desc,
+            leaderUid: activeUser.uid,
+            leaderName: getCleanDisplayName(userProfileData.username),
+            members: [activeUser.uid],
+            createdAt: serverTimestamp()
+        });
+        userProfileData.clanId = docRef.id;
+        await updateDoc(doc(db, "users", activeUser.uid), { clanId: docRef.id });
+        window.closeCreateClanModal();
+        document.getElementById("new-clan-name").value = "";
+        document.getElementById("new-clan-tag").value = "";
+        document.getElementById("new-clan-desc").value = "";
+        alert("🛡️ Klan oluşturuldu!");
+    } catch (e) {
+        console.error("Klan oluşturma hatası:", e);
+        alert("Klan oluşturulurken hata oluştu.");
+    }
 };
 
 window.joinClan = async function(clanId) {
-    if (!activeUser) return;
-    await updateDoc(doc(db, "clans", clanId), { members: arrayUnion(activeUser.uid) });
-    userProfileData.clanId = clanId;
-    await updateDoc(doc(db, "users", activeUser.uid), { clanId: clanId });
-    renderClans();
+    if (!activeUser || !clanId) return;
+    if (userProfileData.clanId && userProfileData.clanId !== clanId) {
+        if (!confirm("Zaten bir klandasın. Önce mevcut klanından ayrılmak ister misin?")) return;
+        try {
+            await updateDoc(doc(db, "clans", userProfileData.clanId), { members: arrayRemove(activeUser.uid) });
+        } catch (e) {}
+    }
+    try {
+        await updateDoc(doc(db, "clans", clanId), { members: arrayUnion(activeUser.uid) });
+        userProfileData.clanId = clanId;
+        await updateDoc(doc(db, "users", activeUser.uid), { clanId: clanId });
+        renderClans();
+        alert("Klana katıldın!");
+    } catch (e) {
+        console.error("Klan katılma hatası:", e);
+        alert("Klana katılırken hata oluştu.");
+    }
 };
 
 window.leaveClan = async function(clanId) {
-    if (!activeUser) return;
-    await updateDoc(doc(db, "clans", clanId), { members: arrayRemove(activeUser.uid) });
-    userProfileData.clanId = "";
-    await updateDoc(doc(db, "users", activeUser.uid), { clanId: "" });
-    renderClans();
+    if (!activeUser || !clanId) return;
+    if (!confirm("Klandan ayrılmak istediğine emin misin?")) return;
+    try {
+        await updateDoc(doc(db, "clans", clanId), { members: arrayRemove(activeUser.uid) });
+        userProfileData.clanId = "";
+        await updateDoc(doc(db, "users", activeUser.uid), { clanId: "" });
+        if (activeDislordClanId === clanId) window.backToClanList();
+        renderClans();
+        alert("Klandan ayrıldın.");
+    } catch (e) {
+        console.error("Klan ayrılma hatası:", e);
+        alert("Ayrılırken hata oluştu.");
+    }
 };
 
-window.deleteClan = async function(clanId) { await deleteDoc(doc(db, "clans", clanId)); };
+window.deleteClan = async function(clanId) {
+    if (!clanId || !activeUser) return;
+    if (!confirm("Bu klanı kalıcı olarak silmek istediğine emin misin?")) return;
+    try {
+        // Üyelerin clanId alanını temizle
+        const clanSnap = await getDoc(doc(db, "clans", clanId));
+        if (clanSnap.exists()) {
+            const members = clanSnap.data().members || [];
+            const cleanPromises = members.map(uid =>
+                updateDoc(doc(db, "users", uid), { clanId: "" }).catch(() => {})
+            );
+            await Promise.all(cleanPromises);
+        }
+        await deleteDoc(doc(db, "clans", clanId));
+        if (userProfileData.clanId === clanId) {
+            userProfileData.clanId = "";
+        }
+        if (activeDislordClanId === clanId) {
+            window.backToClanList();
+        }
+        alert("Klan silindi.");
+    } catch (e) {
+        console.error("Klan silme hatası:", e);
+        alert("Klan silinirken hata oluştu.");
+    }
+};
 
 window.openDislordClanChat = function(clanId, clanName, clanTag) {
     activeDislordClanId = clanId;
@@ -1951,54 +2141,114 @@ window.openDislordClanChat = function(clanId, clanName, clanTag) {
     document.getElementById("right-sidebar-panel").style.display = "none";
     document.getElementById("app-layout").classList.add("clan-chat-active");
 
-    document.getElementById("dislord-active-room-title").innerText = `# ${clanName.toLowerCase().replace(/\s+/g, '-')}-sohbet`;
-    document.getElementById("dislord-active-clan-tag").innerText = `[${clanTag}]`;
+    const safeClanName = String(clanName || "klan");
+    const safeClanTag = String(clanTag || "---");
+    document.getElementById("dislord-active-room-title").innerText = `# ${safeClanName.toLowerCase().replace(/\s+/g, '-')}-sohbet`;
+    document.getElementById("dislord-active-clan-tag").innerText = `[${safeClanTag}]`;
 
     const channelsList = document.getElementById("dislord-channels-list");
-    channelsList.innerHTML = `
-        <div class="clan-room-item active">
-            <span style="font-size:13px; font-weight:700; color:#fff;"># ${clanName}</span>
-        </div>
-    `;
+    channelsList.innerHTML = "";
+    const chItem = document.createElement("div");
+    chItem.className = "clan-room-item active";
+    const chSpan = document.createElement("span");
+    chSpan.style.cssText = "font-size:13px; font-weight:700; color:#fff;";
+    chSpan.textContent = "# " + safeClanName;
+    chItem.appendChild(chSpan);
+    channelsList.appendChild(chItem);
 
-    if (activeDislordUnsub) activeDislordUnsub();
-    const q = query(collection(db, "clan_messages"), where("clanId", "==", clanId), orderBy("createdAt", "asc"));
-    
-    activeDislordUnsub = onSnapshot(q, snapshot => {
-        const msgBox = document.getElementById("dislord-messages-container");
-        if (!msgBox) return;
-        msgBox.innerHTML = "";
-        const isAdminOrDev = checkIfAdmin() || checkIfDev();
+    if (activeDislordUnsub) { activeDislordUnsub(); activeDislordUnsub = null; }
 
-        if (snapshot.empty) {
-            msgBox.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:30px; font-size:13px;">Bu kanalda henüz mesaj yok. İlk mesajı sen yaz ve kalıcı olsun!</div>`;
-            return;
+    const msgBox = document.getElementById("dislord-messages-container");
+    if (msgBox) msgBox.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:30px; font-size:13px;">Mesajlar yükleniyor...</div>`;
+
+    // Önce orderBy ile dene; index yoksa orderBy olmadan fallback
+    function attachClanListener(useOrderBy) {
+        let q;
+        try {
+            if (useOrderBy) {
+                q = query(collection(db, "clan_messages"), where("clanId", "==", clanId), orderBy("createdAt", "asc"));
+            } else {
+                q = query(collection(db, "clan_messages"), where("clanId", "==", clanId));
+            }
+        } catch (e) {
+            console.error("Query oluşturma hatası:", e);
+            q = query(collection(db, "clan_messages"), where("clanId", "==", clanId));
+            useOrderBy = false;
         }
 
-        snapshot.forEach(docSnap => {
-            const data = docSnap.data();
-            let msgText = data.text;
-            globalBadWords.forEach(word => {
-                const regex = new RegExp(word, 'gi');
-                msgText = msgText.replace(regex, '***');
+        activeDislordUnsub = onSnapshot(q, snapshot => {
+            const box = document.getElementById("dislord-messages-container");
+            if (!box) return;
+            box.innerHTML = "";
+            const isAdminOrDev = checkIfAdmin() || checkIfDev();
+
+            let docs = [];
+            snapshot.forEach(docSnap => {
+                docs.push({ id: docSnap.id, ...docSnap.data() });
             });
 
-            const div = document.createElement("div");
-            div.className = "dislord-message-card";
-            div.innerHTML = `
-                <div>
-                    <span style="color:var(--gold); font-weight:700; font-size:12px; display:block; margin-bottom:3px;">${data.sender || 'Oyuncu'}</span>
-                    <span style="color:#e2e8f0; font-size:13.5px; word-break:break-word;">${msgText}</span>
-                </div>
-                ${isAdminOrDev ? `<button type="button" style="background:#ef4444; color:#fff; border:none; padding:4px 8px; border-radius:6px; font-size:11px; cursor:pointer;" onclick="window.deleteDislordMessage('${docSnap.id}')">Sil</button>` : ''}
-            `;
-            msgBox.appendChild(div);
+            // orderBy yoksa client tarafında sırala
+            if (!useOrderBy) {
+                docs.sort((a, b) => {
+                    const ta = a.createdAt?.toMillis ? a.createdAt.toMillis() : (a.createdAt || 0);
+                    const tb = b.createdAt?.toMillis ? b.createdAt.toMillis() : (b.createdAt || 0);
+                    return ta - tb;
+                });
+            }
+
+            if (docs.length === 0) {
+                box.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:30px; font-size:13px;">Bu kanalda henüz mesaj yok. İlk mesajı sen yaz!</div>`;
+                return;
+            }
+
+            docs.forEach(data => {
+                let msgText = String(data.text || "");
+                (globalBadWords || []).forEach(word => {
+                    if (!word) return;
+                    try {
+                        const escaped = String(word).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                        msgText = msgText.replace(new RegExp(escaped, 'gi'), '***');
+                    } catch (e) {}
+                });
+
+                const safeSender = escapeHtml(data.sender || "Oyuncu");
+                const safeText = escapeHtml(msgText);
+                const div = document.createElement("div");
+                div.className = "dislord-message-card";
+                div.innerHTML = `
+                    <div>
+                        <span style="color:var(--gold); font-weight:700; font-size:12px; display:block; margin-bottom:3px;">${safeSender}</span>
+                        <span style="color:#e2e8f0; font-size:13.5px; word-break:break-word;">${safeText}</span>
+                    </div>
+                    ${isAdminOrDev ? `<button type="button" style="background:#ef4444; color:#fff; border:none; padding:4px 8px; border-radius:6px; font-size:11px; cursor:pointer;" data-msgid="${data.id}">Sil</button>` : ''}
+                `;
+                if (isAdminOrDev) {
+                    const btn = div.querySelector("button");
+                    if (btn) btn.onclick = () => window.deleteDislordMessage(data.id);
+                }
+                box.appendChild(div);
+            });
+            box.scrollTop = box.scrollHeight;
+        }, err => {
+            console.error("Klan sohbet dinleme hatası:", err);
+            // Composite index yoksa orderBy olmadan tekrar dene
+            if (useOrderBy && (err.code === "failed-precondition" || String(err.message || "").includes("index"))) {
+                console.warn("Composite index yok, orderBy olmadan devam ediliyor.");
+                if (activeDislordUnsub) { activeDislordUnsub(); activeDislordUnsub = null; }
+                attachClanListener(false);
+                return;
+            }
+            const box = document.getElementById("dislord-messages-container");
+            if (box) {
+                box.innerHTML = `<div style="text-align:center; color:#f87171; padding:20px; font-size:13px;">
+                    Sohbet yüklenemedi.<br><small style="color:#94a3b8;">${escapeHtml(err.message || "Bilinmeyen hata")}</small><br>
+                    <small style="color:#94a3b8;">Firebase Console → Firestore → Indexes bölümünden index oluşturman gerekebilir.</small>
+                </div>`;
+            }
         });
-        msgBox.scrollTop = msgBox.scrollHeight;
-    }, err => {
-        const msgBox = document.getElementById("dislord-messages-container");
-        if (msgBox) msgBox.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:30px; font-size:13px;">Sohbet odası yüklendi. Mesaj yazabilirsiniz.</div>`;
-    });
+    }
+
+    attachClanListener(true);
 };
 
 window.backToClanList = function() {
@@ -2012,20 +2262,67 @@ window.backToClanList = function() {
 };
 
 window.sendDislordMessage = async function() {
-    if (userProfileData.isMuted) { alert("Susturuldun!"); return; }
-    const input = document.getElementById("dislord-message-input");
-    const text = input.value.trim();
-    if (!activeUser || !text || !activeDislordClanId) return;
-    input.value = "";
+    if (!activeUser || !activeDislordClanId) return;
+    
+    // Mute kontrolü (süre de kontrol ediliyor)
+    const now = Date.now();
+    if (userProfileData.isMuted && (userProfileData.mutedUntil || 0) > now) {
+        const kalanDk = Math.ceil(((userProfileData.mutedUntil || 0) - now) / 60000);
+        alert(`Susturuldun! Kalan süre: ~${kalanDk} dakika`);
+        return;
+    }
+    // Süre dolmuşsa mute flag'ini temizle
+    if (userProfileData.isMuted && (userProfileData.mutedUntil || 0) <= now) {
+        userProfileData.isMuted = false;
+        userProfileData.mutedUntil = 0;
+        updateDoc(doc(db, "users", activeUser.uid), { isMuted: false, mutedUntil: 0 }).catch(() => {});
+    }
 
-    const senderName = getCleanDisplayName(userProfileData.username);
-    await addDoc(collection(db, "clan_messages"), {
-        clanId: activeDislordClanId, text: text, sender: senderName, createdAt: serverTimestamp()
-    });
+    // Rate limit: 1.2 saniyede bir mesaj
+    const nowMsg = Date.now();
+    if (nowMsg - lastClanMsgAt < 1200) {
+        alert("Çok hızlı mesaj gönderiyorsun. Biraz bekle.");
+        return;
+    }
+
+    const input = document.getElementById("dislord-message-input");
+    const text = (input.value || "").trim();
+    if (!text) return;
+    if (text.length > 500) { alert("Mesaj en fazla 500 karakter olabilir."); return; }
+    input.value = "";
+    lastClanMsgAt = nowMsg;
+
+    try {
+        const senderName = getCleanDisplayName(userProfileData.username);
+        await addDoc(collection(db, "clan_messages"), {
+            clanId: activeDislordClanId,
+            text: text,
+            sender: senderName,
+            createdAt: serverTimestamp()
+        });
+    } catch (e) {
+        console.error("Mesaj gönderme hatası:", e);
+        let msg = "Mesaj gönderilemedi.";
+        if (e.code === "permission-denied") {
+            msg = "Mesaj gönderilemedi: Firestore kuralları engelliyor. Rules'ı kontrol et.";
+        } else if (e.message) {
+            msg = "Mesaj gönderilemedi: " + e.message;
+        }
+        alert(msg);
+        input.value = text;
+    }
 };
 
 window.handleDislordChatKey = function(e) { if (e.key === "Enter") { e.preventDefault(); window.sendDislordMessage(); } };
-window.deleteDislordMessage = async function(msgId) { await deleteDoc(doc(db, "clan_messages", msgId)); };
+window.deleteDislordMessage = async function(msgId) {
+    if (!msgId) return;
+    try {
+        await deleteDoc(doc(db, "clan_messages", msgId));
+    } catch (e) {
+        console.error("Mesaj silme hatası:", e);
+        alert("Mesaj silinemedi.");
+    }
+};
 
 onSnapshot(query(collection(db, "clans"), orderBy("createdAt", "desc")), snapshot => {
     allClansCache = [];
@@ -2049,23 +2346,88 @@ function renderClans() {
 
         const card = document.createElement("div");
         card.className = "clan-card";
-        card.innerHTML = `
-            <div class="clan-top">
-                <div class="clan-badge">${clan.icon || '🛡️'}</div>
-                <div style="flex:1;">
-                    <div style="display:flex; justify-content:space-between;">
-                        <h3 style="color:#fff;">${clan.name} <span class="clan-tag">[${clan.tag}]</span></h3>
-                        ${(isLeader || isAdminOrDev) ? `<button type="button" onclick="window.deleteClan('${clan.id}')" style="background:#ef4444; color:#fff; border:none; padding:2px 6px; border-radius:6px; font-size:10px; cursor:pointer;">Sil</button>` : ''}
-                    </div>
-                    <p style="font-size:12px; color:#94a3b8;">${clan.desc}</p>
-                </div>
-            </div>
-            <div class="clan-meta"><span>👑 Lider: ${getCleanDisplayName(clan.leaderName)}</span><span>👥 ${membersArr.length} Üye</span></div>
-            <div style="display:flex; gap:8px;">
-                ${isMember ? `<button type="button" class="btn-logout" style="flex:1;" onclick="window.leaveClan('${clan.id}')">Ayrıl</button>` : `<button type="button" class="btn-action" style="flex:1;" onclick="window.joinClan('${clan.id}')">Katıl</button>`}
-                <button type="button" class="btn-secondary" style="flex:1; background:var(--primary); color:#fff; border:none;" onclick="window.openDislordClanChat('${clan.id}', '${clan.name}', '${clan.tag}')">💬 Dislord Odası</button>
-            </div>
-        `;
+
+        // Top section
+        const top = document.createElement("div");
+        top.className = "clan-top";
+
+        const badge = document.createElement("div");
+        badge.className = "clan-badge";
+        badge.textContent = clan.icon || "🛡️";
+        top.appendChild(badge);
+
+        const info = document.createElement("div");
+        info.style.flex = "1";
+
+        const titleRow = document.createElement("div");
+        titleRow.style.cssText = "display:flex; justify-content:space-between; align-items:center;";
+
+        const h3 = document.createElement("h3");
+        h3.style.color = "#fff";
+        h3.textContent = (clan.name || "Klan") + " ";
+        const tagSpan = document.createElement("span");
+        tagSpan.className = "clan-tag";
+        tagSpan.textContent = "[" + (clan.tag || "???") + "]";
+        h3.appendChild(tagSpan);
+        titleRow.appendChild(h3);
+
+        if (isLeader || isAdminOrDev) {
+            const delBtn = document.createElement("button");
+            delBtn.type = "button";
+            delBtn.textContent = "Sil";
+            delBtn.style.cssText = "background:#ef4444; color:#fff; border:none; padding:2px 6px; border-radius:6px; font-size:10px; cursor:pointer;";
+            delBtn.onclick = () => window.deleteClan(clan.id);
+            titleRow.appendChild(delBtn);
+        }
+        info.appendChild(titleRow);
+
+        const desc = document.createElement("p");
+        desc.style.cssText = "font-size:12px; color:#94a3b8;";
+        desc.textContent = clan.desc || "";
+        info.appendChild(desc);
+        top.appendChild(info);
+        card.appendChild(top);
+
+        const meta = document.createElement("div");
+        meta.className = "clan-meta";
+        const leaderSpan = document.createElement("span");
+        leaderSpan.textContent = "👑 Lider: " + getCleanDisplayName(clan.leaderName);
+        const countSpan = document.createElement("span");
+        countSpan.textContent = "👥 " + membersArr.length + " Üye";
+        meta.appendChild(leaderSpan);
+        meta.appendChild(countSpan);
+        card.appendChild(meta);
+
+        const actions = document.createElement("div");
+        actions.style.cssText = "display:flex; gap:8px;";
+
+        if (isMember) {
+            const leaveBtn = document.createElement("button");
+            leaveBtn.type = "button";
+            leaveBtn.className = "btn-logout";
+            leaveBtn.style.flex = "1";
+            leaveBtn.textContent = "Ayrıl";
+            leaveBtn.onclick = () => window.leaveClan(clan.id);
+            actions.appendChild(leaveBtn);
+        } else {
+            const joinBtn = document.createElement("button");
+            joinBtn.type = "button";
+            joinBtn.className = "btn-action";
+            joinBtn.style.flex = "1";
+            joinBtn.textContent = "Katıl";
+            joinBtn.onclick = () => window.joinClan(clan.id);
+            actions.appendChild(joinBtn);
+        }
+
+        const chatBtn = document.createElement("button");
+        chatBtn.type = "button";
+        chatBtn.className = "btn-secondary";
+        chatBtn.style.cssText = "flex:1; background:var(--primary); color:#fff; border:none;";
+        chatBtn.textContent = "💬 Dislord Odası";
+        chatBtn.onclick = () => window.openDislordClanChat(clan.id, clan.name, clan.tag);
+        actions.appendChild(chatBtn);
+
+        card.appendChild(actions);
         container.appendChild(card);
     });
 }
@@ -2091,10 +2453,20 @@ window.openProfile = function() {
             const isActive = userProfileData.activeBadge === item;
             const row = document.createElement("div");
             row.style.cssText = "display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.03); padding:8px; border-radius:8px;";
-            row.innerHTML = `
-                <span style="font-size:13px; font-weight:700; color:#fff;">${item}</span>
-                <button type="button" class="btn-action" style="padding:4px 10px; font-size:11px; background:${isActive ? '#ef4444' : 'var(--primary)'}" onclick="window.useItem('${item}')">${isActive ? 'Kullanımı Bırak' : 'Kullan'}</button>
-            `;
+            
+            const nameSpan = document.createElement("span");
+            nameSpan.style.cssText = "font-size:13px; font-weight:700; color:#fff;";
+            nameSpan.textContent = item;
+            
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "btn-action";
+            btn.style.cssText = `padding:4px 10px; font-size:11px; background:${isActive ? '#ef4444' : 'var(--primary)'}`;
+            btn.textContent = isActive ? "Kullanımı Bırak" : "Kullan";
+            btn.onclick = () => window.useItem(item);
+            
+            row.appendChild(nameSpan);
+            row.appendChild(btn);
             invContainer.appendChild(row);
         });
     }
@@ -2115,6 +2487,8 @@ window.saveProfile = async function() {
     errorElem.innerText = "";
 
     if (!newNameInput) { errorElem.innerText = "Kullanıcı adı boş olamaz."; return; }
+    if (newNameInput.length > 24) { errorElem.innerText = "Kullanıcı adı en fazla 24 karakter olabilir."; return; }
+    
     let updates = { avatarUrl: newAvatarUrl, studentClass: newClass, studentBranch: newBranch };
 
     const currentCleanName = getCleanDisplayName(userProfileData.username);
@@ -2128,14 +2502,31 @@ window.saveProfile = async function() {
             await updateEmail(activeUser, newEmail);
             updates.username = newNameInput;
             updates.nameChanged = true;
-        } catch (err) { errorElem.innerText = "Şifre hatalı!"; return; }
+        } catch (err) {
+            console.error("İsim değiştirme hatası:", err);
+            if (err.code === "auth/wrong-password" || err.code === "auth/invalid-credential") {
+                errorElem.innerText = "Şifre hatalı!";
+            } else if (err.code === "auth/requires-recent-login") {
+                errorElem.innerText = "Güvenlik için tekrar giriş yapıp dene.";
+            } else if (err.code === "auth/email-already-in-use") {
+                errorElem.innerText = "Bu kullanıcı adı zaten alınmış!";
+            } else {
+                errorElem.innerText = "İsim değiştirilemedi: " + (err.message || "Bilinmeyen hata");
+            }
+            return;
+        }
     }
 
-    await setDoc(doc(db, "users", activeUser.uid), updates, { merge: true });
-    userProfileData = { ...userProfileData, ...updates };
-    updateUserHeaderUI();
-    renderAllLists();
-    window.closeProfile();
+    try {
+        await setDoc(doc(db, "users", activeUser.uid), updates, { merge: true });
+        userProfileData = { ...userProfileData, ...updates };
+        updateUserHeaderUI();
+        renderAllLists();
+        window.closeProfile();
+    } catch (e) {
+        console.error("Profil kaydetme hatası:", e);
+        errorElem.innerText = "Profil kaydedilirken hata oluştu.";
+    }
 };
 
 onSnapshot(query(collection(db, "users")), snapshot => {
@@ -2150,6 +2541,16 @@ onSnapshot(query(collection(db, "users")), snapshot => {
             userProfileData.isDev = serverData.isDev ?? userProfileData.isDev;
             userProfileData.devPassword = serverData.devPassword ?? userProfileData.devPassword;
             userProfileData.lastDailyClaim = serverData.lastDailyClaim ?? userProfileData.lastDailyClaim;
+            userProfileData.clanId = serverData.clanId ?? userProfileData.clanId;
+            userProfileData.inventory = serverData.inventory ?? userProfileData.inventory;
+            userProfileData.activeBadge = serverData.activeBadge ?? userProfileData.activeBadge;
+            
+            // Mute süresi dolmuşsa otomatik temizle
+            if (userProfileData.isMuted && (userProfileData.mutedUntil || 0) > 0 && Date.now() > userProfileData.mutedUntil) {
+                userProfileData.isMuted = false;
+                userProfileData.mutedUntil = 0;
+                updateDoc(doc(db, "users", activeUser.uid), { isMuted: false, mutedUntil: 0 }).catch(() => {});
+            }
             updateUserHeaderUI();
 
             const adminBtn = document.getElementById("admin-nav-btn");
@@ -2263,23 +2664,67 @@ function renderAllLists() {
     activeMap.forEach(player => {
         const displayName = player.username + (player.isSelf ? " (Sen)" : "");
         const isUserAfk = player.status === "afk";
-        const avatarHtml = player.avatarUrl ? `<img src="${player.avatarUrl}" class="player-avatar">` : `<div class="player-avatar" style="display:grid; place-items:center;">🐱</div>`;
-        
-        let badgesHtml = "";
-        if (player.isAdmin) badgesHtml += ` <span class="badge-admin">Admin</span>`;
-        if (player.isDev) badgesHtml += ` <span class="badge-dev">Geliştirici</span>`;
-        if (player.activeBadge) badgesHtml += ` <span style="font-size:10px; color:var(--gold-light); font-weight:700;">[${player.activeBadge}]</span>`;
 
         const div = document.createElement("div");
         div.className = "player-item";
-        div.innerHTML = `
-            ${avatarHtml}
-            <div class="player-info">
-                <div class="player-name">${displayName} ${badgesHtml}</div>
-                <div class="player-status-text">${isUserAfk ? "AFK" : "Çevrimiçi"}</div>
-            </div>
-            <span class="status-dot ${isUserAfk ? 'afk' : 'online'}"></span>
-        `;
+
+        if (player.avatarUrl) {
+            const img = document.createElement("img");
+            img.src = player.avatarUrl;
+            img.className = "player-avatar";
+            img.alt = "";
+            img.onerror = () => {
+                const fallback = document.createElement("div");
+                fallback.className = "player-avatar";
+                fallback.style.cssText = "display:grid; place-items:center;";
+                fallback.textContent = "🐱";
+                img.replaceWith(fallback);
+            };
+            div.appendChild(img);
+        } else {
+            const av = document.createElement("div");
+            av.className = "player-avatar";
+            av.style.cssText = "display:grid; place-items:center;";
+            av.textContent = "🐱";
+            div.appendChild(av);
+        }
+
+        const info = document.createElement("div");
+        info.className = "player-info";
+        const nameDiv = document.createElement("div");
+        nameDiv.className = "player-name";
+        nameDiv.appendChild(document.createTextNode(displayName + " "));
+        if (player.isAdmin) {
+            const b = document.createElement("span");
+            b.className = "badge-admin";
+            b.textContent = "Admin";
+            nameDiv.appendChild(b);
+            nameDiv.appendChild(document.createTextNode(" "));
+        }
+        if (player.isDev) {
+            const b = document.createElement("span");
+            b.className = "badge-dev";
+            b.textContent = "Geliştirici";
+            nameDiv.appendChild(b);
+            nameDiv.appendChild(document.createTextNode(" "));
+        }
+        if (player.activeBadge) {
+            const b = document.createElement("span");
+            b.style.cssText = "font-size:10px; color:var(--gold-light); font-weight:700;";
+            b.textContent = "[" + player.activeBadge + "]";
+            nameDiv.appendChild(b);
+        }
+        const statusDiv = document.createElement("div");
+        statusDiv.className = "player-status-text";
+        statusDiv.textContent = isUserAfk ? "AFK" : "Çevrimiçi";
+        info.appendChild(nameDiv);
+        info.appendChild(statusDiv);
+        div.appendChild(info);
+
+        const dot = document.createElement("span");
+        dot.className = "status-dot " + (isUserAfk ? "afk" : "online");
+        div.appendChild(dot);
+
         listContainer.appendChild(div);
     });
 
@@ -2295,13 +2740,35 @@ function renderAllLists() {
             const isTargetAdmin = lowerName === "salim_xy66" || lowerName === "desiredoue";
             const rankBadge = isTargetAdmin ? '<span class="badge-admin">Admin</span>' : (u.activeBadge || 'Oyuncu');
             
-            const avHtml = u.avatarUrl ? `<img src="${u.avatarUrl}" style="width:28px; height:28px; border-radius:50%; object-fit:cover; vertical-align:middle; margin-right:6px;">` : '🐱';
             const tr = document.createElement("tr");
-            tr.innerHTML = `
-                <td><b>#${idx + 1}</b></td>
-                <td>${avHtml} ${cleanName}</td>
-                <td><span style="color:var(--cyan); font-size:12.5px;">${rankBadge}</span></td>
-            `;
+            const tdRank = document.createElement("td");
+            tdRank.innerHTML = `<b>#${idx + 1}</b>`;
+            const tdName = document.createElement("td");
+            if (u.avatarUrl) {
+                const img = document.createElement("img");
+                img.src = u.avatarUrl;
+                img.alt = "";
+                img.style.cssText = "width:28px; height:28px; border-radius:50%; object-fit:cover; vertical-align:middle; margin-right:6px;";
+                img.onerror = () => { img.style.display = "none"; };
+                tdName.appendChild(img);
+            } else {
+                tdName.appendChild(document.createTextNode("🐱 "));
+            }
+            tdName.appendChild(document.createTextNode(cleanName));
+            const tdBadge = document.createElement("td");
+            const badgeSpan = document.createElement("span");
+            badgeSpan.style.cssText = "color:var(--cyan); font-size:12.5px;";
+            // rankBadge can be HTML for admin - handle carefully
+            if (isTargetAdmin) {
+                badgeSpan.className = "badge-admin";
+                badgeSpan.textContent = "Admin";
+            } else {
+                badgeSpan.textContent = u.activeBadge || "Oyuncu";
+            }
+            tdBadge.appendChild(badgeSpan);
+            tr.appendChild(tdRank);
+            tr.appendChild(tdName);
+            tr.appendChild(tdBadge);
             leaderboardTbody.appendChild(tr);
         });
     }
@@ -2309,11 +2776,30 @@ function renderAllLists() {
 
 setInterval(renderAllLists, 10000);
 
-window.logout = async function() { await updateStatus("offline"); await signOut(auth); };
+window.logout = async function() {
+    try {
+        await updateStatus("offline");
+    } catch (e) {}
+    try {
+        if (activeDislordUnsub) { activeDislordUnsub(); activeDislordUnsub = null; }
+        if (activeAdminChatUnsub) { activeAdminChatUnsub(); activeAdminChatUnsub = null; }
+        stopHeartbeat();
+        await signOut(auth);
+    } catch (e) {
+        console.error("Çıkış hatası:", e);
+        // Yine de arayüzü sıfırla
+        document.getElementById("auth-overlay").style.display = "flex";
+        document.getElementById("top-navbar").style.display = "none";
+        document.getElementById("main-content").style.display = "none";
+    }
+};
 
 window.openGame = function(title, url) {
-    document.getElementById("modal-game-title").innerText = title;
-    document.getElementById("game-frame").src = url;
+    if (!url) return;
+    document.getElementById("modal-game-title").innerText = title || "Oyun";
+    const frame = document.getElementById("game-frame");
+    frame.src = ""; // önceki oyunu temizle
+    setTimeout(() => { frame.src = url; }, 50);
     document.getElementById("game-modal").style.display = "flex";
 };
 
