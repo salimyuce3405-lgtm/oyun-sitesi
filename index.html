@@ -16,9 +16,9 @@
     --gold: #f59e0b;
     --gold-light: #fde68a;
     --bg-dark: #06080d;
-    --nav-bg: rgba(9, 12, 22, 0.92);
+    --nav-bg: rgba(9, 12, 22, 0.96);
     --panel-bg: rgba(15, 20, 34, 0.96);
-    --card-bg: rgba(17, 24, 39, 0.65);
+    --card-bg: rgba(17, 24, 39, 0.72);
     --border-color: rgba(255, 255, 255, 0.08);
 }
 
@@ -38,12 +38,11 @@ body {
     transform: translateX(-50%);
     width: min(650px, 92%);
     z-index: 999999;
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.97), rgba(30, 27, 75, 0.97));
-    border: 1px solid rgba(245, 158, 11, 0.6);
+    background: #0b0f1c;
+    border: 1px solid rgba(245, 158, 11, 0.7);
     border-radius: 16px;
     padding: 14px 20px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(245, 158, 11, 0.25);
-    backdrop-filter: blur(14px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.95), 0 0 25px rgba(245, 158, 11, 0.25);
     align-items: center;
     justify-content: space-between;
     gap: 14px;
@@ -72,7 +71,7 @@ body {
 #top-navbar {
     display: none; background: var(--nav-bg); border-bottom: 1px solid rgba(245, 158, 11, 0.22);
     padding: 0 28px; height: 72px; align-items: center; justify-content: space-between;
-    position: sticky; top: 0; z-index: 500; gap: 16px; backdrop-filter: blur(18px);
+    position: sticky; top: 0; z-index: 500; gap: 16px;
     box-shadow: 0 10px 35px rgba(0, 0, 0, 0.65);
 }
 
@@ -125,12 +124,32 @@ body {
     padding: 8px 14px; border-radius: 10px; font-size: 12.5px; font-weight: 700; cursor: pointer;
 }
 
+/* KOZMETİK ÇERÇEVE VE İSİM STİLLERİ */
+.frame_neon { border: 2px solid #22d3ee !important; box-shadow: 0 0 10px #22d3ee; }
+.frame_matrix { border: 2px solid #22c55e !important; box-shadow: 0 0 10px #22c55e; }
+.frame_holo { border: 2px solid #a855f7 !important; box-shadow: 0 0 10px #c084fc; }
+.frame_blood { border: 2px solid #ef4444 !important; box-shadow: 0 0 10px #ef4444; }
+.frame_gold { border: 2px solid #fbbf24 !important; box-shadow: 0 0 12px #fbbf24; }
+.frame_cosmic { border: 2px solid #60a5fa !important; box-shadow: 0 0 12px #818cf8; }
+.frame_blinky { border: 2px dashed #ef4444 !important; box-shadow: 0 0 10px #ef4444; }
+.frame_pinky { border: 2px dashed #ec4899 !important; box-shadow: 0 0 10px #ec4899; }
+
+.name_nitro { color: #ec4899 !important; text-shadow: 0 0 8px rgba(236,72,153,0.6); }
+.name_gold { color: #fbbf24 !important; text-shadow: 0 0 8px rgba(251,191,36,0.6); }
+.name_mint { color: #4ade80 !important; text-shadow: 0 0 8px rgba(74,222,128,0.5); }
+.name_crimson { color: #f87171 !important; text-shadow: 0 0 8px rgba(248,113,113,0.6); }
+.name_snow { color: #ffffff !important; text-shadow: 0 0 10px rgba(255,255,255,0.8); }
+.name_rainbow {
+    background: linear-gradient(90deg,#f43f5e,#eab308,#22c55e,#3b82f6,#a855f7);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;
+}
+
 /* 2D OYUN MENÜ BAR */
 .arcade-menu-bar { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 14px; margin-bottom: 24px; }
 .arcade-tab-btn {
     background: rgba(17, 24, 39, 0.85); border: 1px solid var(--border-color); color: #94a3b8;
     padding: 10px 18px; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer;
-    display: flex; align-items: center; gap: 8px; white-space: nowrap; transition: 0.2s; backdrop-filter: blur(10px);
+    display: flex; align-items: center; gap: 8px; white-space: nowrap; transition: 0.2s;
 }
 .arcade-tab-btn:hover { border-color: rgba(245, 158, 11, 0.4); color: #fff; }
 .arcade-tab-btn.active {
@@ -147,7 +166,7 @@ body {
 .auth-shell {
     width: min(960px, 100%); min-height: 520px; display: grid; grid-template-columns: 1fr 1fr;
     border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 22px; overflow: hidden;
-    background: var(--panel-bg); box-shadow: 0 25px 70px rgba(0,0,0,0.9); backdrop-filter: blur(20px);
+    background: var(--panel-bg); box-shadow: 0 25px 70px rgba(0,0,0,0.9);
 }
 .auth-showcase {
     padding: 40px; display: flex; flex-direction: column; justify-content: space-between;
@@ -178,52 +197,86 @@ body {
     box-shadow: 0 6px 20px var(--primary-glow); transition: 0.2s; margin-top: 8px;
 }
 .submit-btn:hover { filter: brightness(1.12); }
-.submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.submit-btn:disabled { opacity: 0.6; cursor: wait; }
 #auth-error { min-height: 22px; margin-top: 12px; font-size: 12.5px; color: #f87171; text-align: center; font-weight: 600; }
 
 /* ANA SİTE İÇERİĞİ */
 #main-content { display: none; padding-bottom: 60px; }
 .app-layout { max-width: 1380px; margin: 30px auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 290px; gap: 26px; }
-.app-layout.clan-chat-active { grid-template-columns: 1fr; }
+/* SOHBET TAM EKRAN (ÜST MENÜ HARİÇ) */
+.app-layout.clan-chat-active {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    grid-template-columns: 1fr;
+}
+#main-content.chat-fullscreen-mode { padding-bottom: 0; }
 .section-view { display: none; }
 .section-view.active { display: block; }
 
 /* SOHBET ODASI ALANI */
 .clan-main-wrapper {
-    display: grid; grid-template-columns: 260px 1fr; background: var(--panel-bg); border: 1px solid var(--border-color);
-    border-radius: 18px; overflow: hidden; height: calc(100vh - 140px); backdrop-filter: blur(15px); box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    display: grid; grid-template-columns: 1fr; background: #06080d; border: none;
+    border-radius: 0; overflow: hidden; height: calc(100vh - 72px);
 }
-.clan-sidebar-left {
-    background: rgba(10, 14, 26, 0.95); border-right: 1px solid var(--border-color); padding: 18px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto;
-}
-.clan-sidebar-title { font-size: 11px; font-weight: 800; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
-.clan-room-item {
-    padding: 10px 14px; border-radius: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color);
-    cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: 0.2s;
-}
-.clan-room-item:hover { background: rgba(255,255,255,0.07); border-color: rgba(245,158,11,0.4); }
-.clan-room-item.active { background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(139,92,246,0.2)); border-color: var(--gold); }
 
 /* SOHBET PENCERESİ FLEX DÜZENİ */
-.dislord-chat-pane { display: flex; flex-direction: column; height: 100%; width: 100%; background: radial-gradient(circle at 50% 50%, rgba(15,23,42,0.6), rgba(6,8,13,0.95)); position: relative; overflow: hidden; }
+.dislord-chat-pane { display: flex; flex-direction: column; height: 100%; width: 100%; background: #070a12; position: relative; overflow: hidden; }
 .dislord-chat-header {
-    background: rgba(15, 23, 42, 0.9); padding: 16px 22px; border-bottom: 1px solid var(--border-color);
+    background: #0d1220; padding: 14px 22px; border-bottom: 1px solid var(--border-color);
     display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 15px; color: #fff; flex-shrink: 0;
 }
-.dislord-messages-area { flex: 1 1 auto; padding: 22px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; width: 100%; }
+.dislord-messages-area { flex: 1 1 auto; padding: 14px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; width: 100%; }
 .dislord-message-card {
-    background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 12px 16px; border-radius: 12px;
-    display: flex; justify-content: space-between; align-items: flex-start; backdrop-filter: blur(10px); word-break: break-word;
+    background: rgba(255,255,255,0.035); border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 10px;
+    display: flex; justify-content: space-between; align-items: flex-start; word-break: break-word;
+    font-size: 12.5px; gap: 8px;
 }
+.dislord-message-card .msg-sender { font-size: 11px; font-weight: 800; color: var(--gold); margin-bottom: 2px; display: inline-block; }
+.dislord-message-card .msg-text { font-size: 13px; color: #e2e8f0; line-height: 1.4; }
 .dislord-input-area {
-    padding: 16px 20px; background: rgba(15, 23, 42, 0.9); border-top: 1px solid var(--border-color);
-    display: flex; gap: 12px; align-items: center; flex-shrink: 0; width: 100%;
+    padding: 12px 18px; background: #0d1220; border-top: 1px solid var(--border-color);
+    display: flex; gap: 10px; align-items: center; flex-shrink: 0; width: 100%; position: relative;
 }
-.dislord-input-area input {
-    flex: 1; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); padding: 12px 16px; border-radius: 12px; color: #fff; outline: none; font-size: 14px;
+.chat-input-box-wrap {
+    flex: 1; display: flex; align-items: center; background: #05070c;
+    border: 1px solid var(--border-color); border-radius: 12px; padding-right: 8px; position: relative;
 }
+.chat-input-box-wrap:focus-within { border-color: var(--primary); }
+.chat-input-box-wrap input {
+    flex: 1; background: transparent; border: none; padding: 12px 14px; color: #fff; outline: none; font-size: 14px;
+}
+.emoji-trigger-btn {
+    background: transparent; border: none; font-size: 20px; cursor: pointer; padding: 4px 6px; border-radius: 8px; transition: 0.15s; line-height: 1;
+}
+.emoji-trigger-btn:hover { background: rgba(255,255,255,0.1); transform: scale(1.1); }
+
+/* EMOJİ POPUP PANELİ */
+#emoji-picker-popover {
+    display: none;
+    position: absolute;
+    bottom: 66px;
+    right: 115px;
+    width: min(340px, 90vw);
+    max-height: 240px;
+    overflow-y: auto;
+    background: #0b0f19;
+    border: 1px solid rgba(139, 92, 246, 0.55);
+    border-radius: 14px;
+    padding: 10px;
+    z-index: 900;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.95);
+    grid-template-columns: repeat(8, 1fr);
+    gap: 4px;
+}
+#emoji-picker-popover.open { display: grid; }
+.emoji-pick-item {
+    background: transparent; border: none; font-size: 20px; padding: 5px; border-radius: 8px; cursor: pointer; transition: 0.15s;
+}
+.emoji-pick-item:hover { background: rgba(139, 92, 246, 0.3); transform: scale(1.15); }
+
 .dislord-send-btn {
-    background: var(--primary); color: white; border: none; padding: 12px 22px; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.2s;
+    background: var(--primary); color: white; border: none; padding: 12px 22px; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.2s; white-space: nowrap;
 }
 .dislord-send-btn:hover { filter: brightness(1.15); }
 
@@ -237,7 +290,7 @@ body {
 .game-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
 .game-card {
     background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 18px; padding: 22px;
-    display: flex; flex-direction: column; justify-content: space-between; transition: 0.25s; backdrop-filter: blur(10px);
+    display: flex; flex-direction: column; justify-content: space-between; transition: 0.25s;
 }
 .game-card:hover { transform: translateY(-4px); border-color: rgba(245, 158, 11, 0.5); box-shadow: 0 15px 35px rgba(139, 92, 246, 0.18); }
 .game-icon { width: 56px; height: 56px; display: grid; place-items: center; border-radius: 14px; background: rgba(139, 92, 246, 0.15); font-size: 28px; margin-bottom: 16px; }
@@ -252,29 +305,20 @@ body {
     background: #1e293b; color: #fff; border: 1px solid var(--border-color); border-radius: 10px; padding: 9px 14px; font-weight: 700; font-size: 12.5px; cursor: pointer;
 }
 
-.clan-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; margin-bottom: 20px; }
-.clan-card {
-    background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 12px; backdrop-filter: blur(10px);
-}
-.clan-top { display: flex; align-items: center; gap: 12px; }
-.clan-badge { width: 46px; height: 46px; border-radius: 12px; background: rgba(124, 58, 237, 0.2); border: 1px solid rgba(139, 92, 246, 0.4); display: grid; place-items: center; font-size: 24px; }
-.clan-tag { background: rgba(139, 92, 246, 0.2); color: var(--cyan); font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 6px; }
-.clan-meta { display: flex; justify-content: space-between; font-size: 12px; color: #94a3b8; border-top: 1px solid var(--border-color); padding-top: 10px; }
-
 /* TABLOLAR VE MAĞAZA */
-.data-table { width: 100%; border-collapse: collapse; background: var(--card-bg); border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); backdrop-filter: blur(10px); }
+.data-table { width: 100%; border-collapse: collapse; background: var(--card-bg); border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); }
 .data-table th, .data-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 13.5px; }
 .data-table th { background: rgba(0,0,0,0.3); color: #94a3b8; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.8px; }
 .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; }
 .shop-card {
-    background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; gap: 12px; backdrop-filter: blur(10px);
+    background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; gap: 12px;
 }
 .shop-icon { font-size: 36px; margin: 6px 0; }
 .price-tag { color: #fde047; font-weight: 800; font-size: 14px; }
 
 /* SAĞ TARAF: CANLI OYUNCU LİSTESİ */
 .sidebar-panel {
-    background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 18px; padding: 18px; height: fit-content; position: sticky; top: 96px; backdrop-filter: blur(15px);
+    background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 18px; padding: 18px; height: fit-content; position: sticky; top: 96px;
 }
 .sidebar-title { font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
 .player-list { display: flex; flex-direction: column; gap: 9px; max-height: 520px; overflow-y: auto; }
@@ -293,33 +337,102 @@ body {
 
 /* MODALLAR */
 .modal-backdrop {
-    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.82); z-index: 1000; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px);
+    display: none; position: fixed; inset: 0; background: #000000; z-index: 1000; justify-content: center; align-items: center; padding: 20px;
 }
 .modal-box {
-    background: #0f172a; width: 100%; max-width: 460px; border-radius: 20px; border: 1px solid var(--border-color); padding: 26px; box-shadow: 0 25px 50px rgba(0,0,0,0.75);
+    background: #0b0f19; width: 100%; max-width: 460px; border-radius: 20px; border: 1px solid var(--border-color); padding: 26px; box-shadow: 0 25px 50px rgba(0,0,0,0.9); max-height: 90vh; overflow-y: auto;
 }
 
 .game-modal-content {
-    background: #0f172a; width: 100%; max-width: 1080px; height: 86vh; border-radius: 20px; border: 1px solid var(--border-color); display: flex; flex-direction: column; overflow: hidden; transition: 0.3s;
+    background: #0b0f19; width: 100%; max-width: 1080px; height: 86vh; border-radius: 20px; border: 1px solid var(--border-color); display: flex; flex-direction: column; overflow: hidden; transition: 0.3s;
 }
-.modal-header { background: #1e293b; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); }
+.modal-header { background: #141b2d; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); }
 .modal-actions { display: flex; align-items: center; gap: 8px; }
 .fullscreen-btn { background: rgba(139,92,246,0.25); border: 1px solid rgba(139,92,246,0.5); color: #c4b5fd; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; transition: 0.2s; }
 .fullscreen-btn:hover { background: var(--primary); color: #fff; }
 .close-btn { background: #ef4444; color: white; border: none; padding: 6px 14px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 #game-frame { width: 100%; height: 100%; border: none; background: #000; }
 
+/* AI SOHBET TAM SİYAH ARKA PLAN */
+#ai-chat-modal {
+    display: none; position: fixed; inset: 0; background: #000000; z-index: 1300; flex-direction: column;
+}
+.ai-msg-content { font-size: 13.5px; color: #f8fafc; line-height: 1.55; white-space: pre-wrap; }
+.ai-code-block { background: #05070c; border: 1px solid rgba(255,255,255,0.12); padding: 10px 12px; border-radius: 10px; font-family: monospace; font-size: 12.5px; color: #22d3ee; margin-top: 6px; overflow-x: auto; }
+
 @media(max-width: 1150px) {
     #top-navbar { height: auto; padding: 12px 18px; flex-wrap: wrap; }
     .nav-links { flex-wrap: wrap; }
     .app-layout { grid-template-columns: 1fr; }
     .sidebar-panel { position: static; }
-    .clan-main-wrapper { grid-template-columns: 1fr; height: auto; }
 }
 @media(max-width: 768px) {
     .auth-shell { grid-template-columns: 1fr; max-width: 420px; }
     .auth-showcase { display: none; }
 }
+
+/* CANLI YAYIN */
+.st-box{background:var(--panel-bg);border:1px solid var(--border-color);border-radius:16px;padding:18px}
+.st-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.st-head h3{font-size:16px;font-weight:800;display:flex;align-items:center;gap:10px}
+.st-dot{width:12px;height:12px;border-radius:50%;background:#ef4444;box-shadow:0 0 10px #ef4444;animation:stp 1.4s infinite}
+@keyframes stp{50%{opacity:.35}}
+.st-btn{border:none;border-radius:10px;padding:9px 16px;font-weight:700;font-size:13px;cursor:pointer;color:#fff;background:var(--primary)}
+.st-btn.red{background:#ef4444}.st-btn.green{background:#16a34a}.st-btn.gray{background:rgba(255,255,255,.1)}
+.st-card{display:flex;justify-content:space-between;align-items:center;gap:12px;background:rgba(255,255,255,.04);border:1px solid var(--border-color);border-radius:12px;padding:14px 16px;margin-bottom:10px}
+.st-card.first{border-color:rgba(239,68,68,.6)}.st-card small{display:block;color:#94a3b8;margin-top:3px}
+.st-empty{text-align:center;color:#94a3b8;padding:34px 10px;line-height:1.8}
+.st-room{display:grid;grid-template-columns:1fr 320px;gap:14px}
+.st-video{background:#000;border-radius:14px;overflow:hidden;min-height:340px;display:grid;place-items:center}
+.st-video video{width:100%;max-height:72vh;object-fit:contain;outline:none}
+.st-side{display:flex;flex-direction:column;background:rgba(0,0,0,.35);border:1px solid var(--border-color);border-radius:14px;min-height:340px;max-height:72vh}
+.st-side h4{padding:12px 14px;border-bottom:1px solid var(--border-color);font-size:14px}
+#st-chat{flex:1;overflow-y:auto;padding:10px 14px;font-size:13px;display:flex;flex-direction:column;gap:6px}
+#st-chat b{color:var(--gold-light)}
+.st-send{display:flex;gap:8px;padding:10px;border-top:1px solid var(--border-color)}
+.st-send input{flex:1;background:#0b0f1c;border:1px solid var(--border-color);border-radius:10px;padding:9px 12px;color:#fff;outline:none;min-width:0}
+#st-ctl-area{padding:10px;border-top:1px solid var(--border-color);font-size:12.5px;color:#cbd5e1}
+#st-ctl-area .st-btn{width:100%;margin-top:6px}
+#st-remote-cursor{position:fixed;z-index:9999999;pointer-events:none;display:none;font-size:11px;font-weight:800;color:#fff}
+#st-remote-cursor:before{content:"";display:block;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:18px solid #22d3ee;transform:rotate(-30deg)}
+#st-remote-cursor span{background:#22d3ee;color:#06080d;padding:1px 6px;border-radius:6px;margin-left:10px}
+@media(max-width:900px){.st-room{grid-template-columns:1fr}}
+.ai-code-wrap{position:relative;margin-top:8px}.ai-copy{position:absolute;top:6px;right:6px;background:#1f2937;color:#fff;border:none;border-radius:6px;font-size:11px;padding:3px 8px;cursor:pointer}
+
+/* Chat reply & pin */
+.msg-reply-quote {
+    background: rgba(139,92,246,0.12); border-left: 3px solid var(--primary);
+    padding: 4px 8px; margin-bottom: 4px; border-radius: 0 6px 6px 0;
+    font-size: 11px; color: #94a3b8; cursor: default;
+}
+.msg-actions-row { margin-top: 4px; display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
+.msg-act-btn {
+    background: rgba(255,255,255,0.05); border: 1px solid var(--border-color);
+    color: #94a3b8; font-size: 10px; padding: 2px 7px; border-radius: 6px; cursor: pointer;
+}
+.msg-act-btn:hover { color: #fff; border-color: var(--primary); }
+.msg-pinned-badge {
+    background: rgba(245,158,11,0.2); color: #fde68a; font-size: 10px;
+    padding: 1px 6px; border-radius: 4px; font-weight: 800; margin-left: 6px;
+}
+#reply-preview-bar {
+    display: none; padding: 8px 14px; background: rgba(139,92,246,0.15);
+    border-top: 1px solid rgba(139,92,246,0.35); font-size: 12px; color: #c4b5fd;
+    align-items: center; justify-content: space-between; gap: 10px;
+}
+#reply-preview-bar.visible { display: flex; }
+#pinned-messages-bar {
+    display: none; padding: 8px 14px; background: rgba(245,158,11,0.12);
+    border-bottom: 1px solid rgba(245,158,11,0.35); font-size: 12px; color: #fde68a;
+}
+/* Stream control panel */
+#st-ctl-area {
+    padding: 12px; border-top: 1px solid var(--border-color); display: flex;
+    flex-direction: column; gap: 8px; background: rgba(0,0,0,0.25);
+}
+#st-ctl-area .st-btn { width: 100%; margin: 2px 0; }
+.st-ctl-title { font-size: 12px; font-weight: 800; color: #fde68a; margin-bottom: 4px; }
+
 </style>
 </head>
 
@@ -353,6 +466,7 @@ body {
             <button type="button" class="nav-item" data-sec="leaderboard" onclick="window.switchSection('leaderboard')">Skor Tablosu</button>
             <button type="button" class="nav-item" data-sec="ticket" onclick="window.switchSection('ticket')">🎟️ Gişe</button>
             <button type="button" class="nav-item" data-sec="shop" onclick="window.switchSection('shop')">🛍️ Siber Dükkan</button>
+            <button type="button" class="nav-item" data-sec="quests" onclick="window.switchSection('quests')">🎯 Görevler</button>
             <button type="button" class="nav-item" data-sec="clans" onclick="window.switchSection('clans')">💬 Sohbet</button>
             <button type="button" class="nav-item" data-sec="stats" onclick="window.switchSection('stats')">📊 İstatistik</button>
             <button type="button" class="nav-item" style="color:var(--gold-light);" onclick="window.openAdminSelectModal()">💬 Admin Sohbeti</button>
@@ -363,7 +477,7 @@ body {
     </div>
 
     <div class="nav-right">
-        <span class="pill-coin" id="user-coins-display" onclick="window.switchSection('ticket')" title="Gişeye Git">🪙 0</span>
+        <span class="pill-coin" id="user-coins-display" onclick="window.switchSection('ticket')" title="Gişeye Git">💰 0</span>
         <button type="button" class="pill-btn" onclick="window.openProfile()">👤 Profil</button>
         <button type="button" class="btn-logout" onclick="window.logout()">Çıkış</button>
     </div>
@@ -510,7 +624,7 @@ body {
                         <tr>
                             <th>Sıra</th>
                             <th>Oyuncu</th>
-                            <th>Unvan</th>
+                            <th>Sitede Süre</th>
                         </tr>
                     </thead>
                     <tbody id="leaderboard-tbody"></tbody>
@@ -522,31 +636,60 @@ body {
                 <div class="section-header">
                     <div>
                         <h2>🎟️ Portal Gişesi & 2D Arcade</h2>
-                        <p>Günlük ödülünü al, 2D mini oyunlarda şansını dene ve jetonlarını katla!</p>
+                        <p>Önce oyunu seç, sonra oyna. Bakiye ve skorun burada görünür.</p>
                     </div>
                 </div>
 
+                <div style="display:flex; gap:14px; flex-wrap:wrap; margin-bottom:18px;">
+                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:14px; padding:14px 20px; min-width:160px;">
+                        <div style="font-size:11px; color:#94a3b8; font-weight:700; letter-spacing:0.5px;">BAKİYE</div>
+                        <div id="ticket-balance" style="font-size:22px; font-weight:800; color:#fde047; margin-top:4px;">💰 0</div>
+                    </div>
+                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:14px; padding:14px 20px; min-width:160px;">
+                        <div style="font-size:11px; color:#94a3b8; font-weight:700; letter-spacing:0.5px;">SKOR PUANI</div>
+                        <div id="ticket-score-points" style="font-size:22px; font-weight:800; color:#a78bfa; margin-top:4px;">0</div>
+                    </div>
+                </div>
+
+                <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px; margin-bottom:20px;">
+                    <h3 style="font-size:16px; color:#fde047; margin-bottom:8px;">🏦 Skor Bankası</h3>
+                    <p style="font-size:12.5px; color:#94a3b8; margin-bottom:12px;">Skorunu bakiyeye çevir. Oran: <b style="color:#fff;">5 skor = 1 bakiye</b> (ör. 500 skor → 100 bakiye)</p>
+                    <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:flex-end;">
+                        <div class="input-group" style="margin-bottom:0; flex:1; min-width:140px;">
+                            <label>SKOR BAKİYESİ</label>
+                            <div id="bank-score-display" style="padding:11px 14px; background:rgba(0,0,0,0.45); border:1px solid var(--border-color); border-radius:11px; color:#22d3ee; font-weight:800;">0</div>
+                        </div>
+                        <div class="input-group" style="margin-bottom:0; flex:1; min-width:140px;">
+                            <label>ÇEVİRİLECEK SKOR</label>
+                            <input type="number" id="bank-score-input" value="500" min="5" step="5" placeholder="Örn: 500">
+                        </div>
+                        <button type="button" class="submit-btn" style="width:auto; margin-top:0; padding:11px 22px;" onclick="window.convertScoreToCoins()">Bakiyeye Çevir</button>
+                    </div>
+                    <p id="bank-result" style="margin-top:10px; font-size:13px; font-weight:700; min-height:20px;"></p>
+                </div>
+
+                <p style="color:#94a3b8; font-size:13px; margin-bottom:12px;">Oynamak istediğin oyunu seç:</p>
                 <div class="arcade-menu-bar">
-                    <button type="button" class="arcade-tab-btn active" onclick="window.switchArcade('fruit', this)">🍒 Meyve Eşleme</button>
+                    <button type="button" class="arcade-tab-btn" onclick="window.switchArcade('fruit', this)">🍒 Meyve Eşleme</button>
                     <button type="button" class="arcade-tab-btn" onclick="window.switchArcade('mystery', this)">📦 Gizemli Kutu</button>
-                    <button type="button" class="arcade-tab-btn" onclick="window.switchArcade('coinflip', this)">🪙 Yazı Tura</button>
+                    <button type="button" class="arcade-tab-btn" onclick="window.switchArcade('coinflip', this)">💰 Yazı Tura</button>
                     <button type="button" class="arcade-tab-btn" onclick="window.switchArcade('pixel', this)">🐎 Piksel Koşusu</button>
                     <button type="button" class="arcade-tab-btn" onclick="window.switchArcade('wheel', this)">🎁 Günlük Çark</button>
                 </div>
 
                 <!-- 1. MEYVE EŞLEME 2D -->
-                <div id="arcade-fruit" class="arcade-game-pane" style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:18px; padding:24px; text-align:center; backdrop-filter:blur(10px);">
+                <div id="arcade-fruit" class="arcade-game-pane" style="display:none; background:var(--card-bg); border:1px solid var(--border-color); border-radius:18px; padding:24px; text-align:center;">
                     <h3 style="font-size:20px; color:#fde047; margin-bottom:8px;">🍒 2D Meyve Eşleme Simülasyonu</h3>
-                    <p style="color:#94a3b8; font-size:13px; margin-bottom:16px;">3 aynı meyveyi eşle, büyük ödülü kap! (Bahis: 50 🪙)</p>
+                    <p style="color:#94a3b8; font-size:13px; margin-bottom:16px;">3 aynı meyveyi eşle, büyük ödülü kap! (Bahis: 50 bakiye)</p>
                     <div id="fruit-slots" style="font-size:42px; background:rgba(0,0,0,0.4); padding:20px; border-radius:14px; margin-bottom:16px; letter-spacing:15px;">🍒 🍋 🍊</div>
-                    <button type="button" class="submit-btn" style="max-width:240px; margin:0 auto;" onclick="window.playFruitGame()">Meyveleri Çevir (50 🪙)</button>
+                    <button type="button" class="submit-btn" style="max-width:240px; margin:0 auto;" onclick="window.playFruitGame()">Meyveleri Çevir (50 bakiye)</button>
                     <p id="fruit-result" style="margin-top:12px; font-weight:700; min-height:22px;"></p>
                 </div>
 
                 <!-- 2. GİZEMLİ KUTU 2D -->
-                <div id="arcade-mystery" class="arcade-game-pane" style="display:none; background:var(--card-bg); border:1px solid var(--border-color); border-radius:18px; padding:24px; text-align:center; backdrop-filter:blur(10px);">
+                <div id="arcade-mystery" class="arcade-game-pane" style="display:none; background:var(--card-bg); border:1px solid var(--border-color); border-radius:18px; padding:24px; text-align:center;">
                     <h3 style="font-size:20px; color:#fde047; margin-bottom:8px;">📦 2D Gizemli Hazine Kutusu</h3>
-                    <p style="color:#94a3b8; font-size:13px; margin-bottom:16px;">3 kutudan birini seç, içinden çıkan sürpriz jetonu kazan! (Giriş: 100 🪙)</p>
+                    <p style="color:#94a3b8; font-size:13px; margin-bottom:16px;">3 kutudan birini seç, içinden çıkan sürpriz bakiye kazan! (Giriş: 100 bakiye)</p>
                     <div style="display:flex; justify-content:center; gap:16px; margin-bottom:20px;">
                         <div onclick="window.openBox(1)" style="font-size:48px; background:rgba(255,255,255,0.05); border:1px solid var(--border-color); padding:20px; border-radius:14px; cursor:pointer;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">🎁</div>
                         <div onclick="window.openBox(2)" style="font-size:48px; background:rgba(255,255,255,0.05); border:1px solid var(--border-color); padding:20px; border-radius:14px; cursor:pointer;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">🎁</div>
@@ -556,10 +699,10 @@ body {
                 </div>
 
                 <!-- 3. YAZI TURA 2D -->
-                <div id="arcade-coinflip" class="arcade-game-pane" style="display:none; background:var(--card-bg); border:1px solid var(--border-color); border-radius:18px; padding:24px; text-align:center; backdrop-filter:blur(10px);">
-                    <h3 style="font-size:20px; color:#fde047; margin-bottom:8px;">🪙 2D Yazı Tura Düellosu</h3>
+                <div id="arcade-coinflip" class="arcade-game-pane" style="display:none; background:var(--card-bg); border:1px solid var(--border-color); border-radius:18px; padding:24px; text-align:center;">
+                    <h3 style="font-size:20px; color:#fde047; margin-bottom:8px;">💰 2D Yazı Tura Düellosu</h3>
                     <p style="color:#94a3b8; font-size:13px; margin-bottom:16px;">Yazı mı Tura mı? Parasını ikiye katla!</p>
-                    <div id="coin-icon" style="font-size:56px; margin-bottom:16px;">🪙</div>
+                    <div id="coin-icon" style="font-size:56px; margin-bottom:16px;">💰</div>
                     <div style="display:flex; justify-content:center; gap:12px; margin-bottom:16px;">
                         <button type="button" class="submit-btn" style="max-width:120px;" onclick="window.playCoinFlip('yazi')">Yazı</button>
                         <button type="button" class="submit-btn" style="max-width:120px; background:linear-gradient(135deg,#f59e0b,#b45309);" onclick="window.playCoinFlip('tura')">Tura</button>
@@ -568,7 +711,7 @@ body {
                 </div>
 
                 <!-- 4. PİKSEL KOŞUSU -->
-                <div id="arcade-pixel" class="arcade-game-pane" style="display:none; background:var(--card-bg); border:1px solid var(--border-color); border-radius:18px; padding:24px; backdrop-filter:blur(10px);">
+                <div id="arcade-pixel" class="arcade-game-pane" style="display:none; background:var(--card-bg); border:1px solid var(--border-color); border-radius:18px; padding:24px;">
                     <h3 style="font-size:20px; color:#fde047; margin-bottom:8px; text-align:center;">🐎 Piksel Koşusu (Simülasyon)</h3>
                     <p style="color:#94a3b8; font-size:13px; margin-bottom:16px; text-align:center;">Favori atını seç, oranına göre ödülünü katla!</p>
                     
@@ -605,7 +748,7 @@ body {
                             </select>
                         </div>
                         <div class="input-group" style="width:140px; margin-bottom:0;">
-                            <label>BAHİS (JETON)</label>
+                            <label>BAHİS (BAKİYE)</label>
                             <input type="number" id="pixel-bet" value="50" min="10">
                         </div>
                         <button type="button" class="submit-btn" style="width:auto; padding:11px 24px; margin-top:18px;" onclick="window.startPixelRace()">Yarışı Başlat</button>
@@ -614,11 +757,11 @@ body {
                 </div>
 
                 <!-- 5. GÜNLÜK ÇARK / ÖDÜL 2D -->
-                <div id="arcade-wheel" class="arcade-game-pane" style="display:none; background:var(--card-bg); border:1px solid var(--border-color); border-radius:18px; padding:24px; text-align:center; backdrop-filter:blur(10px);">
+                <div id="arcade-wheel" class="arcade-game-pane" style="display:none; background:var(--card-bg); border:1px solid var(--border-color); border-radius:18px; padding:24px; text-align:center;">
                     <h3 style="font-size:20px; color:#fde047; margin-bottom:8px;">🎁 Günlük Ödül & Çark</h3>
-                    <p style="color:#94a3b8; font-size:13px; margin-bottom:16px;">Her 24 saatte bir kez ücretsiz +100 Jeton ödülünü topla!</p>
+                    <p style="color:#94a3b8; font-size:13px; margin-bottom:16px;">Her 24 saatte bir kez ücretsiz +100 bakiye ödülünü topla!</p>
                     <div style="font-size:64px; margin-bottom:16px;">🎁</div>
-                    <button type="button" class="submit-btn" id="daily-claim-btn" style="max-width:280px; margin:0 auto;" onclick="window.claimDailyBonus()">Günlük Ödülü Al (+100 🪙)</button>
+                    <button type="button" class="submit-btn" id="daily-claim-btn" style="max-width:280px; margin:0 auto;" onclick="window.claimDailyBonus()">Günlük Ödülü Al (+100 bakiye)</button>
                     <p id="daily-timer-info" style="margin-top:12px; font-size:12px; color:#94a3b8;"></p>
                 </div>
             </div>
@@ -628,102 +771,242 @@ body {
                 <div class="section-header">
                     <div>
                         <h2>🛍️ Siber Dükkan</h2>
-                        <p>Jetonlarınla unvan satın al, profilinden kullan.</p>
+                        <p>Bakiyenle unvan, çerçeve ve isim stili satın al; satın aldıklarını tek tıkla kullan.</p>
                     </div>
                 </div>
-                <div class="shop-grid">
-                    <div class="shop-card">
+                <div class="shop-grid" id="shop-grid-container">
+                    <!-- UNVANLAR -->
+                    <div class="shop-card" data-shop-id="👑 Kral">
                         <div class="shop-icon">👑</div>
                         <h3>Kral Tacı</h3>
-                        <p style="font-size:12.5px; color:#94a3b8;">Özel Kral unvanını açar.</p>
-                        <div class="price-tag">250 🪙</div>
-                        <button type="button" class="btn-action" id="buy-item-kral" onclick="window.buyItem('👑 Kral', 250)">Satın Al</button>
+                        <p style="font-size:12.5px; color:#94a3b8;">Unvan: 👑 Kral</p>
+                        <div class="price-tag">250 bakiye</div>
+                        <button type="button" class="btn-action shop-item-btn" onclick="window.handleShopBtn('title','👑 Kral',250)">Satın Al</button>
                     </div>
-                    <div class="shop-card">
+                    <div class="shop-card" data-shop-id="🔥 Efsane">
                         <div class="shop-icon">🔥</div>
-                        <h3>Efsanevi Oyuncu</h3>
-                        <p style="font-size:12.5px; color:#94a3b8;">Efsane unvanını açar.</p>
-                        <div class="price-tag">400 🪙</div>
-                        <button type="button" class="btn-action" id="buy-item-efsane" onclick="window.buyItem('🔥 Efsane', 400)">Satın Al</button>
+                        <h3>Efsane</h3>
+                        <p style="font-size:12.5px; color:#94a3b8;">Unvan: 🔥 Efsane</p>
+                        <div class="price-tag">400 bakiye</div>
+                        <button type="button" class="btn-action shop-item-btn" onclick="window.handleShopBtn('title','🔥 Efsane',400)">Satın Al</button>
                     </div>
-                    <div class="shop-card">
+                    <div class="shop-card" data-shop-id="💎 VIP">
                         <div class="shop-icon">💎</div>
                         <h3>Elmas VIP</h3>
-                        <p style="font-size:12.5px; color:#94a3b8;">Elmas VIP unvanını açar.</p>
-                        <div class="price-tag">750 🪙</div>
-                        <button type="button" class="btn-action" id="buy-item-vip" onclick="window.buyItem('💎 VIP', 750)">Satın Al</button>
+                        <p style="font-size:12.5px; color:#94a3b8;">Unvan: 💎 VIP</p>
+                        <div class="price-tag">750 bakiye</div>
+                        <button type="button" class="btn-action shop-item-btn" onclick="window.handleShopBtn('title','💎 VIP',750)">Satın Al</button>
+                    </div>
+                    <!-- ÇERÇEVELER -->
+                    <div class="shop-card" data-shop-id="frame_neon">
+                        <div class="shop-icon" style="color:#22d3ee;">○</div>
+                        <h3>Neon Çerçeve</h3>
+                        <p style="font-size:12.5px; color:#94a3b8;">Elektrikli neon ışıklar</p>
+                        <div class="price-tag">4000 bakiye</div>
+                        <button type="button" class="btn-action shop-item-btn" onclick="window.handleShopBtn('frame','frame_neon',4000)">Satın Al</button>
+                    </div>
+                    <div class="shop-card" data-shop-id="frame_matrix">
+                        <div class="shop-icon" style="color:#22c55e;">○</div>
+                        <h3>Matriks Çerçeve</h3>
+                        <p style="font-size:12.5px; color:#94a3b8;">Yeşil kod yağmuru</p>
+                        <div class="price-tag">8000 bakiye</div>
+                        <button type="button" class="btn-action shop-item-btn" onclick="window.handleShopBtn('frame','frame_matrix',8000)">Satın Al</button>
+                    </div>
+                    <div class="shop-card" data-shop-id="frame_holo">
+                        <div class="shop-icon" style="color:#a855f7;">○</div>
+                        <h3>Hologram Çerçeve</h3>
+                        <p style="font-size:12.5px; color:#94a3b8;">Holografik çerçeve</p>
+                        <div class="price-tag">9000 bakiye</div>
+                        <button type="button" class="btn-action shop-item-btn" onclick="window.handleShopBtn('frame','frame_holo',9000)">Satın Al</button>
+                    </div>
+                    <div class="shop-card" data-shop-id="frame_blood">
+                        <div class="shop-icon" style="color:#ef4444;">○</div>
+                        <h3>Kanlı Ay</h3>
+                        <p style="font-size:12.5px; color:#94a3b8;">Koyu kırmızı çerçeve</p>
+                        <div class="price-tag">15000 bakiye</div>
+                        <button type="button" class="btn-action shop-item-btn" onclick="window.handleShopBtn('frame','frame_blood',15000)">Satın Al</button>
+                    </div>
+                    <div class="shop-card" data-shop-id="frame_gold">
+                        <div class="shop-icon" style="color:#fbbf24;">○</div>
+                        <h3>Altın Çerçeve</h3>
+                        <p style="font-size:12.5px; color:#94a3b8;">Lüks altın çerçeve</p>
+                        <div class="price-tag">20000 bakiye</div>
+                        <button type="button" class="btn-action shop-item-btn" onclick="window.handleShopBtn('frame','frame_gold',20000)">Satın Al</button>
+                    </div>
+                    <div class="shop-card" data-shop-id="frame_cosmic">
+                        <div class="shop-icon" style="color:#60a5fa;">○</div>
+                        <h3>Kozmik Çerçeve</h3>
+                        <p style="font-size:12.5px; color:#94a3b8;">Evren temalı</p>
+                        <div class="price-tag">25000 bakiye</div>
+                        <button type="button" class="btn-action shop-item-btn" onclick="window.handleShopBtn('frame','frame_cosmic',25000)">Satın Al</button>
+                    </div>
+                    <div class="shop-card" data-shop-id="frame_blinky">
+                        <div class="shop-icon">👻</div>
+                        <h3>Piksel Blinky</h3>
+                        <p style="font-size:12.5px; color:#94a3b8;">Kırmızı Pac-Man hayaleti</p>
+                        <div class="price-tag">12000 bakiye</div>
+                        <button type="button" class="btn-action shop-item-btn" onclick="window.handleShopBtn('frame','frame_blinky',12000)">Satın Al</button>
+                    </div>
+                    <div class="shop-card" data-shop-id="frame_pinky">
+                        <div class="shop-icon">👻</div>
+                        <h3>Piksel Pinky</h3>
+                        <p style="font-size:12.5px; color:#94a3b8;">Pembe Pac-Man hayaleti</p>
+                        <div class="price-tag">12000 bakiye</div>
+                        <button type="button" class="btn-action shop-item-btn" onclick="window.handleShopBtn('frame','frame_pinky',12000)">Satın Al</button>
+                    </div>
+                    <!-- İSİM STİLLERİ -->
+                    <div class="shop-card" data-shop-id="name_nitro">
+                        <h3 style="color:#ec4899;">Nitro İsim</h3>
+                        <p style="font-size:12.5px; color:#94a3b8;">Pembe isim rengi</p>
+                        <div class="price-tag">1500 bakiye</div>
+                        <button type="button" class="btn-action shop-item-btn" onclick="window.handleShopBtn('name','name_nitro',1500)">Satın Al</button>
+                    </div>
+                    <div class="shop-card" data-shop-id="name_gold">
+                        <h3 style="color:#fbbf24;">Altın İsim</h3>
+                        <p style="font-size:12.5px; color:#94a3b8;">Altın isim rengi</p>
+                        <div class="price-tag">2500 bakiye</div>
+                        <button type="button" class="btn-action shop-item-btn" onclick="window.handleShopBtn('name','name_gold',2500)">Satın Al</button>
+                    </div>
+                    <div class="shop-card" data-shop-id="name_mint">
+                        <h3 style="color:#4ade80;">Mint İsim</h3>
+                        <p style="font-size:12.5px; color:#94a3b8;">Nane yeşili</p>
+                        <div class="price-tag">1700 bakiye</div>
+                        <button type="button" class="btn-action shop-item-btn" onclick="window.handleShopBtn('name','name_mint',1700)">Satın Al</button>
+                    </div>
+                    <div class="shop-card" data-shop-id="name_crimson">
+                        <h3 style="color:#f87171;">Crimson İsim</h3>
+                        <p style="font-size:12.5px; color:#94a3b8;">Koyu kırmızı</p>
+                        <div class="price-tag">2000 bakiye</div>
+                        <button type="button" class="btn-action shop-item-btn" onclick="window.handleShopBtn('name','name_crimson',2000)">Satın Al</button>
+                    </div>
+                    <div class="shop-card" data-shop-id="name_snow">
+                        <h3 style="color:#f8fafc;">Snow İsim</h3>
+                        <p style="font-size:12.5px; color:#94a3b8;">Parlak beyaz</p>
+                        <div class="price-tag">1500 bakiye</div>
+                        <button type="button" class="btn-action shop-item-btn" onclick="window.handleShopBtn('name','name_snow',1500)">Satın Al</button>
+                    </div>
+                    <div class="shop-card" data-shop-id="name_rainbow">
+                        <h3 style="background:linear-gradient(90deg,#f43f5e,#eab308,#22c55e,#3b82f6); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Rainbow İsim</h3>
+                        <p style="font-size:12.5px; color:#94a3b8;">Gökkuşağı isim</p>
+                        <div class="price-tag">6000 bakiye</div>
+                        <button type="button" class="btn-action shop-item-btn" onclick="window.handleShopBtn('name','name_rainbow',6000)">Satın Al</button>
                     </div>
                 </div>
             </div>
 
-            <!-- 5. SOHBET -->
+            <!-- GÖREVLER -->
+            <div id="sec-quests" class="section-view">
+                <div class="section-header">
+                    <div>
+                        <h2>🎯 Görevler</h2>
+                        <p>Görev bitirdikçe yenileri zorlaşır. Ödül: bakiye / skor.</p>
+                    </div>
+                </div>
+                <div id="quests-list" class="shop-grid"></div>
+            </div>
+
+            <!-- 5. SOHBET (TAM EKRAN - SADECE ÜST MENÜ KALIR) -->
             <div id="sec-clans" class="section-view">
-                <div class="clan-main-wrapper" style="grid-template-columns: 1fr;">
+                <div class="clan-main-wrapper">
                     <div class="dislord-chat-pane">
                         <div class="dislord-chat-header">
-                            <span>💬 Sohbet</span>
-                            <span style="font-size:12px; color:#4ade80;">● Çevrimiçi</span>
+                            <span>💬 Genel Sohbet</span>
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <button type="button" class="submit-btn" style="width:auto; margin:0; padding:6px 12px; font-size:12px;" onclick="document.getElementById('poll-create-modal').style.display='flex'">📊 Anket Oluştur</button>
+                                <span style="font-size:12px; color:#4ade80;">● Çevrimiçi</span>
+                            </div>
                         </div>
                         <div class="dislord-messages-area" id="dislord-messages-container"></div>
+
+                        <!-- EMOJİ SEÇİCİ POPUP -->
+                        <div id="emoji-picker-popover"></div>
+
+                        <div id="pinned-messages-bar"></div>
+                        <div id="reply-preview-bar"><span id="reply-preview-text"></span><button type="button" class="msg-act-btn" onclick="window.clearReply()">✕</button></div>
                         <div class="dislord-input-area">
-                            <input type="text" id="dislord-message-input" placeholder="Mesajınızı yazın..." onkeydown="window.handleDislordChatKey(event)">
+                            <div class="chat-input-box-wrap">
+                                <input type="text" id="dislord-message-input" placeholder="Mesajınızı yazın..." onkeydown="window.handleDislordChatKey(event)">
+                                <button type="button" class="emoji-trigger-btn" id="emoji-toggle-btn" title="Emojiler" onclick="window.toggleEmojiPicker(event)">😀</button>
+                            </div>
                             <button type="button" class="dislord-send-btn" onclick="window.sendDislordMessage()">Gönder</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 6. İSTATİSTİK -->
+            <!-- 6. İSTATİSTİK (SÜRE SİLİNDİ) -->
             <div id="sec-stats" class="section-view">
                 <div class="section-header">
                     <div>
                         <h2>📊 Portal İstatistikleri</h2>
-                        <p>Genel sistem ve oyuncu verileri.</p>
+                        <p>Kayıtlı tüm hesaplar ve özet.</p>
                     </div>
                 </div>
-                <div class="shop-grid">
+                <div class="shop-grid" style="margin-bottom:20px;">
                     <div class="shop-card" style="text-align:left;">
                         <div class="shop-icon">👥</div>
                         <h3>Toplam Oyuncu</h3>
                         <p style="font-size:22px; font-weight:800; color:#fff;" id="stat-total-users">0</p>
                     </div>
-                    <div class="shop-card" style="text-align:left;">
-                        <div class="shop-icon">🛡️</div>
-                        <h3>Toplam Klan</h3>
-                        <p style="font-size:22px; font-weight:800; color:#fff;" id="stat-total-clans">0</p>
-                    </div>
-                    <div class="shop-card" style="text-align:left;">
-                        <div class="shop-icon">🪙</div>
-                        <h3>Dolaşımdaki Jeton</h3>
-                        <p style="font-size:22px; font-weight:800; color:#fde047;" id="stat-total-coins">0</p>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Oyuncu</th>
+                            <th>Sınıf</th>
+                            <th>Bakiye</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stats-users-tbody"></tbody>
+                </table>
+            </div>
+
+            <!-- 7. ADMIN PANELİ -->
+            <div id="sec-stream" class="section-view">
+                <div id="st-hub" class="st-box">
+                    <div class="st-head"><h3>📺 Canlı Yayınlar</h3><button type="button" class="st-btn red" id="st-open-btn" onclick="window.stStart()">🎥 Kendi Yayınımı Aç</button></div>
+                    <div id="st-hub-body"></div>
+                </div>
+                <div id="st-room" style="display:none;">
+                    <div class="st-box" style="margin-bottom:14px;"><div class="st-head" style="margin:0;"><h3><span class="st-dot"></span><span id="st-title">yayında</span></h3><button type="button" class="st-btn red st-host-only" id="st-leave-btn" onclick="window.stLeave()">Yayını Durdur</button></div></div>
+                    <div class="st-room">
+                        <div class="st-video"><video id="st-video" autoplay playsinline tabindex="0"></video></div>
+                        <div class="st-side">
+                            <h4>💬 Canlı Chat</h4>
+                            <div id="st-chat"></div>
+                            <div class="st-send"><input type="text" id="st-chat-input" placeholder="Mesaj yaz..." onkeydown="if(event.key==='Enter')window.stSendChat()"><button type="button" class="st-btn green" onclick="window.stSendChat()">Gönder</button></div>
+                            <div id="st-ctl-area" class="st-host-only"></div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 7. ADMIN PANELİ -->
             <div id="sec-admin-panel" class="section-view">
                 <div class="section-header">
                     <div>
                         <h2>👑 Portal Admin Merkezi</h2>
-                        <p>Jeton ekle/sil, süreli duyuru at, geliştirici ata, ban ve tüm engelleri kaldır.</p>
+                        <p>Bakiye ekle/sil, süreli duyuru at, geliştirici ata, ban ve tüm engelleri kaldır.</p>
                     </div>
                 </div>
                 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px; backdrop-filter:blur(10px);">
-                        <h3 style="font-size:16px; color:#fde047; margin-bottom:14px;">🪙 Jeton Ekle / Sil (Eksi Bakiye Olamaz)</h3>
+                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px;">
+                        <h3 style="font-size:16px; color:#fde047; margin-bottom:14px;">💰 Bakiye Ekle / Sil (Eksi Bakiye Olamaz)</h3>
                         <div class="input-group">
                             <label>HEDEF OYUNCU</label>
                             <select id="admin-target-user-coin"></select>
                         </div>
                         <div class="input-group">
-                            <label>JETON MİKTARI (Örn: 500 veya -200)</label>
+                            <label>BAKİYE MİKTARI (Örn: 500 veya -200)</label>
                             <input type="number" id="admin-coin-amount" value="500">
                         </div>
                         <button type="button" class="submit-btn" onclick="window.adminGiveOrTakeCoins()">Bakiyeyi Güncelle</button>
+                        <div class="input-group" style="margin-top:16px;"><label>🏆 SKOR MİKTARI (Örn: 500 veya -200)</label><input type="number" id="admin-score-amount" value="500"></div>
+                        <button type="button" class="submit-btn" onclick="window.adminGiveOrTakeScore()">Skoru Güncelle</button>
                     </div>
 
-                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px; backdrop-filter:blur(10px);">
+                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px;">
                         <h3 style="font-size:16px; color:#facc15; margin-bottom:14px;">🔇 Süreli Sustur (Mute)</h3>
                         <div class="input-group">
                             <label>HEDEF OYUNCU</label>
@@ -736,7 +1019,7 @@ body {
                         <button type="button" class="submit-btn" style="background:linear-gradient(135deg, #f59e0b, #b45309);" onclick="window.adminSetTimedMute()">Süreli Mute At</button>
                     </div>
 
-                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px; backdrop-filter:blur(10px);">
+                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px;">
                         <h3 style="font-size:16px; color:#22d3ee; margin-bottom:14px;">📢 Süreli Üst Duyuru Yayınla</h3>
                         <div class="input-group">
                             <label>DUYURU METNİ</label>
@@ -749,20 +1032,22 @@ body {
                         <button type="button" class="submit-btn" style="background:linear-gradient(135deg, #0284c7, #0369a1);" onclick="window.adminSendTimedBroadcast()">Duyuruyu Başlat</button>
                     </div>
 
-                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px; backdrop-filter:blur(10px);">
-                        <h3 style="font-size:16px; color:#a855f7; margin-bottom:14px;">🛠️ Geliştirici Yetkisi & Şifre Atama</h3>
+                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px;">
+                        <h3 style="font-size:16px; color:#a855f7; margin-bottom:14px;">🛠️ Geliştirici Yetkisi</h3>
                         <div class="input-group">
-                            <label>HEDEF OYUNCU</label>
+                            <label>GELİŞTİRİCİ YAPILACAK OYUNCU (herkes)</label>
                             <select id="admin-target-user-dev"></select>
                         </div>
                         <div class="input-group">
                             <label>GELİŞTİRİCİ PANEL ŞİFRESİ BELİRLE</label>
                             <input type="text" id="dev-custom-password" placeholder="Örn: dev12345">
                         </div>
-                        <div class="row-group">
-                            <button type="button" class="submit-btn" style="background:linear-gradient(135deg, #7c3aed, #5b21b6); margin-top:0;" onclick="window.adminSetDev(true)">Geliştirici Yap</button>
-                            <button type="button" class="submit-btn" style="background:linear-gradient(135deg, #991b1b, #450a0a); margin-top:0;" onclick="window.adminSetDev(false)">Yetkiyi Geri Al</button>
+                        <button type="button" class="submit-btn" style="background:linear-gradient(135deg, #7c3aed, #5b21b6); margin-top:0;" onclick="window.adminSetDev(true)">Geliştirici Yap</button>
+                        <div class="input-group" style="margin-top:16px;">
+                            <label>YETKİSİ ALINACAK GELİŞTİRİCİ (sadece verdiklerim)</label>
+                            <select id="admin-target-user-dev-revoke"></select>
                         </div>
+                        <button type="button" class="submit-btn" style="background:linear-gradient(135deg, #991b1b, #450a0a); margin-top:0;" onclick="window.adminSetDev(false)">Yetkiyi Geri Al</button>
                         
                         <div class="input-group" style="margin-top:14px;">
                             <label>YASAKLI KELİME EKLE (Virgülle Ayır)</label>
@@ -771,25 +1056,30 @@ body {
                         <button type="button" class="submit-btn" style="background:linear-gradient(135deg, #ef4444, #991b1b);" onclick="window.adminSaveBadWords()">Yasaklı Kelimeleri Güncelle</button>
                     </div>
 
-                    
-<div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px; backdrop-filter:blur(10px); grid-column: 1 / -1;">
+                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px; grid-column: 1 / -1;">
                         <h3 style="font-size:16px; color:#f87171; margin-bottom:14px;">⛔ Hesap & IP Engelleme (Ban) Yönetimi</h3>
                         <div class="input-group">
                             <label>HEDEF OYUNCU</label>
                             <select id="admin-target-user-ban"></select>
                         </div>
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 10px;">
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 10px;">
                             <button type="button" class="submit-btn" style="background:linear-gradient(135deg, #dc2626, #7f1d1d); margin-top:0;" onclick="window.adminBanUser('account')">Hesabı Engelle</button>
+                            <button type="button" class="submit-btn" style="background:linear-gradient(135deg, #9f1239, #4c0519); margin-top:0;" onclick="window.adminDeleteUser()">Hesabı Sil</button>
                             <button type="button" class="submit-btn" style="background:linear-gradient(135deg, #991b1b, #450a0a); margin-top:0;" onclick="window.adminBanUser('ip')">IP / Cihaz Banı</button>
                         </div>
                         <div style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 16px; text-align: center;">
                             <button type="button" class="submit-btn" style="background:linear-gradient(135deg, #2563eb, #1d4ed8); max-width: 380px; margin: 0 auto;" onclick="window.adminUnbanAllUsers()">🔓 Tüm Banları ve Cihaz Engellerini Kaldır</button>
                         </div>
                     </div>
+
+                    <div style="background:var(--card-bg); border:1px solid rgba(239,68,68,0.4); border-radius:16px; padding:20px; grid-column: 1 / -1;">
+                        <h3 style="font-size:16px; color:#f87171; margin-bottom:10px;">🗑️ Toplu Hesap Temizliği</h3>
+                        <p style="font-size:12.5px; color:#94a3b8; margin-bottom:14px;">Admin ve geliştirici hesapları hariç <b style="color:#fff;">tüm oyuncu hesaplarını</b> siler. Geri alınamaz!</p>
+                        <button type="button" class="submit-btn" style="background:linear-gradient(135deg,#7f1d1d,#450a0a); max-width:420px;" onclick="window.adminDeleteAllNonStaff()">Tüm Hesapları Kaldır (Admin/Dev Hariç)</button>
+                    </div>
                 </div>
             </div>
 
-            
             <!-- ADMIN DM KUTUSU PANELİ -->
             <div id="sec-admin-dm" class="section-view">
                 <div class="section-header">
@@ -798,7 +1088,7 @@ body {
                         <p>Sohbetten sana özel mesaj gönderen tüm oyuncuların listesi ve son mesajları.</p>
                     </div>
                 </div>
-                <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px; backdrop-filter:blur(10px);">
+                <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px;">
                     <h3 style="font-size:16px; color:#fde047; margin-bottom:14px;">💬 Gelen Özel Mesajlar</h3>
                     <div id="admin-dm-inbox-list" style="display:flex; flex-direction:column; gap:12px; max-height:550px; overflow-y:auto;">
                         <div style="color:#94a3b8; font-size:13px; text-align:center; padding:20px;">Yükleniyor...</div>
@@ -806,7 +1096,7 @@ body {
                 </div>
             </div>
 
-<!-- 8. KISITLI GELİŞTİRİCİ PANELİ -->
+            <!-- 8. KISITLI GELİŞTİRİCİ PANELİ -->
             <div id="sec-dev-panel" class="section-view">
                 <div class="section-header">
                     <div>
@@ -816,7 +1106,7 @@ body {
                 </div>
                 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px; backdrop-filter:blur(10px);">
+                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px;">
                         <h3 style="font-size:16px; color:#facc15; margin-bottom:14px;">🔇 Süreli Sustur (Mute)</h3>
                         <div class="input-group">
                             <label>HEDEF OYUNCU</label>
@@ -829,7 +1119,7 @@ body {
                         <button type="button" class="submit-btn" style="background:linear-gradient(135deg, #f59e0b, #b45309);" onclick="window.devSetTimedMute()">Süreli Mute At</button>
                     </div>
 
-                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px; backdrop-filter:blur(10px);">
+                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px;">
                         <h3 style="font-size:16px; color:#ef4444; margin-bottom:14px;">⛔ Hesap Engelleme</h3>
                         <div class="input-group">
                             <label>HEDEF OYUNCU</label>
@@ -838,7 +1128,7 @@ body {
                         <button type="button" class="submit-btn" style="background:linear-gradient(135deg, #dc2626, #7f1d1d);" onclick="window.devBanUser()">Hesabı Engelle (Ban)</button>
                     </div>
 
-                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px; backdrop-filter:blur(10px); grid-column: 1 / -1;">
+                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px; grid-column: 1 / -1;">
                         <h3 style="font-size:16px; color:#a855f7; margin-bottom:14px;">📝 Yasaklı Kelime Yönetimi</h3>
                         <div class="input-group">
                             <label>YASAKLI KELİME EKLE (Virgülle Ayır)</label>
@@ -850,11 +1140,72 @@ body {
             </div>
         </div>
 
-        <!-- SAĞ TARAF: ONLINE & AFK OYUNCULAR (Klan Odasındayken Gizlenir) -->
+        <!-- SAĞ TARAF: ONLINE & AFK OYUNCULAR -->
         <aside class="sidebar-panel" id="right-sidebar-panel">
             <div class="sidebar-title"><span>👥 Aktif Oyuncular</span><span id="online-count" style="font-size:11px; color:var(--cyan);">0 aktif</span></div>
             <div class="player-list" id="player-list"></div>
+            <div style="margin-top:16px; border-top:1px solid var(--border-color); padding-top:14px;">
+                <div class="sidebar-title" style="margin-bottom:10px;"><span>🤖 Portal AI</span></div>
+                <p style="font-size:12px; color:#94a3b8; margin-bottom:10px; line-height:1.4;">Matematik, kodlama, tarih, bilim, oyun stratejisi ve işlem yapabilen tam kapasiteli yapay zeka.</p>
+                <button type="button" class="submit-btn" style="margin-top:0; font-size:13px;" onclick="window.openAIChat()">AI ile Konuş</button>
+            </div>
+            <div style="margin-top:16px; border-top:1px solid var(--border-color); padding-top:14px;">
+                <div class="sidebar-title" style="margin-bottom:10px;"><span>📺 Canlı Yayın</span><span id="st-live-badge" style="font-size:11px; color:#94a3b8;">yayın yok</span></div>
+                <p style="font-size:12px; color:#94a3b8; margin-bottom:10px; line-height:1.4;">Ekranını paylaş, arkadaşlarının yayınını izle, canlı sohbet et.</p>
+                <button type="button" class="submit-btn" style="margin-top:0; font-size:13px; background:linear-gradient(135deg,#ef4444,#b91c1c);" onclick="window.openStreamHub()">Yayınlara Git</button>
+            </div>
         </aside>
+    </div>
+</div>
+
+<!-- AI SOHBET MODALI (TAM SİYAH ARKA PLAN, YÜKSEK KAPASİTELİ ASİSTAN) -->
+<div id="ai-chat-modal">
+    <div style="background:#0a0a0a; padding:14px 22px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.12);">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <span style="font-size:22px;">🤖</span>
+            <div>
+                <h3 style="color:#fff; font-size:16px; font-weight:800;">Portal AI Pro</h3>
+                <span style="font-size:11px; color:#4ade80;">● Matematik · Kodlama · Bilgi · Portal İşlemleri Aktif</span>
+            </div>
+        </div>
+        <div style="display:flex; gap:8px;">
+            <button type="button" class="pill-btn" onclick="window.clearAIChat()">Sohbeti Temizle</button>
+            <button type="button" class="close-btn" onclick="window.closeAIChat()">Kapat ✖</button>
+        </div>
+    </div>
+    <div id="ai-chat-messages" style="flex:1; overflow-y:auto; padding:22px; display:flex; flex-direction:column; gap:14px; background:#000000;"></div>
+    <div style="padding:14px 22px; background:#0a0a0a; border-top:1px solid rgba(255,255,255,0.12); display:flex; gap:10px;">
+        <input type="text" id="ai-chat-input" placeholder="Her şeyi sor veya işlem yaptır (ör: 145*38 kaç, python döngü yaz, skorumu bakiyeye çevir, tarih, bilim)..." style="flex:1; background:#111111; border:1px solid rgba(255,255,255,0.15); padding:13px 16px; border-radius:12px; color:#fff; outline:none; font-size:14px;" onkeydown="if(event.key==='Enter')window.sendAIMessage()">
+        <button type="button" class="dislord-send-btn" onclick="window.sendAIMessage()">Gönder</button>
+    </div>
+</div>
+
+<!-- ANKET OLUŞTUR MODALI -->
+<div id="poll-create-modal" class="modal-backdrop">
+    <div class="modal-box">
+        <h3 style="font-size:18px; font-weight:800; margin-bottom:14px; text-align:center;">📊 Anket Oluştur</h3>
+        <div class="input-group">
+            <label>SORU</label>
+            <input type="text" id="poll-question" placeholder="Örn: En sevdiğin oyun hangisi?" maxlength="120">
+        </div>
+        <div class="input-group">
+            <label>SEÇENEK 1</label>
+            <input type="text" id="poll-opt1" maxlength="40">
+        </div>
+        <div class="input-group">
+            <label>SEÇENEK 2</label>
+            <input type="text" id="poll-opt2" maxlength="40">
+        </div>
+        <div class="input-group">
+            <label>SEÇENEK 3 (opsiyonel)</label>
+            <input type="text" id="poll-opt3" maxlength="40">
+        </div>
+        <div class="input-group">
+            <label>SEÇENEK 4 (opsiyonel)</label>
+            <input type="text" id="poll-opt4" maxlength="40">
+        </div>
+        <button type="button" class="submit-btn" onclick="window.createPoll()">Anketi Gönder</button>
+        <button type="button" class="submit-btn" style="background:#1e293b; color:#fff;" onclick="document.getElementById('poll-create-modal').style.display='none'">Vazgeç</button>
     </div>
 </div>
 
@@ -891,15 +1242,15 @@ body {
 </div>
 
 <!-- ADMIN ÖZEL SOHBET MODALI -->
-<div id="admin-chat-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:1200; justify-content:center; align-items:center; padding:20px; backdrop-filter:blur(10px);">
-    <div style="background:#0f172a; width:100%; max-width:650px; height:80vh; border-radius:20px; border:1px solid rgba(245, 158, 11, 0.3); display:flex; flex-direction:column; overflow:hidden; box-shadow:0 25px 50px rgba(0,0,0,0.8);">
-        <div style="background:#1e293b; padding:16px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color);">
+<div id="admin-chat-modal" style="display:none; position:fixed; inset:0; background:#000000; z-index:1200; justify-content:center; align-items:center; padding:20px;">
+    <div style="background:#0b0f19; width:100%; max-width:650px; height:80vh; border-radius:20px; border:1px solid rgba(245, 158, 11, 0.4); display:flex; flex-direction:column; overflow:hidden; box-shadow:0 25px 50px rgba(0,0,0,0.9);">
+        <div style="background:#141b2d; padding:16px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color);">
             <h3 id="admin-chat-title" style="color:#fff; font-size:17px;">💬 Admin İle Özel Sohbet</h3>
             <button type="button" class="close-btn" onclick="window.closeAdminChat()">Kapat ✖</button>
         </div>
         <div id="admin-chat-messages" style="flex:1; padding:18px; overflow-y:auto; display:flex; flex-direction:column; gap:12px;"></div>
-        <div style="padding:14px; background:#1e293b; display:flex; gap:10px; border-top:1px solid var(--border-color);">
-            <input type="text" id="admin-chat-input" placeholder="Admin için mesajını yaz..." onkeydown="window.handleAdminChatKey(event)" style="flex:1; background:rgba(0,0,0,0.4); border:1px solid var(--border-color); padding:11px 14px; border-radius:10px; color:white; outline:none; font-size:13.5px;">
+        <div style="padding:14px; background:#141b2d; display:flex; gap:10px; border-top:1px solid var(--border-color);">
+            <input type="text" id="admin-chat-input" placeholder="Admin için mesajını yaz..." onkeydown="window.handleAdminChatKey(event)" style="flex:1; background:#06080d; border:1px solid var(--border-color); padding:11px 14px; border-radius:10px; color:white; outline:none; font-size:13.5px;">
             <button type="button" onclick="window.sendAdminMessage()" style="background:var(--primary); color:white; border:none; padding:0 18px; border-radius:10px; font-weight:800; cursor:pointer;">Gönder</button>
         </div>
     </div>
@@ -942,8 +1293,8 @@ body {
             <input type="text" id="profile-avatar-url" placeholder="https://ornek.com/resim.png">
         </div>
 
-        <div style="background: rgba(0,0,0,0.3); border:1px solid var(--border-color); border-radius:12px; padding:12px; margin-bottom:16px;">
-            <label style="color:#fde047; font-size:12px; font-weight:800; margin-bottom:8px; display:block;">📦 Envanterin / Satın Alınan Unvanlar</label>
+        <div style="background: rgba(0,0,0,0.45); border:1px solid var(--border-color); border-radius:12px; padding:12px; margin-bottom:16px;">
+            <label style="color:#fde047; font-size:12px; font-weight:800; margin-bottom:8px; display:block;">📦 Envanterin / Satın Alınanlar</label>
             <div id="inventory-list" style="display:flex; flex-direction:column; gap:8px;"></div>
         </div>
 
@@ -967,11 +1318,56 @@ body {
     </div>
 </div>
 
+<!-- Geliştirici araçları: yalnızca sunucuda doğrulanmış admin için açık -->
+<script>
+(function () {
+    var lock = document.createElement("div");
+    lock.style.cssText = "position:fixed;inset:0;z-index:2147483647;background:#06080d;color:#fca5a5;display:none;align-items:center;justify-content:center;font:700 18px sans-serif;text-align:center;padding:20px";
+    lock.textContent = "🔒 Geliştirici araçları bu sitede yalnızca adminlere açıktır. Kapatıp sayfayı yenileyin.";
+    document.addEventListener("DOMContentLoaded", function () { document.body.appendChild(lock); });
+    function adm() { return window.__isAdmin === true; }
+    function stop(e) { if (!adm()) { e.preventDefault(); e.stopPropagation(); return false; } }
+    document.addEventListener("contextmenu", stop, true);
+    document.addEventListener("keydown", function (e) {
+        var k = (e.key || "").toLowerCase();
+        if (e.key === "F12" || (e.ctrlKey && e.shiftKey && "ijck".indexOf(k) > -1) || (e.ctrlKey && (k === "u" || k === "s")) || (e.metaKey && e.altKey && "iujc".indexOf(k) > -1)) stop(e);
+    }, true);
+    setInterval(function () {
+        if (adm()) { lock.style.display = "none"; return; }
+        var t = performance.now(); debugger;
+        lock.style.display = (performance.now() - t > 80) ? "flex" : "none";
+    }, 1000);
+})();
+</script>
+
+<!-- YEDEK: Firebase yüklenemezse giriş ekranı butonları yine çalışsın -->
+<script>
+window.__firebaseReady = false;
+window.switchTab = function(mode) {
+    var g = function(i){ return document.getElementById(i); };
+    var reg = mode === "register";
+    g("login-tab").classList.toggle("active", !reg);
+    g("register-tab").classList.toggle("active", reg);
+    g("class-section").style.display = reg ? "grid" : "none";
+    g("card-title").innerText = reg ? "Hesap Oluştur" : "Sisteme Giriş";
+    g("card-subtitle").innerText = reg ? "Bilgilerini doldurarak yeni kayıt oluştur." : "Hesabına giriş yap veya yeni kayıt oluştur.";
+    g("submit-btn").innerText = reg ? "Kayıt Ol" : "Giriş Yap";
+    g("auth-error").innerText = "";
+    window.__fallbackMode = mode;
+};
+window.handleAuth = function() {
+    var e = document.getElementById("auth-error");
+    e.style.color = "#f87171";
+    e.innerText = "Sunucu bağlantısı (Firebase) yüklenemedi. İnternetini kontrol edip sayfayı yenile; siteyi önizlemede değil, normal bir tarayıcıda/hosting üzerinde aç.";
+};
+window.handleAuthKey = function(ev) { if (ev.key === "Enter") { ev.preventDefault(); window.handleAuth(); } };
+</script>
+
 <!-- FIREBASE & MANTIK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateEmail, EmailAuthProvider, reauthenticateWithCredential } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, deleteDoc, doc, setDoc, getDoc, getDocs, updateDoc, arrayUnion, arrayRemove, query, where, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, deleteDoc, doc, setDoc, getDoc, getDocs, updateDoc, query, where, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDRS1B64hqK-Q-zgUrhvgdaAhyq7o5RnGw",
@@ -987,23 +1383,25 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const ADMIN_MASTER_PASSWORD = "123321";
+const ADMIN_EMAILS = ["salim_xy66@oyunportal.com", "desiredoue@oyunportal.com"];
+let adminVerified = false, adminUnlocked = false, devUnlocked = false;
+let adminUids = new Set();
 
 let activeUser = null;
 let currentMode = "login";
-let userProfileData = { username: "", studentClass: "10", studentBranch: "F", avatarUrl: "", nameChanged: false, coins: 150, inventory: [], activeBadge: "", isMuted: false, mutedUntil: 0, isDev: false, devPassword: "", lastDailyClaim: 0, clanId: "" };
+let userProfileData = { username: "", studentClass: "10", studentBranch: "F", avatarUrl: "", nameChanged: false, coins: 150, inventory: [], activeBadges: [], activeFrame: "", activeNameStyle: "", playTimeMs: 0, scorePoints: 0, questLevel: 0, questProgress: {}, questDone: {}, isMuted: false, mutedUntil: 0, isDev: false, devPassword: "", lastDailyClaim: 0, clanId: "" };
 let afkTimer = null;
 let isAfk = false;
 let allUsersCache = [];
-let allClansCache = [];
 let globalBadWords = [];
 
 let activeAdminChatUnsub = null;
 let selectedAdminKey = "salim_xy66";
+let activeChatTargetUserUid = null;
 let broadcastTimeout = null;
-let isGameBusy = false;          // oyun spam koruması
-let lastClanMsgAt = 0;           // klan mesaj rate limit
-let pixelRaceRunning = false;    // pixel yarış çift tık koruması
+let isGameBusy = false;
+let lastClanMsgAt = 0;
+let pixelRaceRunning = false;
 
 let clientDeviceFingerprint = localStorage.getItem("portal_device_fp");
 if (!clientDeviceFingerprint) {
@@ -1011,14 +1409,10 @@ if (!clientDeviceFingerprint) {
     localStorage.setItem("portal_device_fp", clientDeviceFingerprint);
 }
 
-function checkIfAdmin(userObj = userProfileData, email = activeUser?.email) {
-    if (!userObj && !email) return false;
-    const cleanName = getCleanDisplayName(userObj?.username || "").toLowerCase().replace(/\s+/g, "_");
-    const emailLower = (email || "").toLowerCase();
-    // Hem username hem email üzerinden kontrol (daha sağlam)
-    return cleanName === "salim_xy66" || cleanName === "desiredoue" ||
-           emailLower.startsWith("salim_xy66@") || emailLower.startsWith("desiredoue@") ||
-           cleanName.includes("salim_xy66") || cleanName.includes("desiredoue");
+function checkIfAdmin(userObj = userProfileData) {
+    if (userObj === userProfileData) return adminVerified === true;
+    const n = getCleanDisplayName(userObj?.username || "").toLowerCase().replace(/\s+/g, "_");
+    return adminUids.has(userObj?.uid) || n === "salim_xy66" || n === "desiredoue";
 }
 
 function checkIfDev() {
@@ -1040,6 +1434,52 @@ function escapeHtml(str) {
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#39;");
 }
+
+/* EMOJİ SEÇİCİ OLUŞTURMA */
+const ALL_EMOJIS = [
+    "😀","😁","😂","🤣","😃","😄","😅","😆","😉","😊","😋","😎","😍","😘","🥰","😗",
+    "😙","😚","🙂","🤗","🤩","🤔","🤨","😐","😑","😶","🙄","😏","😣","😥","😮","🤐",
+    "😯","😪","😫","🥱","😴","😌","😛","😜","😝","🤤","😒","😓","😔","😕","🙃","🤑",
+    "😲","🙁","😖","😞","😟","😤","😢","😭","😦","😧","😨","😩","🤯","😬","😰","😱",
+    "🥵","🥶","😳","🤪","😵","🥴","😠","😡","🤬","😷","🤒","🤕","🤢","🤮","🤧","😇",
+    "🥳","🥺","🤠","🤡","🤥","🤫","🤭","🧐","🤓","😈","👿","👹","👺","💀","👻","👽",
+    "🤖","💩","😺","😸","😹","😻","😼","😽","🙀","😿","😾","👍","👎","👊","✊","🤛",
+    "🤜","🤞","✌️","🤟","🤘","👌","🤏","👈","👉","👆","👇","☝️","✋","🤚","🖐️","🖖",
+    "👋","🤙","💪","🙏","👏","🤝","❤️","🧡","💛","💚","💙","💜","🖤","🤍","💔","❣️",
+    "💕","💞","💓","💗","💖","💘","💝","🔥","✨","⭐","🌟","💫","⚡","💥","💯","💢",
+    "🎉","🎊","🏆","🥇","🥈","🥉","⚽","🏀","🎮","🕹️","🎲","🎯","🚀","💎","👑","💰"
+];
+
+function initEmojiPicker() {
+    const pop = document.getElementById("emoji-picker-popover");
+    if (!pop || pop.children.length > 0) return;
+    ALL_EMOJIS.forEach(em => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "emoji-pick-item";
+        btn.textContent = em;
+        btn.onclick = (e) => {
+            e.stopPropagation();
+            window.insertChatEmoji(em);
+        };
+        pop.appendChild(btn);
+    });
+}
+
+window.toggleEmojiPicker = function(e) {
+    if (e) e.stopPropagation();
+    initEmojiPicker();
+    const pop = document.getElementById("emoji-picker-popover");
+    if (pop) pop.classList.toggle("open");
+};
+
+document.addEventListener("click", (e) => {
+    const pop = document.getElementById("emoji-picker-popover");
+    const btn = document.getElementById("emoji-toggle-btn");
+    if (pop && pop.classList.contains("open") && !pop.contains(e.target) && e.target !== btn) {
+        pop.classList.remove("open");
+    }
+});
 
 const errorBox = document.getElementById("auth-error");
 const submitBtn = document.getElementById("submit-btn");
@@ -1089,40 +1529,88 @@ window.switchSection = function(secName) {
         btn.classList.toggle("active", btn.getAttribute("data-sec") === secName);
     });
 
+    const appLayout = document.getElementById("app-layout");
+    const mainContent = document.getElementById("main-content");
+    const rightSidebar = document.getElementById("right-sidebar-panel");
+
     if (secName === 'clans') {
         window.openGlobalChat();
-        document.getElementById("app-layout").classList.add("clan-chat-active");
-        document.getElementById("right-sidebar-panel").style.display = "none";
+        appLayout.classList.add("clan-chat-active");
+        mainContent.classList.add("chat-fullscreen-mode");
+        rightSidebar.style.display = "none";
     } else {
-        document.getElementById("app-layout").classList.remove("clan-chat-active");
-        document.getElementById("right-sidebar-panel").style.display = "block";
+        appLayout.classList.remove("clan-chat-active");
+        mainContent.classList.remove("chat-fullscreen-mode");
+        rightSidebar.style.display = "block";
     }
     if (secName === 'stats') {
         updateStatsView();
     }
+    if (secName === 'admin-dm') {
+        loadAdminInbox();
+    }
+    if (secName === 'quests') { renderQuests(); }
+    if (secName === 'ticket') { updateUserHeaderUI(); }
+    if (secName === 'shop') { updateShopButtons(); }
 };
 
+async function sha256Hex(t) {
+    const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t));
+    return Array.from(new Uint8Array(b)).map(x => x.toString(16).padStart(2, "0")).join("");
+}
+
 window.promptAdminPassword = async function() {
-    const pwd = await showCyberPrompt("👑 Admin Paneli Doğrulama", "Lütfen Admin Paneli şifresini girin:", "Şifre (123321)");
-    if (pwd === ADMIN_MASTER_PASSWORD) {
-        window.switchSection('admin-panel'); loadAdminInbox();
-    } else if (pwd !== null) {
+    // Admin paneli şifresi: 123321 (sabit)
+    if (!adminVerified) {
+        // Kullanıcı adı admin listesindeyse yine de izin ver
+        const n = getCleanDisplayName(userProfileData.username || "").toLowerCase().replace(/\s+/g, "_");
+        if (n === "salim_xy66" || n === "desiredoue") {
+            adminVerified = true;
+            window.__isAdmin = true;
+        } else {
+            alert("Bu alana yalnızca adminler erişebilir!");
+            return;
+        }
+    }
+    if (adminUnlocked) {
+        window.switchSection('admin-panel');
+        if (typeof loadAdminInbox === "function") loadAdminInbox();
+        return;
+    }
+    const pwd = await showCyberPrompt("👑 Admin Paneli Doğrulama", "Lütfen Admin Paneli şifresini girin:", "Şifre");
+    if (pwd === null) return;
+    if (String(pwd).trim() === "123321") {
+        adminUnlocked = true;
+        window.__isAdmin = true;
+        const dm = document.getElementById("admin-dm-nav-btn");
+        if (dm) dm.style.display = "flex";
+        if (typeof populateAdminDropdowns === "function") populateAdminDropdowns();
+        if (typeof loadAdminInbox === "function") loadAdminInbox();
+        window.switchSection('admin-panel');
+    } else {
         alert("Hatalı admin şifresi!");
     }
 };
 
 window.promptDevPassword = async function() {
+    if (!checkIfDev()) { alert("Bu alana yalnızca yetkili geliştiriciler erişebilir!"); return; }
+    if (devUnlocked) { window.switchSection('dev-panel'); return; }
     const pwd = await showCyberPrompt("🛠️ Geliştirici Paneli Doğrulama", "Lütfen Geliştirici şifrenizi girin:", "Geliştirici Şifresi");
-    if (pwd === userProfileData.devPassword) {
-        window.switchSection('dev-panel');
-    } else if (pwd !== null) {
-        alert("Hatalı geliştirici şifresi!");
-    }
+    if (pwd === null) return;
+    try {
+        const snap = await getDoc(doc(db, "users", activeUser.uid));
+        const h = snap.exists() ? snap.data().devPwHash : "";
+        if (h && h === await sha256Hex(activeUser.uid + ":" + pwd)) { devUnlocked = true; window.switchSection('dev-panel'); return; }
+    } catch (e) {}
+    alert("Hatalı geliştirici şifresi!");
 };
 
 window.switchTab = function(mode) {
     currentMode = mode;
-    errorBox.innerText = "";
+    const errEl = document.getElementById("auth-error");
+    if (errEl) errEl.innerText = "";
+    const btn = document.getElementById("submit-btn");
+    if (btn) { btn.disabled = false; }
     document.getElementById("login-tab").classList.toggle("active", mode === "login");
     document.getElementById("register-tab").classList.toggle("active", mode === "register");
     
@@ -1141,28 +1629,30 @@ window.switchTab = function(mode) {
 };
 
 window.handleAuth = async function() {
-    const usernameInput = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value;
-    errorBox.innerText = "";
+    const errEl = document.getElementById("auth-error") || errorBox;
+    const btn = document.getElementById("submit-btn") || submitBtn;
+    const usernameInput = (document.getElementById("username") || {}).value;
+    const password = (document.getElementById("password") || {}).value;
+    const userTrim = (usernameInput || "").trim();
+    if (errEl) { errEl.innerText = ""; errEl.style.color = "#f87171"; }
 
-    if (!usernameInput || !password) {
-        errorBox.innerText = "Kullanıcı adı ve şifre boş bırakılamaz!";
+    if (!userTrim || !password) {
+        if (errEl) errEl.innerText = "Kullanıcı adı ve şifre boş bırakılamaz!";
         return;
     }
     if (password.length < 6) {
-        errorBox.innerText = "Şifre en az 6 karakter olmalıdır!";
+        if (errEl) errEl.innerText = "Şifre en az 6 karakter olmalıdır!";
         return;
     }
 
-    const cleanEmailPrefix = usernameInput.toLowerCase().replace(/[^a-z0-9-_]/g, "");
+    const cleanEmailPrefix = userTrim.toLowerCase().replace(/[^a-z0-9-_]/g, "");
     if (!cleanEmailPrefix) {
-        errorBox.innerText = "Geçersiz kullanıcı adı!";
+        if (errEl) errEl.innerText = "Geçersiz kullanıcı adı!";
         return;
     }
 
     const fakeEmail = cleanEmailPrefix + "@oyunportal.com";
-    submitBtn.disabled = true;
-    submitBtn.innerText = "İşleniyor...";
+    if (btn) { btn.disabled = true; btn.innerText = "İşleniyor..."; }
 
     try {
         if (currentMode === "register") {
@@ -1176,14 +1666,21 @@ window.handleAuth = async function() {
             const cred = await createUserWithEmailAndPassword(auth, fakeEmail, password);
             
             await setDoc(doc(db, "users", cred.user.uid), {
-                username: usernameInput,
+                username: userTrim,
                 studentClass: studentClass,
                 studentBranch: studentBranch,
                 avatarUrl: "",
                 nameChanged: false,
                 coins: 150,
                 inventory: [],
-                activeBadge: "",
+                activeBadges: [],
+                activeFrame: "",
+                activeNameStyle: "",
+                scorePoints: 0,
+                playTimeMs: 0,
+                questLevel: 0,
+                questProgress: {},
+                questDone: {},
                 isMuted: false,
                 mutedUntil: 0,
                 isDev: false,
@@ -1195,8 +1692,7 @@ window.handleAuth = async function() {
                 lastSeen: serverTimestamp(),
                 status: "online"
             });
-            errorBox.style.color = "#4ade80";
-            errorBox.innerText = "Hesap başarıyla oluşturuldu, giriş yapılıyor...";
+            if (errEl) { errEl.style.color = "#4ade80"; errEl.innerText = "Hesap oluşturuldu, giriş yapılıyor..."; }
         } else {
             const cred = await signInWithEmailAndPassword(auth, fakeEmail, password);
             
@@ -1209,17 +1705,27 @@ window.handleAuth = async function() {
             }
         }
     } catch (error) {
-        errorBox.style.color = "#f87171";
-        if (error.code === "auth/email-already-in-use") {
-            errorBox.innerText = "Bu kullanıcı adı zaten alınmış!";
-        } else if (error.code === "auth/invalid-credential" || error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
-            errorBox.innerText = "Kullanıcı adı veya şifre hatalı!";
-        } else {
-            errorBox.innerText = error.message;
+        console.error("Auth hata:", error);
+        if (errEl) {
+            errEl.style.color = "#f87171";
+            if (error.code === "auth/email-already-in-use") {
+                errEl.innerText = "Bu kullanıcı adı zaten alınmış!";
+            } else if (error.code === "auth/invalid-credential" || error.code === "auth/user-not-found" || error.code === "auth/wrong-password" || error.code === "auth/invalid-email") {
+                errEl.innerText = "Kullanıcı adı veya şifre hatalı!";
+            } else if (error.code === "auth/too-many-requests") {
+                errEl.innerText = "Çok fazla deneme. Biraz bekle.";
+            } else if (error.code === "auth/network-request-failed") {
+                errEl.innerText = "Ağ hatası. İnternetini kontrol et.";
+            } else {
+                errEl.innerText = error.message || "Giriş başarısız";
+            }
         }
     } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerText = currentMode === "login" ? "Giriş Yap" : "Kayıt Ol";
+        const b = document.getElementById("submit-btn");
+        if (b) {
+            b.disabled = false;
+            b.innerText = currentMode === "login" ? "Giriş Yap" : "Kayıt Ol";
+        }
     }
 };
 
@@ -1229,6 +1735,24 @@ window.handleAuthKey = function(e) {
 
 onAuthStateChanged(auth, async user => {
     activeUser = user;
+    adminVerified = false; adminUnlocked = false; devUnlocked = false; window.__isAdmin = false;
+    if (user) {
+        try {
+            adminVerified = ADMIN_EMAILS.includes((user.email || "").toLowerCase());
+            if (!adminVerified) {
+                try { adminVerified = (await getDoc(doc(db, "admins", user.uid))).exists(); } catch (e2) {}
+            }
+            // E-posta / admins doc yoksa kullanıcı adına bak
+            if (!adminVerified) {
+                const uname = (user.email || "").toLowerCase().split("@")[0];
+                if (uname === "salim_xy66" || uname === "desiredoue") adminVerified = true;
+            }
+            try {
+                adminUids = new Set((await getDocs(collection(db, "admins"))).docs.map(d => d.id));
+            } catch (e3) { adminUids = new Set(); }
+        } catch (e) { adminVerified = false; }
+        window.__isAdmin = adminVerified;
+    }
     if (user) {
         const userRef = doc(db, "users", user.uid);
         const userSnap = await getDoc(userRef);
@@ -1257,7 +1781,14 @@ onAuthStateChanged(auth, async user => {
                     nameChanged: data.nameChanged || false,
                     coins: data.coins ?? 150,
                     inventory: data.inventory || [],
-                    activeBadge: data.activeBadge || "",
+                    activeBadges: data.activeBadges || [],
+                    activeFrame: data.activeFrame || "",
+                    activeNameStyle: data.activeNameStyle || "",
+                    scorePoints: data.scorePoints || 0,
+                    playTimeMs: data.playTimeMs || 0,
+                    questLevel: data.questLevel || 0,
+                    questProgress: data.questProgress || {},
+                    questDone: data.questDone || {},
                     isMuted: data.isMuted || false,
                     mutedUntil: data.mutedUntil || 0,
                     isDev: data.isDev || false,
@@ -1266,7 +1797,7 @@ onAuthStateChanged(auth, async user => {
                     clanId: data.clanId || ""
                 };
             } else {
-                userProfileData = { username: fallbackName, studentClass: "10", studentBranch: "F", avatarUrl: "", nameChanged: false, coins: 150, inventory: [], activeBadge: "", isMuted: false, mutedUntil: 0, isDev: false, devPassword: "", lastDailyClaim: 0, clanId: "" };
+                userProfileData = { username: fallbackName, studentClass: "10", studentBranch: "F", avatarUrl: "", nameChanged: false, coins: 150, inventory: [], activeBadges: [], activeFrame: "", activeNameStyle: "", scorePoints: 0, playTimeMs: 0, questLevel: 0, questProgress: {}, questDone: {}, isMuted: false, mutedUntil: 0, isDev: false, devPassword: "", lastDailyClaim: 0, clanId: "" };
             }
 
             await setDoc(userRef, {
@@ -1277,7 +1808,14 @@ onAuthStateChanged(auth, async user => {
                 nameChanged: userProfileData.nameChanged,
                 coins: userProfileData.coins,
                 inventory: userProfileData.inventory,
-                activeBadge: userProfileData.activeBadge,
+                activeBadges: userProfileData.activeBadges,
+                activeFrame: userProfileData.activeFrame,
+                activeNameStyle: userProfileData.activeNameStyle,
+                scorePoints: userProfileData.scorePoints,
+                playTimeMs: userProfileData.playTimeMs,
+                questLevel: userProfileData.questLevel,
+                questProgress: userProfileData.questProgress,
+                questDone: userProfileData.questDone,
                 isMuted: userProfileData.isMuted,
                 mutedUntil: userProfileData.mutedUntil,
                 isDev: userProfileData.isDev,
@@ -1290,7 +1828,7 @@ onAuthStateChanged(auth, async user => {
                 status: "online"
             }, { merge: true });
         } catch (e) {
-            userProfileData = { username: fallbackName, studentClass: "10", studentBranch: "F", avatarUrl: "", nameChanged: false, coins: 150, inventory: [], activeBadge: "", isMuted: false, mutedUntil: 0, isDev: false, devPassword: "", lastDailyClaim: 0, clanId: "" };
+            userProfileData = { username: fallbackName, studentClass: "10", studentBranch: "F", avatarUrl: "", nameChanged: false, coins: 150, inventory: [], activeBadges: [], activeFrame: "", activeNameStyle: "", scorePoints: 0, playTimeMs: 0, questLevel: 0, questProgress: {}, questDone: {}, isMuted: false, mutedUntil: 0, isDev: false, devPassword: "", lastDailyClaim: 0, clanId: "" };
         }
 
         const adminBtn = document.getElementById("admin-nav-btn");
@@ -1302,8 +1840,10 @@ onAuthStateChanged(auth, async user => {
             if (adminDmBtn) adminDmBtn.style.display = "flex";
             devBtn.style.display = "none";
             populateAdminDropdowns();
+            loadAdminInbox();
         } else {
-            adminBtn.style.display = "none";
+            const ownerNm = getCleanDisplayName(userProfileData.username || "").toLowerCase().replace(/\s+/g, "_");
+            adminBtn.style.display = "flex";
             const adminDmBtnHide = document.getElementById("admin-dm-nav-btn");
             if (adminDmBtnHide) adminDmBtnHide.style.display = "none";
             if (checkIfDev()) {
@@ -1315,6 +1855,7 @@ onAuthStateChanged(auth, async user => {
         }
 
         updateUserHeaderUI();
+        updateShopButtons();
         renderAllLists();
         startHeartbeat();
     } else {
@@ -1332,29 +1873,36 @@ function updateUserHeaderUI() {
     banner.appendChild(document.createTextNode("🎮 Hoş Geldin, "));
     const nameSpan = document.createElement("span");
     nameSpan.style.color = "var(--gold-light)";
+    if (userProfileData.activeNameStyle) {
+        nameSpan.className = userProfileData.activeNameStyle;
+    }
     if (userProfileData.avatarUrl) {
         const img = document.createElement("img");
         img.src = userProfileData.avatarUrl;
         img.alt = "";
-        img.style.cssText = "width:24px; height:24px; border-radius:50%; object-fit:cover; vertical-align:middle; margin-right:4px;";
+        if (userProfileData.activeFrame) img.className = userProfileData.activeFrame;
+        img.style.cssText = "width:26px; height:26px; border-radius:50%; object-fit:cover; vertical-align:middle; margin-right:6px;";
         img.onerror = () => { img.remove(); };
         nameSpan.appendChild(img);
     } else {
         nameSpan.appendChild(document.createTextNode("🐱 "));
     }
     nameSpan.appendChild(document.createTextNode(cleanName));
+    if (Array.isArray(userProfileData.activeBadges) && userProfileData.activeBadges.length > 0) {
+        const badgeWrap = document.createElement("span");
+        badgeWrap.style.cssText = "font-size:13px; margin-left:8px; color:var(--cyan);";
+        badgeWrap.textContent = "[" + userProfileData.activeBadges.join(" · ") + "]";
+        nameSpan.appendChild(badgeWrap);
+    }
     banner.appendChild(nameSpan);
-    document.getElementById("user-coins-display").innerText = `🪙 ${userProfileData.coins || 0}`;
-
-    const inv = userProfileData.inventory || [];
-    ['👑 Kral', '🔥 Efsane', '💎 VIP'].forEach(item => {
-        const btnId = 'buy-item-' + item.split(' ')[1].toLowerCase();
-        const btn = document.getElementById(btnId);
-        if (btn && inv.includes(item)) {
-            btn.innerText = "Satın Alındı ✔";
-            btn.style.opacity = "0.6";
-        }
-    });
+    
+    document.getElementById("user-coins-display").innerText = `💰 ${userProfileData.coins || 0}`;
+    const tb = document.getElementById("ticket-balance");
+    const bs = document.getElementById("bank-score-display");
+    if (tb) tb.innerText = `💰 ${userProfileData.coins || 0}`;
+    if (bs) bs.innerText = String(userProfileData.scorePoints || 0);
+    const tsp = document.getElementById("ticket-score-points");
+    if (tsp) tsp.innerText = String(userProfileData.scorePoints || 0);
 
     checkDailyButtonStatus();
 }
@@ -1376,7 +1924,7 @@ function checkDailyButtonStatus() {
         if (info) info.innerText = `Sonraki ödül için ${hours} saat ${minutes} dakika beklemelisin.`;
     } else {
         btn.disabled = false;
-        btn.innerText = "Günlük Ödülü Al (+100 🪙)";
+        btn.innerText = "Günlük Ödülü Al (+100 bakiye)";
         if (info) info.innerText = "Ödülünüzü hemen alabilirsiniz!";
     }
 }
@@ -1385,7 +1933,9 @@ function startHeartbeat() {
     updateStatus("online");
     clearInterval(window.heartbeatInterval);
     window.heartbeatInterval = setInterval(() => {
-        if (!isAfk && activeUser) updateStatus("online");
+        if (!isAfk && activeUser) {
+            updateStatus("online");
+        }
     }, 10000);
 
     window.resetAfkTimer = () => {
@@ -1417,17 +1967,68 @@ function stopHeartbeat() {
 async function updateStatus(status) {
     if (!activeUser) return;
     try {
+        const addMs = (status === "online") ? 10000 : 0;
+        const newPlay = (Number(userProfileData.playTimeMs) || 0) + addMs;
+        if (addMs) userProfileData.playTimeMs = newPlay;
         await setDoc(doc(db, "users", activeUser.uid), {
             username: getCleanDisplayName(userProfileData.username),
             avatarUrl: userProfileData.avatarUrl || "",
             lastSeen: serverTimestamp(),
-            status: status
+            status: status,
+            playTimeMs: userProfileData.playTimeMs || 0,
+            activeBadges: userProfileData.activeBadges || [],
+            activeFrame: userProfileData.activeFrame || "",
+            activeNameStyle: userProfileData.activeNameStyle || ""
         }, { merge: true });
     } catch (e) {
-        // Sessizce geç - bağlantı kopuk olabilir
         console.warn("Status güncellenemedi:", e.message);
     }
 }
+
+async function addScorePoints(pts) {
+    if (!activeUser || !pts) return;
+    userProfileData.scorePoints = (Number(userProfileData.scorePoints) || 0) + pts;
+    updateUserHeaderUI();
+    try {
+        await updateDoc(doc(db, "users", activeUser.uid), { scorePoints: userProfileData.scorePoints });
+        progressQuest("score");
+    } catch (e) { console.error(e); }
+}
+
+window.convertScoreToCoins = async function() {
+    if (!activeUser) return;
+    const resEl = document.getElementById("bank-result");
+    const input = document.getElementById("bank-score-input");
+    const wantScore = parseInt(input.value, 10);
+    const curScore = Number(userProfileData.scorePoints) || 0;
+
+    if (isNaN(wantScore) || wantScore < 5) {
+        if (resEl) { resEl.style.color = "#f87171"; resEl.innerText = "En az 5 skor girmelisin!"; }
+        return;
+    }
+    const usableScore = Math.floor(wantScore / 5) * 5;
+    if (usableScore > curScore) {
+        if (resEl) { resEl.style.color = "#f87171"; resEl.innerText = "Yeterli skor puanın yok!"; }
+        return;
+    }
+    const gainedCoins = usableScore / 5;
+    try {
+        userProfileData.scorePoints = curScore - usableScore;
+        userProfileData.coins = (Number(userProfileData.coins) || 0) + gainedCoins;
+        await updateDoc(doc(db, "users", activeUser.uid), {
+            scorePoints: userProfileData.scorePoints,
+            coins: userProfileData.coins
+        });
+        updateUserHeaderUI();
+        if (resEl) {
+            resEl.style.color = "#4ade80";
+            resEl.innerText = `✔ ${usableScore} skor → +${gainedCoins} bakiye çevrildi!`;
+        }
+    } catch (e) {
+        console.error(e);
+        if (resEl) { resEl.style.color = "#f87171"; resEl.innerText = "İşlem sırasında hata oluştu."; }
+    }
+};
 
 window.switchArcade = function(tabKey, btnEl) {
     document.querySelectorAll(".arcade-game-pane").forEach(pane => pane.style.display = "none");
@@ -1460,7 +2061,8 @@ window.claimDailyBonus = async function() {
             lastDailyClaim: now 
         });
         updateUserHeaderUI();
-        alert("🎉 Tebrikler! +100 Portal Jetonu hesabına eklendi.");
+        alert("🎉 Tebrikler! +100 bakiye hesabına eklendi.");
+        progressQuest("daily");
     } catch (e) {
         console.error("Günlük ödül hatası:", e);
         alert("Ödül alınırken hata oluştu. Lütfen tekrar dene.");
@@ -1473,7 +2075,7 @@ window.playFruitGame = async function() {
     if (!activeUser) return;
     if (isGameBusy) return;
     const bet = 50;
-    if ((userProfileData.coins || 0) < bet) { alert("Yeterli jetonun yok!"); return; }
+    if ((userProfileData.coins || 0) < bet) { alert("Yeterli bakiyen yok!"); return; }
     isGameBusy = true;
 
     const fruits = ['🍒', '🍋', '🍊', '🍇', '⭐', '💎'];
@@ -1486,16 +2088,16 @@ window.playFruitGame = async function() {
 
     let delta = -bet;
     if (r1 === r2 && r2 === r3) {
-        delta = bet * 4; // net +200 (5x - 1x bet)
+        delta = bet * 4;
         resElem.style.color = "#4ade80";
-        resElem.innerText = `JACKPOT! +${bet * 5} 🪙 Kazandın!`;
+        resElem.innerText = `JACKPOT! +${bet * 5} bakiye kazandın!`;
     } else if (r1 === r2 || r2 === r3 || r1 === r3) {
-        delta = bet; // net +50 (2x - 1x bet)
+        delta = bet;
         resElem.style.color = "#fde047";
-        resElem.innerText = `İkili Eşleşme! +${bet * 2} 🪙 Kazandın.`;
+        resElem.innerText = `İkili Eşleşme! +${bet * 2} bakiye kazandın.`;
     } else {
         resElem.style.color = "#f87171";
-        resElem.innerText = `Kaybettin, ${bet} 🪙 gitti.`;
+        resElem.innerText = `Kaybettin, ${bet} bakiye gitti.`;
     }
 
     try {
@@ -1503,9 +2105,11 @@ window.playFruitGame = async function() {
         userProfileData.coins = newCoins;
         await updateDoc(doc(db, "users", activeUser.uid), { coins: newCoins });
         updateUserHeaderUI();
+        progressQuest("fruit");
+        addScorePoints(15);
     } catch (e) {
-        console.error("Jeton güncelleme hatası:", e);
-        alert("Jeton güncellenirken hata oluştu. Lütfen sayfayı yenile.");
+        console.error("Bakiye güncelleme hatası:", e);
+        alert("Bakiye güncellenirken hata oluştu. Lütfen sayfayı yenile.");
     } finally {
         isGameBusy = false;
     }
@@ -1515,7 +2119,7 @@ window.openBox = async function(boxNo) {
     if (!activeUser) return;
     if (isGameBusy) return;
     const cost = 100;
-    if ((userProfileData.coins || 0) < cost) { alert("Yeterli jetonun yok!"); return; }
+    if ((userProfileData.coins || 0) < cost) { alert("Yeterli bakiyen yok!"); return; }
     isGameBusy = true;
 
     const prizes = [0, 50, 100, 250, 500];
@@ -1528,7 +2132,9 @@ window.openBox = async function(boxNo) {
         await updateDoc(doc(db, "users", activeUser.uid), { coins: newCoins });
         updateUserHeaderUI();
         const resElem = document.getElementById("mystery-result");
-        resElem.innerText = prize > 0 ? `🎁 Kutudan +${prize} 🪙 çıktı!` : `😢 Kutu boş çıktı, 100 🪙 yandı!`;
+        resElem.innerText = prize > 0 ? `🎁 Kutudan +${prize} bakiye çıktı!` : `😢 Kutu boş çıktı, 100 bakiye yandı!`;
+        progressQuest("mystery");
+        addScorePoints(20);
     } catch (e) {
         console.error("Kutu hatası:", e);
         alert("İşlem sırasında hata oluştu.");
@@ -1541,7 +2147,7 @@ window.playCoinFlip = async function(choice) {
     if (!activeUser) return;
     if (isGameBusy) return;
     const bet = 50;
-    if ((userProfileData.coins || 0) < bet) { alert("Yeterli jetonun yok!"); return; }
+    if ((userProfileData.coins || 0) < bet) { alert("Yeterli bakiyen yok!"); return; }
     isGameBusy = true;
 
     const outcome = Math.random() < 0.5 ? 'yazi' : 'tura';
@@ -1550,9 +2156,9 @@ window.playCoinFlip = async function(choice) {
 
     let delta = -bet;
     if (choice === outcome) {
-        delta = bet; // net +50
+        delta = bet;
         resElem.style.color = "#4ade80";
-        resElem.innerText = `Kazandın! Sonuç: ${outcome.toUpperCase()} (+${bet * 2} 🪙)`;
+        resElem.innerText = `Kazandın! Sonuç: ${outcome.toUpperCase()} (+${bet * 2} bakiye)`;
     } else {
         resElem.style.color = "#f87171";
         resElem.innerText = `Kaybettin! Sonuç: ${outcome.toUpperCase()}`;
@@ -1563,6 +2169,8 @@ window.playCoinFlip = async function(choice) {
         userProfileData.coins = newCoins;
         await updateDoc(doc(db, "users", activeUser.uid), { coins: newCoins });
         updateUserHeaderUI();
+        progressQuest("coinflip");
+        addScorePoints(10);
     } catch (e) {
         console.error("Yazı-tura hatası:", e);
         alert("İşlem sırasında hata oluştu.");
@@ -1577,7 +2185,7 @@ window.startPixelRace = async function() {
     const choice = document.getElementById("pixel-choice").value;
     let bet = parseInt(document.getElementById("pixel-bet").value) || 50;
     if (bet < 10) bet = 10;
-    if ((userProfileData.coins || 0) < bet) { alert("Yeterli jetonun yok!"); return; }
+    if ((userProfileData.coins || 0) < bet) { alert("Yeterli bakiyen yok!"); return; }
     pixelRaceRunning = true;
 
     try {
@@ -1595,7 +2203,6 @@ window.startPixelRace = async function() {
     resElem.innerText = "Yarış başladı, atlar koşuyor...";
     resElem.style.color = "#94a3b8";
 
-    // Reset runners
     ["runner-1","runner-2","runner-3","runner-4"].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.style.left = "0%";
@@ -1622,7 +2229,7 @@ window.startPixelRace = async function() {
                 let prize = Math.floor(bet * mult);
                 userProfileData.coins = Math.max(0, (userProfileData.coins || 0) + prize);
                 resElem.style.color = "#4ade80";
-                resElem.innerText = `🏆 Yarışı ${winner}. At kazandı! Tebrikler +${prize} 🪙 kazandın!`;
+                resElem.innerText = `🏆 Yarışı ${winner}. At kazandı! Tebrikler +${prize} bakiye kazandın!`;
             } else {
                 resElem.style.color = "#f87171";
                 resElem.innerText = `😢 Yarışı ${winner}. At kazandı. Seçtiğin at kaybetti!`;
@@ -1630,50 +2237,241 @@ window.startPixelRace = async function() {
             updateDoc(doc(db, "users", activeUser.uid), { coins: userProfileData.coins }).catch(e => console.error(e));
             updateUserHeaderUI();
             pixelRaceRunning = false;
+            progressQuest("pixel");
+            addScorePoints(25);
         }
     }, 120);
 };
 
-window.buyItem = async function(itemName, cost) {
+/* SİBER DÜKKAN BUTON GÜNCELLEME & SATIN AL / KULLAN */
+function isItemEquipped(itemId) {
+    if (itemId.startsWith('frame_')) return userProfileData.activeFrame === itemId;
+    if (itemId.startsWith('name_')) return userProfileData.activeNameStyle === itemId;
+    return Array.isArray(userProfileData.activeBadges) && userProfileData.activeBadges.includes(itemId);
+}
+
+function updateShopButtons() {
+    const inv = Array.isArray(userProfileData.inventory) ? userProfileData.inventory : [];
+    document.querySelectorAll("#shop-grid-container .shop-card").forEach(card => {
+        const itemId = card.getAttribute("data-shop-id");
+        const btn = card.querySelector(".shop-item-btn");
+        if (!itemId || !btn) return;
+        if (inv.includes(itemId)) {
+            const active = isItemEquipped(itemId);
+            btn.textContent = active ? "Aktif (Kaldır)" : "Kullan";
+            btn.style.background = active
+                ? "linear-gradient(135deg, #16a34a, #15803d)"
+                : "linear-gradient(135deg, #f59e0b, #d97706)";
+            btn.style.boxShadow = active
+                ? "0 4px 15px rgba(34, 197, 94, 0.4)"
+                : "0 4px 15px rgba(245, 158, 11, 0.4)";
+        } else {
+            btn.textContent = "Satın Al";
+            btn.style.background = "";
+            btn.style.boxShadow = "";
+        }
+    });
+}
+
+window.handleShopBtn = async function(kind, itemId, cost) {
     if (!activeUser) return;
     const inv = Array.isArray(userProfileData.inventory) ? [...userProfileData.inventory] : [];
-    if (inv.includes(itemName)) { alert("Bu eşya zaten envanterinde var!"); return; }
-    if ((userProfileData.coins || 0) < cost) { alert("Yeterli jetonun yok!"); return; }
-
+    if (inv.includes(itemId)) {
+        await window.useItem(itemId);
+        return;
+    }
+    if ((userProfileData.coins || 0) < cost) { alert("Yeterli bakiyen yok!"); return; }
     try {
         const newCoins = Math.max(0, (userProfileData.coins || 0) - cost);
-        inv.push(itemName);
+        inv.push(itemId);
         userProfileData.coins = newCoins;
         userProfileData.inventory = inv;
         await updateDoc(doc(db, "users", activeUser.uid), { coins: newCoins, inventory: inv });
         updateUserHeaderUI();
-        alert(`✨ "${itemName}" başarıyla satın alındı! Profilinden kullanabilirsin.`);
+        updateShopButtons();
+        alert("✔ Satın alındı! Şimdi 'Kullan' butonuna basarak aktifleştirebilirsin.");
     } catch (e) {
-        console.error("Satın alma hatası:", e);
-        alert("Satın alma sırasında hata oluştu.");
+        console.error(e);
+        alert("Satın alma hatası.");
     }
 };
 
-window.useItem = async function(itemName) {
+window.buyItem = async function(kind, itemId, cost) {
+    return window.handleShopBtn(kind, itemId, cost);
+};
+
+window.useItem = async function(itemId) {
     if (!activeUser) return;
     try {
-        userProfileData.activeBadge = (userProfileData.activeBadge === itemName) ? "" : itemName;
-        await updateDoc(doc(db, "users", activeUser.uid), { activeBadge: userProfileData.activeBadge });
-        window.openProfile();
+        if (itemId.startsWith('frame_')) {
+            userProfileData.activeFrame = (userProfileData.activeFrame === itemId) ? "" : itemId;
+            await updateDoc(doc(db, "users", activeUser.uid), { activeFrame: userProfileData.activeFrame });
+        } else if (itemId.startsWith('name_')) {
+            userProfileData.activeNameStyle = (userProfileData.activeNameStyle === itemId) ? "" : itemId;
+            await updateDoc(doc(db, "users", activeUser.uid), { activeNameStyle: userProfileData.activeNameStyle });
+        } else {
+            let badges = Array.isArray(userProfileData.activeBadges) ? [...userProfileData.activeBadges] : [];
+            if (badges.includes(itemId)) {
+                badges = badges.filter(b => b !== itemId);
+            } else {
+                if (badges.length >= 5) { alert("En fazla 5 unvan takabilirsin!"); return; }
+                badges.push(itemId);
+            }
+            userProfileData.activeBadges = badges;
+            await updateDoc(doc(db, "users", activeUser.uid), { activeBadges: badges });
+        }
+        if (document.getElementById("profile-modal").style.display === "flex") {
+            window.openProfile();
+        }
         updateUserHeaderUI();
-        alert(`✔ Unvan güncellendi: ${userProfileData.activeBadge || 'Kaldırıldı'}`);
+        updateShopButtons();
+        renderAllLists();
     } catch (e) {
-        console.error("Unvan hatası:", e);
-        alert("Unvan güncellenirken hata oluştu.");
+        console.error(e);
+        alert("Güncelleme hatası.");
     }
 };
 
+const QUEST_DEFS = [
+    { id: "q_fruit_1", game: "fruit", need: 3, reward: 80, rewardType: "bakiye", title: "Meyve Çaylağı", desc: "Meyve eşlemeyi 3 kez oyna" },
+    { id: "q_fruit_2", game: "fruit", need: 10, reward: 200, rewardType: "bakiye", title: "Meyve Ustası", desc: "Meyve eşlemeyi 10 kez oyna", minLevel: 1 },
+    { id: "q_box_1", game: "mystery", need: 2, reward: 100, rewardType: "bakiye", title: "Kutu Avcısı", desc: "Gizemli kutuyu 2 kez aç" },
+    { id: "q_box_2", game: "mystery", need: 8, reward: 250, rewardType: "skor", title: "Hazine Avcısı", desc: "Gizemli kutuyu 8 kez aç", minLevel: 1 },
+    { id: "q_coin_1", game: "coinflip", need: 5, reward: 120, rewardType: "bakiye", title: "Şanslı Yazı", desc: "Yazı tura 5 kez oyna" },
+    { id: "q_coin_2", game: "coinflip", need: 15, reward: 400, rewardType: "skor", title: "Tura Kralı", desc: "Yazı tura 15 kez oyna", minLevel: 2 },
+    { id: "q_pixel_1", game: "pixel", need: 3, reward: 150, rewardType: "bakiye", title: "Pist Çaylağı", desc: "Piksel koşusu 3 kez", minLevel: 1 },
+    { id: "q_pixel_2", game: "pixel", need: 12, reward: 400, rewardType: "skor", title: "Pist Efsanesi", desc: "Piksel koşusu 12 kez", minLevel: 2 },
+    { id: "q_daily_1", game: "daily", need: 1, reward: 50, rewardType: "bakiye", title: "Günlük Rutin", desc: "Günlük ödül al" },
+    { id: "q_any_1", game: "any", need: 20, reward: 500, rewardType: "bakiye", title: "Portal Bağımlısı", desc: "Toplam 20 oyun oyna", minLevel: 2 },
+    { id: "q_basket_1", game: "basket", need: 2, reward: 100, rewardType: "bakiye", title: "Basket Acemisi", desc: "Basket Random 2 kez oyna" },
+    { id: "q_basket_2", game: "basket", need: 8, reward: 280, rewardType: "skor", title: "Basket Yıldızı", desc: "Basket Random 8 kez oyna", minLevel: 1 },
+    { id: "q_soccer_1", game: "soccer", need: 2, reward: 100, rewardType: "bakiye", title: "Futbol Acemisi", desc: "Soccer Random 2 kez oyna" },
+    { id: "q_soccer_2", game: "soccer", need: 8, reward: 280, rewardType: "skor", title: "Futbol Yıldızı", desc: "Soccer Random 8 kez oyna", minLevel: 1 },
+    { id: "q_slope_1", game: "slope", need: 3, reward: 120, rewardType: "bakiye", title: "Slope Koşucusu", desc: "Slope 3 oyununu 3 kez aç" },
+    { id: "q_slope_2", game: "slope", need: 10, reward: 320, rewardType: "skor", title: "Slope Ustası", desc: "Slope 3 oyununu 10 kez aç", minLevel: 2 },
+    { id: "q_stick_1", game: "stickman", need: 2, reward: 90, rewardType: "bakiye", title: "Çöp Adam Savaşçısı", desc: "Stickman Battle 2 kez oyna" },
+    { id: "q_fart_1", game: "fartnership", need: 2, reward: 90, rewardType: "skor", title: "Ortaklık", desc: "Fartnership 2 kez oyna" },
+    { id: "q_score_1", game: "score", need: 500, reward: 50, rewardType: "bakiye", title: "Skor Toplayıcı", desc: "500 skor puanı biriktir" },
+    { id: "q_score_2", game: "score", need: 2000, reward: 150, rewardType: "bakiye", title: "Skor Canavarı", desc: "2000 skor puanı biriktir", minLevel: 1 },
+    { id: "q_score_3", game: "score", need: 5000, reward: 400, rewardType: "skor", title: "Skor Efsanesi", desc: "5000 skor puanı biriktir (bonus skor)", minLevel: 2 },
+];
+
+function questToday() { const d = new Date(); return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(); }
+function dailyQuests() {
+    let seed = 7; for (const ch of questToday()) seed = (seed * 31 + ch.charCodeAt(0)) >>> 0;
+    const a = QUEST_DEFS.slice();
+    for (let i = a.length - 1; i > 0; i--) { seed = (seed * 1664525 + 1013904223) >>> 0; const j = seed % (i + 1); [a[i], a[j]] = [a[j], a[i]]; }
+    return a.slice(0, 6);
+}
+function renderQuests() {
+    const box = document.getElementById("quests-list");
+    if (!box) return;
+    box.innerHTML = "";
+    const level = Number(userProfileData.questLevel) || 0;
+    const fresh = (userProfileData.questProgress || {}).__day === questToday();
+    const prog = fresh ? (userProfileData.questProgress || {}) : {};
+    const done = fresh ? (userProfileData.questDone || {}) : {};
+    const dq = dailyQuests();
+
+    dq.forEach(q => {
+
+        const cur = Number(prog[q.id]) || 0;
+        const card = document.createElement("div");
+        card.className = "shop-card";
+        card.style.textAlign = "left";
+        card.innerHTML = `
+            <div class="shop-icon">🎯</div>
+            <h3>${q.title}</h3>
+            <p style="font-size:12.5px;color:#94a3b8;">${q.desc}</p>
+            <p style="font-size:12px;color:var(--cyan);margin:6px 0;">${done[q.id] ? "✅ Tamamlandı" : "İlerleme: " + Math.min(cur, q.need) + " / " + q.need}</p>
+            <div class="price-tag">Ödül: ${q.reward} ${(q.rewardType||"bakiye")==="skor" ? "skor puanı" : "bakiye"}</div>
+        `;
+        box.appendChild(card);
+    });
+
+    const completed = Object.keys(done).length;
+    if (box.children.length === 0) {
+        box.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#94a3b8;padding:30px;">Tüm açık görevler tamamlandı! Seviye: ${level}. Yeni görevler için oyun oynamaya devam et.</div>`;
+    }
+    const info = document.createElement("div");
+    info.style.cssText = "grid-column:1/-1;color:#94a3b8;font-size:12px;text-align:center;";
+    info.textContent = `Görevler her gün yenilenir · Tamamlanan: ${completed} / ${dq.length}`;
+    box.appendChild(info);
+}
+
+async function progressQuest(gameKey) {
+    if (!activeUser) return;
+    const level = Number(userProfileData.questLevel) || 0;
+    const isFresh = (userProfileData.questProgress || {}).__day === questToday();
+    const prog = isFresh ? { ...(userProfileData.questProgress || {}) } : { __day: questToday() };
+    const done = isFresh ? { ...(userProfileData.questDone || {}) } : {};
+    let coinsGain = 0;
+    let scoreGain = 0;
+    let levelUp = 0;
+    let updatedProg = false;
+
+    dailyQuests().forEach(q => {
+        if (done[q.id]) return;
+        const match = q.game === gameKey || q.game === "any" || (q.game === "score" && gameKey === "score");
+        if (!match) return;
+        if (q.game === "score") {
+            prog[q.id] = Number(userProfileData.scorePoints) || 0;
+        } else {
+            prog[q.id] = (Number(prog[q.id]) || 0) + 1;
+        }
+        updatedProg = true;
+        if (prog[q.id] >= q.need) {
+            done[q.id] = true;
+            levelUp += 1;
+            if ((q.rewardType || "bakiye") === "skor") {
+                scoreGain += q.reward;
+            } else {
+                coinsGain += q.reward;
+            }
+        }
+    });
+
+    if (updatedProg) {
+        userProfileData.questProgress = prog;
+        userProfileData.questDone = done;
+        userProfileData.questLevel = level + levelUp;
+        let msgParts = [];
+        if (coinsGain > 0) {
+            userProfileData.coins = (userProfileData.coins || 0) + coinsGain;
+            msgParts.push("+" + coinsGain + " bakiye");
+        }
+        if (scoreGain > 0) {
+            userProfileData.scorePoints = (userProfileData.scorePoints || 0) + scoreGain;
+            msgParts.push("+" + scoreGain + " skor puanı");
+        }
+        if (msgParts.length) alert("🎯 Görev tamamlandı! " + msgParts.join(", "));
+        try {
+            await updateDoc(doc(db, "users", activeUser.uid), {
+                questProgress: prog,
+                questDone: done,
+                questLevel: userProfileData.questLevel,
+                coins: userProfileData.coins,
+                scorePoints: userProfileData.scorePoints || 0
+            });
+            updateUserHeaderUI();
+        } catch (e) { console.error(e); }
+    }
+}
+
+/* İSTATİSTİK GÖRÜNÜMÜ (SÜRE SİLİNDİ) */
 function updateStatsView() {
     document.getElementById("stat-total-users").innerText = allUsersCache.length;
-    document.getElementById("stat-total-clans").innerText = allClansCache.length;
-    let totalCoins = 0;
-    allUsersCache.forEach(u => totalCoins += (u.coins || 0));
-    document.getElementById("stat-total-coins").innerText = totalCoins;
+    const tbody = document.getElementById("stats-users-tbody");
+    if (!tbody) return;
+    tbody.innerHTML = "";
+    const sorted = [...allUsersCache].sort((a,b) => (b.coins||0)-(a.coins||0));
+    sorted.forEach((u, i) => {
+        const tr = document.createElement("tr");
+        const name = getCleanDisplayName(u.username);
+        tr.innerHTML = `<td>${i+1}</td><td></td><td>${u.studentClass||"-"}${u.studentBranch||""}</td><td>💰 ${u.coins||0}</td>`;
+        tr.cells[1].textContent = name;
+        tbody.appendChild(tr);
+    });
 }
 
 window.adminSendTimedBroadcast = async function() {
@@ -1683,10 +2481,13 @@ window.adminSendTimedBroadcast = async function() {
     if (!text) return;
 
     const expiresAt = Date.now() + (durationSec * 1000);
-    await setDoc(doc(db, "settings", "broadcast"), { 
-        message: text, 
-        expiresAt: expiresAt 
-    });
+    try {
+        await setDoc(doc(db, "settings", "broadcast"), { message: text, expiresAt: expiresAt });
+    } catch (e) { return alert("Duyuru gönderilemedi. Önce Admin Paneli şifresini girmen gerekiyor."); }
+    document.getElementById("broadcast-msg-text").innerText = text;
+    document.getElementById("top-broadcast-bar").style.display = "flex";
+    clearTimeout(broadcastTimeout);
+    broadcastTimeout = setTimeout(() => window.closeBroadcastBar(), durationSec * 1000);
     alert(`✔ Duyuru ${durationSec} saniye boyunca üst bantta yayınlandı!`);
 };
 
@@ -1729,10 +2530,10 @@ window.startAdminChat = function() {
     document.getElementById("admin-chat-title").innerText = `💬 Admin (${selectedAdminKey === 'salim_xy66' ? 'Salim' : 'DesireDoue'}) İle Özel Sohbet`;
     
     if (activeAdminChatUnsub) activeAdminChatUnsub();
-    const chatRoomId = activeUser.uid + "_" + selectedAdminKey;
+    activeChatTargetUserUid = activeUser.uid;
+    const chatRoomId = "dm_" + activeChatTargetUserUid + "_" + selectedAdminKey;
     
-    // Geliştirilmiş sorgu: Index çakışmasını engellemek için doğrudan roomId filtresi ve anlık dinleme
-    const q = query(collection(db, "admin_chats"), where("roomId", "==", chatRoomId));
+    const q = query(collection(db, "clan_messages"), where("clanId", "==", chatRoomId));
     
     activeAdminChatUnsub = onSnapshot(q, snapshot => {
         const msgBox = document.getElementById("admin-chat-messages");
@@ -1744,7 +2545,6 @@ window.startAdminChat = function() {
             docsArray.push({ id: docSnap.id, ...docSnap.data() });
         });
 
-        // Mesajları kronolojik olarak (eski -> yeni) client tarafında güvenle sıralıyoruz
         docsArray.sort((a, b) => {
             const timeA = a.createdAt?.toMillis ? a.createdAt.toMillis() : (a.createdAt || 0);
             const timeB = b.createdAt?.toMillis ? b.createdAt.toMillis() : (b.createdAt || 0);
@@ -1774,7 +2574,7 @@ window.startAdminChat = function() {
     }, err => {
         console.error("Admin sohbet hatası:", err);
         const msgBox = document.getElementById("admin-chat-messages");
-        if (msgBox) msgBox.innerHTML = `<div style="text-align:center; color:#f87171; padding:20px; font-size:13px;">Sohbet yüklenemedi: ${escapeHtml(err.message || "hata")}<br><small>Rules veya index kontrol et.</small></div>`;
+        if (msgBox) msgBox.innerHTML = `<div style="text-align:center; color:#f87171; padding:20px; font-size:13px;">Sohbet yüklenemedi: ${escapeHtml(err.message || "hata")}</div>`;
     });
 };
 
@@ -1790,15 +2590,17 @@ window.sendAdminMessage = async function() {
     if (text.length > 500) { alert("Mesaj en fazla 500 karakter olabilir."); return; }
     input.value = "";
 
-    const chatRoomId = activeUser.uid + "_" + selectedAdminKey;
+    const targetUidForRoom = activeChatTargetUserUid || activeUser.uid;
+    const chatRoomId = "dm_" + targetUidForRoom + "_" + selectedAdminKey;
     const senderName = getCleanDisplayName(userProfileData.username);
 
     try {
-        await addDoc(collection(db, "admin_chats"), {
-            roomId: chatRoomId,
-            userUid: activeUser.uid,
+        await addDoc(collection(db, "clan_messages"), {
+            clanId: chatRoomId,
+            isAdminDm: true,
+            userUid: targetUidForRoom,
             adminKey: selectedAdminKey,
-            senderName: senderName,
+            senderName: checkIfAdmin() ? `${senderName} [Admin]` : senderName,
             text: text,
             createdAt: serverTimestamp()
         });
@@ -1816,8 +2618,22 @@ window.handleAdminChatKey = function(e) {
 function isTargetAdminUser(userData) {
     if (!userData) return false;
     const cleanName = getCleanDisplayName(userData.username || "").toLowerCase().replace(/\s+/g, "_");
-    return cleanName === "salim_xy66" || cleanName === "desiredoue";
+    return adminUids.has(userData.uid) || cleanName === "salim_xy66" || cleanName === "desiredoue";
 }
+
+window.adminGiveOrTakeScore = async function() {
+    if (!checkIfAdmin()) return;
+    const sel = document.getElementById("admin-target-user-coin"), uid = sel.value, nm = sel.options[sel.selectedIndex]?.text || "Oyuncu";
+    const amount = parseInt(document.getElementById("admin-score-amount").value);
+    if (!uid || isNaN(amount)) return alert("Geçerli bir oyuncu ve miktar seç.");
+    try {
+        const ref = doc(db, "users", uid), snap = await getDoc(ref);
+        if (!snap.exists()) return alert("Oyuncu bulunamadı.");
+        const total = Math.max(0, (Number(snap.data().scorePoints) || 0) + amount);
+        await updateDoc(ref, { scorePoints: total });
+        alert(`✔ ${nm} adlı oyuncunun skoru güncellendi! Yeni skor: ${total} 🏆`);
+    } catch (e) { console.error(e); alert("Skor güncellenirken hata oluştu."); }
+};
 
 window.adminGiveOrTakeCoins = async function() {
     if (!checkIfAdmin()) return;
@@ -1841,9 +2657,9 @@ window.adminGiveOrTakeCoins = async function() {
         const currentCoins = Number(snap.data().coins) || 0;
         const newTotal = Math.max(0, currentCoins + amount);
         await updateDoc(targetRef, { coins: newTotal });
-        alert(`✔ ${targetName} adlı oyuncunun bakiyesi güncellendi! Yeni Bakiye: ${newTotal} 🪙`);
+        alert(`✔ ${targetName} adlı oyuncunun bakiyesi güncellendi! Yeni bakiye: ${newTotal} 💰`);
     } catch (e) {
-        console.error("Admin jeton hatası:", e);
+        console.error("Admin bakiye hatası:", e);
         alert("Bakiye güncellenirken hata oluştu.");
     }
 };
@@ -1873,7 +2689,7 @@ window.adminSetTimedMute = async function() {
 
 window.adminSetDev = async function(makeDev) {
     if (!checkIfAdmin()) return;
-    const devSelect = document.getElementById("admin-target-user-dev");
+    const devSelect = document.getElementById(makeDev ? "admin-target-user-dev" : "admin-target-user-dev-revoke");
     const targetUid = devSelect.value;
     const customPwd = document.getElementById("dev-custom-password").value.trim();
     if (!targetUid) return;
@@ -1884,17 +2700,19 @@ window.adminSetDev = async function(makeDev) {
         return;
     }
 
-    if (makeDev && !customPwd) {
-        alert("Lütfen geliştirici için bir şifre belirleyin!");
+    if (makeDev && customPwd.length < 4) {
+        alert("Geliştirici için en az 4 karakterlik bir şifre belirleyin!");
         return;
     }
 
     const ref = doc(db, "users", targetUid);
     await updateDoc(ref, { 
         isDev: makeDev, 
-        devPassword: makeDev ? customPwd : "" 
+        devGrantedBy: makeDev ? activeUser.uid : "",
+        devPassword: "",
+        devPwHash: makeDev ? await sha256Hex(targetUid + ":" + customPwd) : "" 
     });
-    alert(makeDev ? "✔ Kullanıcı başarıyla Geliştirici yapıldı ve şifresi tanımlandı." : "✔ Geliştirici yetkisi geri alındı.");
+    alert(makeDev ? "✔ Kullanıcı Geliştirici yapıldı. Belirlediğin şifreyi ona ilet." : "✔ Geliştirici yetkisi geri alındı.");
 };
 
 window.adminSaveBadWords = async function() {
@@ -1930,6 +2748,47 @@ window.adminBanUser = async function(type) {
         alert("✔ IP ve Cihaz banı başarıyla uygulandı.");
     } else {
         alert("✔ Hesap engellendi.");
+    }
+};
+
+window.adminDeleteUser = async function() {
+    if (!checkIfAdmin()) return;
+    const banSelect = document.getElementById("admin-target-user-ban");
+    const targetUid = banSelect.value;
+    if (!targetUid) return;
+
+    const targetUser = allUsersCache.find(u => u.uid === targetUid);
+    if (isTargetAdminUser(targetUser)) {
+        alert("❌ Admin hesapları silinemez!");
+        return;
+    }
+    if (!confirm(`"${getCleanDisplayName(targetUser?.username)}" adlı hesabı tamamen silmek istediğine emin misin?`)) return;
+
+    try {
+        await deleteDoc(doc(db, "users", targetUid));
+        alert("✔ Hesap veritabanından silindi.");
+    } catch (e) {
+        alert("Hesap silinirken hata: " + e.message);
+    }
+};
+
+window.adminDeleteAllNonStaff = async function() {
+    if (!checkIfAdmin()) return;
+    if (!confirm("⚠️ DİKKAT! Admin ve geliştirici hesapları hariç TÜM oyuncu hesapları silinecek. Onaylıyor musun?")) return;
+
+    try {
+        const snap = await getDocs(collection(db, "users"));
+        const promises = [];
+        snap.forEach(d => {
+            const data = d.data();
+            if (!isTargetAdminUser(data) && !data.isDev) {
+                promises.push(deleteDoc(doc(db, "users", d.id)));
+            }
+        });
+        await Promise.all(promises);
+        alert(`✔ Toplam ${promises.length} oyuncu hesabı silindi.`);
+    } catch (e) {
+        alert("Toplu silme hatası: " + e.message);
     }
 };
 
@@ -2004,6 +2863,51 @@ onSnapshot(doc(db, "settings", "config"), docSnap => {
 
 let globalChatUnsub = null;
 
+window.insertChatEmoji = function(emoji) {
+    const input = document.getElementById("dislord-message-input");
+    if (!input) return;
+    input.value += emoji;
+    input.focus();
+};
+
+window.createPoll = async function() {
+    if (!activeUser) return;
+    const qText = (document.getElementById("poll-question").value || "").trim();
+    const opts = [
+        document.getElementById("poll-opt1").value.trim(),
+        document.getElementById("poll-opt2").value.trim(),
+        document.getElementById("poll-opt3").value.trim(),
+        document.getElementById("poll-opt4").value.trim()
+    ].filter(o => o.length > 0);
+
+    if (!qText || opts.length < 2) {
+        alert("Anket sorusu ve en az 2 seçenek girmelisin!");
+        return;
+    }
+
+    try {
+        const senderName = getCleanDisplayName(userProfileData.username);
+        await addDoc(collection(db, "clan_messages"), {
+            clanId: "genel_sohbet",
+            type: "poll",
+            text: qText,
+            pollOptions: opts,
+            pollVotes: {},
+            sender: senderName,
+            badges: Array.isArray(userProfileData.activeBadges) ? userProfileData.activeBadges.slice(0, 5) : [],
+            createdAt: serverTimestamp()
+        });
+        document.getElementById("poll-question").value = "";
+        document.getElementById("poll-opt1").value = "";
+        document.getElementById("poll-opt2").value = "";
+        document.getElementById("poll-opt3").value = "";
+        document.getElementById("poll-opt4").value = "";
+        document.getElementById("poll-create-modal").style.display = "none";
+    } catch (e) {
+        alert("Anket oluşturulamadı: " + e.message);
+    }
+};
+
 window.openGlobalChat = function() {
     if (!activeUser) return;
     if (globalChatUnsub) { globalChatUnsub(); globalChatUnsub = null; }
@@ -2024,41 +2928,101 @@ window.openGlobalChat = function() {
             docs.push({ id: docSnap.id, ...docSnap.data() });
         });
 
-        docs.sort((a, b) => {
-            const ta = a.createdAt?.toMillis ? a.createdAt.toMillis() : (a.createdAt || 0);
-            const tb = b.createdAt?.toMillis ? b.createdAt.toMillis() : (b.createdAt || 0);
-            return ta - tb;
-        });
-
         if (docs.length === 0) {
             box.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:30px; font-size:13px;">Henüz mesaj yok. İlk mesajı sen yaz!</div>`;
             return;
         }
 
-        docs.forEach(data => {
-            let msgText = String(data.text || "");
-            (globalBadWords || []).forEach(word => {
-                if (!word) return;
-                try {
-                    const escaped = String(word).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                    msgText = msgText.replace(new RegExp(escaped, 'gi'), '***');
-                } catch (e) {}
-            });
+        docs.sort((a, b) => {
+            const pa = a.pinned ? 1 : 0, pb = b.pinned ? 1 : 0;
+            if (pa !== pb) return pb - pa;
+            const ta = a.createdAt?.toMillis ? a.createdAt.toMillis() : (a.createdAt || 0);
+            const tb = b.createdAt?.toMillis ? b.createdAt.toMillis() : (b.createdAt || 0);
+            return ta - tb;
+        });
 
+        // Üst sabit mesaj çubuğu
+        const pinBar = document.getElementById("pinned-messages-bar");
+        const pinnedList = docs.filter(d => d.pinned);
+        if (pinBar) {
+            if (pinnedList.length) {
+                pinBar.style.display = "block";
+                pinBar.textContent = "📌 Sabit: " + pinnedList.map(d => (d.sender || "") + ": " + String(d.text || "").slice(0, 60)).join(" | ");
+            } else {
+                pinBar.style.display = "none";
+                pinBar.textContent = "";
+            }
+        }
+
+        docs.forEach(data => {
             const safeSender = escapeHtml(data.sender || "Oyuncu");
-            const safeText = escapeHtml(msgText);
+            const badgesArr = Array.isArray(data.badges) ? data.badges.slice(0, 5) : [];
+            const badgesHtml = badgesArr.map(b => `<span style="font-size:10px;color:var(--gold-light);margin-left:4px;">${escapeHtml(b)}</span>`).join("");
+            const pinBadge = data.pinned ? `<span class="msg-pinned-badge">📌 Sabit</span>` : "";
             const div = document.createElement("div");
             div.className = "dislord-message-card";
-            div.innerHTML = `
-                <div>
-                    <span style="color:var(--gold); font-weight:700; font-size:12px; display:block; margin-bottom:3px;">${safeSender}</span>
-                    <span style="color:#e2e8f0; font-size:13.5px; word-break:break-word;">${safeText}</span>
-                </div>
-                ${isAdminOrDev ? `<button type="button" style="background:#ef4444; color:#fff; border:none; padding:4px 8px; border-radius:6px; font-size:11px; cursor:pointer;" data-msgid="${data.id}">Sil</button>` : ''}
-            `;
-            if (isAdminOrDev) {
-                const btn = div.querySelector("button");
-                if (btn) btn.onclick = () => window.deleteDislordMessage(data.id);
+            div.style.flexDirection = "column";
+            div.style.alignItems = "stretch";
+            if (data.pinned) div.style.borderColor = "rgba(245,158,11,0.45)";
+
+            if (data.type === "poll" && Array.isArray(data.pollOptions)) {
+                const votes = data.pollVotes || {};
+                const counts = data.pollOptions.map((_, i) => Object.values(votes).filter(v => v === i).length);
+                const totalVotes = Object.keys(votes).length;
+                let optsHtml = data.pollOptions.map((opt, i) => {
+                    const cnt = counts[i];
+                    const pct = totalVotes ? Math.round((cnt / totalVotes) * 100) : 0;
+                    return `<button type="button" data-poll-opt="${i}" style="display:block;width:100%;text-align:left;margin:4px 0;padding:7px 12px;border-radius:8px;border:1px solid var(--border-color);background:rgba(255,255,255,0.04);color:#e2e8f0;cursor:pointer;font-size:12px;">
+                        ${escapeHtml(opt)} — ${cnt} oy (%${pct})
+                    </button>`;
+                }).join("");
+                div.innerHTML = `<div style="min-width:0;flex:1;">
+                    <span class="msg-sender">📊 ${safeSender}${badgesHtml}${pinBadge}</span>
+                    <span class="msg-text" style="display:block;font-weight:700;margin:4px 0;">${escapeHtml(data.text || "")}</span>
+                    <div class="poll-opts">${optsHtml}</div>
+                    <div style="font-size:11px;color:#94a3b8;margin-top:4px;">Toplam ${totalVotes} oy</div>
+                </div>`;
+                div.querySelectorAll("[data-poll-opt]").forEach(btn => {
+                    btn.onclick = () => window.votePoll(data.id, parseInt(btn.getAttribute("data-poll-opt"), 10));
+                });
+            } else {
+                let msgText = String(data.text || "");
+                (globalBadWords || []).forEach(word => {
+                    if (!word) return;
+                    try {
+                        const escaped = String(word).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                        msgText = msgText.replace(new RegExp(escaped, 'gi'), '***');
+                    } catch (e) {}
+                });
+                const safeText = escapeHtml(msgText);
+                let replyHtml = "";
+                if (data.replyTo && (data.replyTo.sender || data.replyTo.text)) {
+                    replyHtml = `<div class="msg-reply-quote">↩ ${escapeHtml(data.replyTo.sender || "")}: ${escapeHtml(String(data.replyTo.text || "").slice(0, 100))}</div>`;
+                }
+                const canPin = isAdminOrDev;
+                div.innerHTML = `
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+                    <div style="min-width:0;flex:1;">
+                        <span class="msg-sender">${safeSender}${badgesHtml}${pinBadge}</span>
+                        ${replyHtml}
+                        <span class="msg-text" style="display:block;word-break:break-word;">${safeText}</span>
+                        <div class="msg-actions-row">
+                            <button type="button" class="msg-act-btn" data-act="reply">↩ Yanıtla</button>
+                            ${canPin ? (data.pinned
+                                ? `<button type="button" class="msg-act-btn" data-act="unpin">📌 Kaldır</button>`
+                                : `<button type="button" class="msg-act-btn" data-act="pin">📌 Sabitle</button>`) : ""}
+                            ${canPin ? `<button type="button" class="msg-act-btn" data-act="del" style="color:#fca5a5;">Sil</button>` : ""}
+                        </div>
+                    </div>
+                </div>`;
+                const replyBtn = div.querySelector('[data-act="reply"]');
+                if (replyBtn) replyBtn.onclick = () => window.setReplyTo(data.id, data.sender || "Oyuncu", data.text || "");
+                const pinBtn = div.querySelector('[data-act="pin"]');
+                if (pinBtn) pinBtn.onclick = () => window.pinChatMessage(data.id, true);
+                const unpinBtn = div.querySelector('[data-act="unpin"]');
+                if (unpinBtn) unpinBtn.onclick = () => window.pinChatMessage(data.id, false);
+                const delBtn = div.querySelector('[data-act="del"]');
+                if (delBtn) delBtn.onclick = () => window.deleteDislordMessage(data.id);
             }
             box.appendChild(div);
         });
@@ -2072,6 +3036,34 @@ window.openGlobalChat = function() {
             </div>`;
         }
     });
+};
+
+
+window.setReplyTo = function(id, sender, text) {
+    replyToMsg = { id: id, sender: sender || "Oyuncu", text: (text || "").slice(0, 120) };
+    const bar = document.getElementById("reply-preview-bar");
+    const tx = document.getElementById("reply-preview-text");
+    if (bar && tx) {
+        tx.textContent = "Yanıt: " + replyToMsg.sender + " — " + replyToMsg.text;
+        bar.classList.add("visible");
+    }
+    const input = document.getElementById("dislord-message-input");
+    if (input) input.focus();
+};
+window.clearReply = function() {
+    replyToMsg = null;
+    const bar = document.getElementById("reply-preview-bar");
+    if (bar) bar.classList.remove("visible");
+};
+window.pinChatMessage = async function(msgId, pin) {
+    if (!activeUser || !msgId) return;
+    if (!checkIfAdmin() && !checkIfDev()) { alert("Yalnızca admin/geliştirici sabitleyebilir."); return; }
+    try {
+        await updateDoc(doc(db, "clan_messages", msgId), { pinned: !!pin });
+    } catch (e) {
+        console.error(e);
+        alert("Sabitleme başarısız: " + (e.message || e));
+    }
 };
 
 window.sendDislordMessage = async function() {
@@ -2099,6 +3091,22 @@ window.sendDislordMessage = async function() {
     const text = (input.value || "").trim();
     if (!text) return;
     if (text.length > 500) { alert("Mesaj en fazla 500 karakter olabilir."); return; }
+
+    if (!window.recentChatTexts) window.recentChatTexts = [];
+    window.recentChatTexts.push(text.toLowerCase());
+    if (window.recentChatTexts.length > 5) window.recentChatTexts.shift();
+    var sameCount = window.recentChatTexts.filter(function(t){ return t === text.toLowerCase(); }).length;
+    if (sameCount >= 3) {
+        var muteUntil = Date.now() + 60000;
+        userProfileData.isMuted = true;
+        userProfileData.mutedUntil = muteUntil;
+        window.recentChatTexts = [];
+        updateDoc(doc(db, "users", activeUser.uid), { isMuted: true, mutedUntil: muteUntil }).catch(function(){});
+        alert("Aynı mesajı çok kez yazdın! 1 dakika susturuldun.");
+        input.value = "";
+        return;
+    }
+
     input.value = "";
     lastClanMsgAt = nowMsg;
 
@@ -2106,15 +3114,33 @@ window.sendDislordMessage = async function() {
         const senderName = getCleanDisplayName(userProfileData.username);
         await addDoc(collection(db, "clan_messages"), {
             clanId: "genel_sohbet",
+            type: "text",
             text: text,
             sender: senderName,
+            badges: Array.isArray(userProfileData.activeBadges) ? userProfileData.activeBadges.slice(0, 5) : [],
+            reactions: {},
+            pinned: false,
+            replyTo: (replyToMsg && replyToMsg.id) ? { id: replyToMsg.id, sender: replyToMsg.sender, text: replyToMsg.text } : null,
             createdAt: serverTimestamp()
         });
+        if (typeof window.clearReply === "function") window.clearReply();
     } catch (e) {
         console.error("Mesaj gönderme hatası:", e);
         alert("Mesaj gönderilemedi: " + (e.message || "Hata"));
         input.value = text;
     }
+};
+
+window.votePoll = async function(msgId, optionIndex) {
+    if (!activeUser || !msgId) return;
+    try {
+        var ref = doc(db, "clan_messages", msgId);
+        var snap = await getDoc(ref);
+        if (!snap.exists()) return;
+        var votes = Object.assign({}, (snap.data().pollVotes || {}));
+        votes[activeUser.uid] = optionIndex;
+        await updateDoc(ref, { pollVotes: votes });
+    } catch (e) { console.error(e); alert("Oy kullanılamadı."); }
 };
 
 window.handleDislordChatKey = function(e) { if (e.key === "Enter") { e.preventDefault(); window.sendDislordMessage(); } };
@@ -2146,7 +3172,7 @@ window.openProfile = function() {
         invContainer.innerHTML = `<span style="font-size:12px; color:#94a3b8;">Envanterin boş.</span>`;
     } else {
         inv.forEach(item => {
-            const isActive = userProfileData.activeBadge === item;
+            const isActive = isItemEquipped(item);
             const row = document.createElement("div");
             row.style.cssText = "display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.03); padding:8px; border-radius:8px;";
             
@@ -2157,8 +3183,8 @@ window.openProfile = function() {
             const btn = document.createElement("button");
             btn.type = "button";
             btn.className = "btn-action";
-            btn.style.cssText = `padding:4px 10px; font-size:11px; background:${isActive ? '#ef4444' : 'var(--primary)'}`;
-            btn.textContent = isActive ? "Kullanımı Bırak" : "Kullan";
+            btn.style.cssText = `padding:4px 10px; font-size:11px; background:${isActive ? '#16a34a' : '#f59e0b'}`;
+            btn.textContent = isActive ? "Aktif (Kaldır)" : "Kullan";
             btn.onclick = () => window.useItem(item);
             
             row.appendChild(nameSpan);
@@ -2239,15 +3265,22 @@ onSnapshot(query(collection(db, "users")), snapshot => {
             userProfileData.lastDailyClaim = serverData.lastDailyClaim ?? userProfileData.lastDailyClaim;
             userProfileData.clanId = serverData.clanId ?? userProfileData.clanId;
             userProfileData.inventory = serverData.inventory ?? userProfileData.inventory;
-            userProfileData.activeBadge = serverData.activeBadge ?? userProfileData.activeBadge;
+            userProfileData.activeBadges = serverData.activeBadges ?? userProfileData.activeBadges ?? [];
+            userProfileData.activeFrame = serverData.activeFrame ?? userProfileData.activeFrame ?? "";
+            userProfileData.activeNameStyle = serverData.activeNameStyle ?? userProfileData.activeNameStyle ?? "";
+            userProfileData.playTimeMs = serverData.playTimeMs ?? userProfileData.playTimeMs ?? 0;
+            userProfileData.scorePoints = serverData.scorePoints ?? userProfileData.scorePoints ?? 0;
+            userProfileData.questLevel = serverData.questLevel ?? userProfileData.questLevel ?? 0;
+            userProfileData.questProgress = serverData.questProgress ?? userProfileData.questProgress ?? {};
+            userProfileData.questDone = serverData.questDone ?? userProfileData.questDone ?? {};
             
-            // Mute süresi dolmuşsa otomatik temizle
             if (userProfileData.isMuted && (userProfileData.mutedUntil || 0) > 0 && Date.now() > userProfileData.mutedUntil) {
                 userProfileData.isMuted = false;
                 userProfileData.mutedUntil = 0;
                 updateDoc(doc(db, "users", activeUser.uid), { isMuted: false, mutedUntil: 0 }).catch(() => {});
             }
             updateUserHeaderUI();
+            updateShopButtons();
 
             const adminBtn = document.getElementById("admin-nav-btn");
             const devBtn = document.getElementById("dev-nav-btn");
@@ -2272,7 +3305,7 @@ onSnapshot(query(collection(db, "users")), snapshot => {
 
 function populateAdminDropdowns() {
     if (!checkIfAdmin()) return;
-    ['admin-target-user-coin', 'admin-target-user-mute', 'admin-target-user-dev', 'admin-target-user-ban'].forEach(id => {
+    ['admin-target-user-coin', 'admin-target-user-mute', 'admin-target-user-dev', 'admin-target-user-dev-revoke', 'admin-target-user-ban'].forEach(id => {
         const sel = document.getElementById(id);
         if (!sel) return;
         const prev = sel.value;
@@ -2283,10 +3316,11 @@ function populateAdminDropdowns() {
             const isTargetAdmin = lowerName === "salim_xy66" || lowerName === "desiredoue";
 
             if (id === 'admin-target-user-dev' && isTargetAdmin) return;
+            if (id === 'admin-target-user-dev-revoke' && !(u.isDev === true && !isTargetAdmin && (!u.devGrantedBy || u.devGrantedBy === activeUser.uid))) return;
 
             const opt = document.createElement("option");
             opt.value = u.uid;
-            opt.innerText = `${cleanName} (🪙 ${u.coins || 0})${isTargetAdmin ? ' [ADMİN]' : ''}`;
+            opt.innerText = id === 'admin-target-user-coin' ? `${cleanName} (💰 ${u.coins || 0} · 🏆 ${u.scorePoints || 0})${isTargetAdmin ? ' [ADMİN]' : ''}` : `${cleanName}${isTargetAdmin ? ' [ADMİN]' : ''}`;
             sel.appendChild(opt);
         });
         if (prev) sel.value = prev;
@@ -2329,7 +3363,9 @@ function renderAllLists() {
             username: getCleanDisplayName(userProfileData.username),
             avatarUrl: userProfileData.avatarUrl || "",
             status: isAfk ? "afk" : "online",
-            activeBadge: userProfileData.activeBadge || "",
+            activeBadges: userProfileData.activeBadges || [],
+            activeFrame: userProfileData.activeFrame || "",
+            activeNameStyle: userProfileData.activeNameStyle || "",
             isAdmin: isSelfAdmin,
             isDev: !isSelfAdmin && (userProfileData.isDev || false),
             isSelf: true
@@ -2349,7 +3385,9 @@ function renderAllLists() {
                 username: cleanName,
                 avatarUrl: data.avatarUrl || "",
                 status: (data.status === "afk" || diffSeconds > 30) ? "afk" : "online",
-                activeBadge: data.activeBadge || "",
+                activeBadges: data.activeBadges || [],
+                activeFrame: data.activeFrame || "",
+                activeNameStyle: data.activeNameStyle || "",
                 isAdmin: isTargetAdmin,
                 isDev: !isTargetAdmin && (data.isDev || false),
                 isSelf: false
@@ -2367,11 +3405,11 @@ function renderAllLists() {
         if (player.avatarUrl) {
             const img = document.createElement("img");
             img.src = player.avatarUrl;
-            img.className = "player-avatar";
+            img.className = "player-avatar" + (player.activeFrame ? " " + player.activeFrame : "");
             img.alt = "";
             img.onerror = () => {
                 const fallback = document.createElement("div");
-                fallback.className = "player-avatar";
+                fallback.className = "player-avatar" + (player.activeFrame ? " " + player.activeFrame : "");
                 fallback.style.cssText = "display:grid; place-items:center;";
                 fallback.textContent = "🐱";
                 img.replaceWith(fallback);
@@ -2379,7 +3417,7 @@ function renderAllLists() {
             div.appendChild(img);
         } else {
             const av = document.createElement("div");
-            av.className = "player-avatar";
+            av.className = "player-avatar" + (player.activeFrame ? " " + player.activeFrame : "");
             av.style.cssText = "display:grid; place-items:center;";
             av.textContent = "🐱";
             div.appendChild(av);
@@ -2389,7 +3427,11 @@ function renderAllLists() {
         info.className = "player-info";
         const nameDiv = document.createElement("div");
         nameDiv.className = "player-name";
-        nameDiv.appendChild(document.createTextNode(displayName + " "));
+        const nameTextSpan = document.createElement("span");
+        if (player.activeNameStyle) nameTextSpan.className = player.activeNameStyle;
+        nameTextSpan.textContent = displayName;
+        nameDiv.appendChild(nameTextSpan);
+        nameDiv.appendChild(document.createTextNode(" "));
         if (player.isAdmin) {
             const b = document.createElement("span");
             b.className = "badge-admin";
@@ -2404,12 +3446,14 @@ function renderAllLists() {
             nameDiv.appendChild(b);
             nameDiv.appendChild(document.createTextNode(" "));
         }
-        if (player.activeBadge) {
+        const badges = Array.isArray(player.activeBadges) ? player.activeBadges.slice(0, 5) : [];
+        badges.forEach(bd => {
             const b = document.createElement("span");
-            b.style.cssText = "font-size:10px; color:var(--gold-light); font-weight:700;";
-            b.textContent = "[" + player.activeBadge + "]";
+            b.style.cssText = "font-size:9px; color:var(--gold-light); font-weight:700;";
+            b.textContent = bd;
+            nameDiv.appendChild(document.createTextNode(" "));
             nameDiv.appendChild(b);
-        }
+        });
         const statusDiv = document.createElement("div");
         statusDiv.className = "player-status-text";
         statusDiv.textContent = isUserAfk ? "AFK" : "Çevrimiçi";
@@ -2429,13 +3473,9 @@ function renderAllLists() {
 
     if (leaderboardTbody) {
         leaderboardTbody.innerHTML = "";
-        const sorted = [...allUsersCache].filter(u => !u.isBanned).sort((a, b) => (b.coins || 0) - (a.coins || 0));
+        const sorted = [...allUsersCache].filter(u => !u.isBanned).sort((a, b) => (b.playTimeMs || 0) - (a.playTimeMs || 0));
         sorted.forEach((u, idx) => {
             const cleanName = getCleanDisplayName(u.username);
-            const lowerName = cleanName.toLowerCase().replace(/\s+/g, "_");
-            const isTargetAdmin = lowerName === "salim_xy66" || lowerName === "desiredoue";
-            const rankBadge = isTargetAdmin ? '<span class="badge-admin">Admin</span>' : (u.activeBadge || 'Oyuncu');
-            
             const tr = document.createElement("tr");
             const tdRank = document.createElement("td");
             tdRank.innerHTML = `<b>#${idx + 1}</b>`;
@@ -2454,13 +3494,10 @@ function renderAllLists() {
             const tdBadge = document.createElement("td");
             const badgeSpan = document.createElement("span");
             badgeSpan.style.cssText = "color:var(--cyan); font-size:12.5px;";
-            // rankBadge can be HTML for admin - handle carefully
-            if (isTargetAdmin) {
-                badgeSpan.className = "badge-admin";
-                badgeSpan.textContent = "Admin";
-            } else {
-                badgeSpan.textContent = u.activeBadge || "Oyuncu";
-            }
+            const ms = Number(u.playTimeMs) || 0;
+            const hours = Math.floor(ms / 3600000);
+            const mins = Math.floor((ms % 3600000) / 60000);
+            badgeSpan.textContent = hours > 0 ? (hours + " sa " + mins + " dk") : (mins + " dk");
             tdBadge.appendChild(badgeSpan);
             tr.appendChild(tdRank);
             tr.appendChild(tdName);
@@ -2473,6 +3510,7 @@ function renderAllLists() {
 setInterval(renderAllLists, 10000);
 
 window.logout = async function() {
+    try { if (adminUnlocked) await deleteDoc(doc(db, "adminClaims", activeUser.uid)); } catch (e) {}
     try {
         await updateStatus("offline");
     } catch (e) {}
@@ -2483,7 +3521,6 @@ window.logout = async function() {
         await signOut(auth);
     } catch (e) {
         console.error("Çıkış hatası:", e);
-        // Yine de arayüzü sıfırla
         document.getElementById("auth-overlay").style.display = "flex";
         document.getElementById("top-navbar").style.display = "none";
         document.getElementById("main-content").style.display = "none";
@@ -2494,9 +3531,18 @@ window.openGame = function(title, url) {
     if (!url) return;
     document.getElementById("modal-game-title").innerText = title || "Oyun";
     const frame = document.getElementById("game-frame");
-    frame.src = ""; // önceki oyunu temizle
+    frame.src = "";
     setTimeout(() => { frame.src = url; }, 50);
     document.getElementById("game-modal").style.display = "flex";
+    const t = (title || "").toLowerCase();
+    let gkey = "any";
+    if (t.includes("basket")) gkey = "basket";
+    else if (t.includes("soccer")) gkey = "soccer";
+    else if (t.includes("slope")) gkey = "slope";
+    else if (t.includes("stickman")) gkey = "stickman";
+    else if (t.includes("fartnership") || t.includes("fart")) gkey = "fartnership";
+    progressQuest(gkey);
+    addScorePoints(25);
 };
 
 window.closeGame = function() {
@@ -2520,11 +3566,11 @@ function loadAdminInbox() {
     const inboxContainer = document.getElementById("admin-dm-inbox-list");
     if (!inboxContainer) return;
 
-    // Determine current admin key (salim_xy66 or desiredoue)
     const cleanName = getCleanDisplayName(userProfileData.username || "").toLowerCase().replace(/\s+/g, "_");
-    const adminKey = cleanName.includes("desiredoue") ? "desiredoue" : "salim_xy66";
+    const emailLower = (activeUser?.email || "").toLowerCase();
+    const adminKey = (cleanName.includes("desiredoue") || emailLower.startsWith("desiredoue@")) ? "desiredoue" : "salim_xy66";
 
-    const q = query(collection(db, "admin_chats"), where("adminKey", "==", adminKey));
+    const q = query(collection(db, "clan_messages"), where("isAdminDm", "==", true));
 
     adminInboxUnsub = onSnapshot(q, snapshot => {
         inboxContainer.innerHTML = "";
@@ -2532,14 +3578,17 @@ function loadAdminInbox() {
 
         snapshot.forEach(docSnap => {
             const data = docSnap.data();
+            if (data.adminKey !== adminKey) return;
             const uUid = data.userUid;
             if (!uUid) return;
             if (!conversations[uUid]) {
                 conversations[uUid] = {
                     userUid: uUid,
-                    senderName: data.senderName || "Oyuncu",
+                    senderName: (data.senderName && !data.senderName.includes("[Admin]")) ? data.senderName : "Oyuncu",
                     messages: []
                 };
+            } else if (data.senderName && !data.senderName.includes("[Admin]")) {
+                conversations[uUid].senderName = data.senderName;
             }
             conversations[uUid].messages.push({
                 id: docSnap.id,
@@ -2583,13 +3632,13 @@ function loadAdminInbox() {
             btn.textContent = "Sohbeti Aç / Yanıtla";
             btn.onclick = () => {
                 selectedAdminKey = adminKey;
-                // Open admin chat modal for this specific user
+                activeChatTargetUserUid = uUid;
                 document.getElementById("admin-chat-title").innerText = `💬 ${conv.senderName} ile Özel Sohbet`;
                 document.getElementById("admin-chat-modal").style.display = "flex";
                 
                 if (activeAdminChatUnsub) activeAdminChatUnsub();
-                const chatRoomId = uUid + "_" + adminKey;
-                const qChat = query(collection(db, "admin_chats"), where("roomId", "==", chatRoomId));
+                const chatRoomId = "dm_" + uUid + "_" + adminKey;
+                const qChat = query(collection(db, "clan_messages"), where("clanId", "==", chatRoomId));
                 
                 activeAdminChatUnsub = onSnapshot(qChat, snap => {
                     const msgBox = document.getElementById("admin-chat-messages");
@@ -2636,6 +3685,619 @@ function loadAdminInbox() {
     });
 }
 
+/* PORTAL AI PRO — YÜKSEK KAPASİTELİ ZEKA, İŞLEM MOTORU VE PORTAL EYLEMLERİ */
+let aiHistory = [];
+
+window.openAIChat = function() {
+    const modal = document.getElementById("ai-chat-modal");
+    const box = document.getElementById("ai-chat-messages");
+    modal.style.display = "flex";
+    if (box && box.children.length === 0) {
+        appendAIMessage("🤖 Portal AI Pro", `Merhaba ${getCleanDisplayName(userProfileData.username)}! Ben gelişmiş Portal AI Pro asistanıyım.\n\nNeler yapabilirim?\n• 🧮 Matematik & Bilimsel İşlemler: Karmaşık denklemler, yüzdeler, karekök, faktöriyel, birim dönüşümleri (ör: "148 * 73 + sqrt(144)", "500'ün %18'i kaç", "10! kaç")\n• 💻 Kodlama & Yazılım: Python, HTML, CSS, JavaScript örnek kodları üretme ve açıklama (ör: "python hesap makinesi kodu yaz", "html buton kodu")\n• ⚡ Canlı Portal İşlemleri: Bakiyeni, skorunu kontrol etme, skoru bakiyeye çevirme ("tüm skorumu bakiyeye çevir"), oyun başlatma ("basket random aç", "yazı tura oyna")\n• 🌍 Genel Kültür, Tarih, Bilim & Oyun Taktikleri: Aklına gelen her konuda detaylı açıklama!`, false);
+    }
+    setTimeout(() => document.getElementById("ai-chat-input")?.focus(), 80);
+};
+
+window.closeAIChat = function() {
+    document.getElementById("ai-chat-modal").style.display = "none";
+};
+
+window.clearAIChat = function() {
+    const box = document.getElementById("ai-chat-messages");
+    if (box) box.innerHTML = "";
+    aiHistory = [];
+    window.openAIChat();
+};
+
+function appendAIMessage(sender, text, isUser = false, codeBlock = "") {
+    const box = document.getElementById("ai-chat-messages");
+    if (!box) return;
+    const div = document.createElement("div");
+    div.style.cssText = `background:${isUser ? '#1a1033' : '#0f0f0f'}; border:1px solid ${isUser ? 'rgba(139,92,246,0.5)' : 'rgba(255,255,255,0.12)'}; padding:14px 18px; border-radius:14px; max-width:85%; align-self:${isUser ? 'flex-end' : 'flex-start'};`;
+    const sEl = document.createElement("div");
+    sEl.style.cssText = `font-size:11px; font-weight:800; color:${isUser ? '#c4b5fd' : 'var(--gold)'}; margin-bottom:6px;`;
+    sEl.textContent = sender;
+    const tEl = document.createElement("div");
+    tEl.className = "ai-msg-content";
+    tEl.textContent = text;
+    div.appendChild(sEl);
+    div.appendChild(tEl);
+    if (codeBlock) {
+        const pre = document.createElement("pre");
+        pre.className = "ai-code-block";
+        pre.textContent = codeBlock;
+        div.appendChild(pre);
+    }
+    box.appendChild(div);
+    box.scrollTop = box.scrollHeight;
+}
+
+function safeMathEval(expr) {
+    let cleaned = expr.toLowerCase()
+        .replace(/×/g, "*").replace(/÷/g, "/").replace(/,/g, ".")
+        .replace(/\^/g, "**")
+        .replace(/karekök\s*\(?(\d+(?:\.\d+)?)\)?/g, "Math.sqrt($1)")
+        .replace(/sqrt\(/g, "Math.sqrt(")
+        .replace(/sin\(/g, "Math.sin(")
+        .replace(/cos\(/g, "Math.cos(")
+        .replace(/tan\(/g, "Math.tan(")
+        .replace(/log\(/g, "Math.log10(")
+        .replace(/pi/g, "Math.PI");
+
+    cleaned = cleaned.replace(/(\d+)!/g, (_, n) => {
+        const num = parseInt(n, 10);
+        if (num > 170) return "Infinity";
+        let f = 1;
+        for (let i = 2; i <= num; i++) f *= i;
+        return String(f);
+    });
+
+    const pctMatch = cleaned.match(/(\d+(?:\.\d+)?)\s*(?:'in|'ın|'un|'ün|nin|nın)?\s*%\s*(\d+(?:\.\d+)?)/);
+    if (pctMatch) {
+        const a = parseFloat(pctMatch[1]);
+        const b = parseFloat(pctMatch[2]);
+        return (a * b) / 100;
+    }
+
+    const mathTokens = cleaned.replace(/Math\.(sqrt|sin|cos|tan|log10|PI)/g, "");
+    if (!/^[0-9+\-*/().\s*]+$/.test(mathTokens) || !/[0-9]/.test(mathTokens)) return null;
+    if (!/[+\-*/]/.test(mathTokens) && !cleaned.includes("Math.")) return null;
+
+    try {
+        const res = Function('"use strict"; return (' + cleaned + ')')();
+        if (typeof res === "number" && !isNaN(res)) {
+            return Number.isInteger(res) ? res : Number(res.toFixed(6));
+        }
+    } catch (e) {}
+    return null;
+}
+
+async function generateLocalAIResponse(rawQ) {
+    const q = rawQ.trim();
+    const low = q.toLowerCase();
+    aiHistory.push(low);
+
+    /* 1. CANLI PORTAL İŞLEMLERİ */
+    if ((low.includes("skorumu") || low.includes("skor")) && (low.includes("çevir") || low.includes("dönüştür") || low.includes("bozdur"))) {
+        const curScore = Number(userProfileData.scorePoints) || 0;
+        const usable = Math.floor(curScore / 5) * 5;
+        if (usable < 5) {
+            return { text: `Şu an ${curScore} skor puanın var. Bakiyeye çevirmek için en az 5 skor puanına ihtiyacın var.` };
+        }
+        const gain = usable / 5;
+        userProfileData.scorePoints = curScore - usable;
+        userProfileData.coins = (Number(userProfileData.coins) || 0) + gain;
+        await updateDoc(doc(db, "users", activeUser.uid), {
+            scorePoints: userProfileData.scorePoints,
+            coins: userProfileData.coins
+        });
+        updateUserHeaderUI();
+        return { text: `✅ İşlem tamamlandı! ${usable} skor puanın bozduruldu ve hesabına +${gain} 💰 eklendi.
+Yeni Bakiye: ${userProfileData.coins} 💰 | Kalan Skor: ${userProfileData.scorePoints}` };
+    }
+
+    if (low.includes("basket random") && (low.includes("aç") || low.includes("oyna") || low.includes("başlat"))) {
+        window.closeAIChat();
+        window.openGame('Basket Random','https://files.twoplayergames.org/files/games/other/Basket_Random/index.html');
+        return { text: "🏀 Basket Random başlatılıyor..." };
+    }
+    if (low.includes("soccer random") && (low.includes("aç") || low.includes("oyna") || low.includes("başlat"))) {
+        window.closeAIChat();
+        window.openGame('Soccer Random','https://files.twoplayergames.org/files/games/other/Soccer_Random/index.html');
+        return { text: "⚽ Soccer Random başlatılıyor..." };
+    }
+    if (low.includes("slope") && (low.includes("aç") || low.includes("oyna") || low.includes("başlat"))) {
+        window.closeAIChat();
+        window.openGame('Slope 3','https://game.azgame.io/slope-3/');
+        return { text: "🚀 Slope 3 başlatılıyor..." };
+    }
+    if ((low.includes("sohbet") || low.includes("chat")) && (low.includes("git") || low.includes("aç"))) {
+        window.closeAIChat();
+        window.switchSection('clans');
+        return { text: "💬 Genel Sohbet ekranına geçiliyor..." };
+    }
+    if ((low.includes("dükkan") || low.includes("mağaza")) && (low.includes("git") || low.includes("aç"))) {
+        window.closeAIChat();
+        window.switchSection('shop');
+        return { text: "🛍️ Siber Dükkan açılıyor..." };
+    }
+
+    /* 2. MATEMATİK & BİLİMSEL İŞLEM MOTORU */
+    const mathRes = safeMathEval(q);
+    if (mathRes !== null) {
+        return { text: `🧮 Hesaplama Sonucu:
+${q} = ${mathRes}` };
+    }
+
+    /* 3. KODLAMA & YAZILIM ASİSTANI */
+    if (low.includes("python")) {
+        if (low.includes("hesap makinesi")) {
+            return {
+                text: "🐍 Python ile temel dört işlem hesap makinesi kodu:",
+                code: `a = float(input("1. Sayı: "))
+islem = input("İşlem (+, -, *, /): ")
+b = float(input("2. Sayı: "))
+
+if islem == "+": print("Sonuç:", a + b)
+elif islem == "-": print("Sonuç:", a - b)
+elif islem == "*": print("Sonuç:", a * b)
+elif islem == "/": print("Sonuç:", a / b if b != 0 else "Sıfıra bölünemez!")`
+            };
+        }
+        if (low.includes("döngü") || low.includes("for") || low.includes("while")) {
+            return {
+                text: "🐍 Python'da for ve while döngüsü örneği:",
+                code: `# 1'den 10'a kadar sayıları yazdırır
+for i in range(1, 11):
+    print("Sayı:", i)
+
+# Koşullu while döngüsü
+sayac = 5
+while sayac > 0:
+    print("Geri sayım:", sayac)
+    sayac -= 1`
+            };
+        }
+        if (low.includes("liste") || low.includes("dizi")) {
+            return {
+                text: "🐍 Python Liste (List) işlemleri:",
+                code: `oyunlar = ["Valorant", "CS2", "GTA V"]
+oyunlar.append("eFootball")  # Eleman ekler
+for oyun in oyunlar:
+    print(oyun)`
+            };
+        }
+        return {
+            text: "🐍 Python güçlü, okunabilir ve yapay zekadan web geliştirmeye kadar her alanda kullanılan bir programlama dilidir. Örnek fonksiyon yapısı:",
+            code: `def selamla(isim):
+    return f"Merhaba {isim}, Python dünyasına hoş geldin!"
+
+print(selamla("${getCleanDisplayName(userProfileData.username)}"))`
+        };
+    }
+
+    if (low.includes("html") || low.includes("css") || low.includes("javascript") || low.includes("js ")) {
+        return {
+            text: "🌐 Modern Web Geliştirme (HTML + CSS + JS) temel şablonu:",
+            code: `<button id="btn" style="padding:10px 20px; background:#8b5cf6; color:#fff; border:none; border-radius:8px;">Tıkla</button>
+<" + "script>\n  document.getElementById("btn").onclick = () => alert("Butona tıklandı!");\n</" + "script>`
+        };
+    }
+
+    /* 4. ZAMAN / TARİH */
+    if (low.includes("saat kaç") || low.includes("tarih") || low.includes("bugün günlerden")) {
+        const now = new Date();
+        return { text: `🕒 Şu anki Tarih ve Saat:
+${now.toLocaleDateString('tr-TR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} - ${now.toLocaleTimeString('tr-TR')}` };
+    }
+
+    /* 5. PORTAL BİLGİLERİ */
+    if (low.includes("bakiye") || low.includes("param") || low.includes("jeton")) {
+        return { text: `💰 Hesap Özeti (${getCleanDisplayName(userProfileData.username)}):
+• Mevcut Bakiye: ${userProfileData.coins || 0} 💰
+• Skor Puanı: ${userProfileData.scorePoints || 0}
+• Görev Seviyesi: ${userProfileData.questLevel || 0}
+
+İstersen bana "skorumu bakiyeye çevir" yazarak anında dönüşüm yaptırabilirsin!` };
+    }
+    if (low.includes("skor") || low.includes("banka")) {
+        return { text: `🏦 Skor Bankası Bilgisi:
+Mevcut skorun: ${userProfileData.scorePoints || 0} puan (≈ ${Math.floor((userProfileData.scorePoints || 0) / 5)} 💰 değerinde).
+Her 5 skor puanı = 1 bakiye eder. Çevirmek için "skorumu bakiyeye çevir" yazabilirsin.` };
+    }
+    if (low.includes("görev")) {
+        return { text: `🎯 Görev Sistemi:
+Şu an Seviye ${userProfileData.questLevel || 0} görevlerdesin. Oyun oynadıkça görevlerin otomatik ilerler ve tamamlandığında bakiye veya skor puanı kazanırsın.` };
+    }
+    if (low.includes("dükkan") || low.includes("unvan") || low.includes("çerçeve")) {
+        return { text: `🛍️ Siber Dükkan:
+Satın aldığın unvan, çerçeve ve isim stilleri üzerinde artık doğrudan "Kullan" butonu çıkar. Bastığında anında profilinde aktifleşir!` };
+    }
+
+    /* 6. GENEL KÜLTÜR, BİLİM, TARİH, COĞRAFYA, SOHBET */
+    if (low.includes("atatürk") || low.includes("cumhuriyet")) {
+        return { text: "🇹🇷 Mustafa Kemal Atatürk, Türkiye Cumhuriyeti'nin kurucusu ve ilk Cumhurbaşkanıdır. 29 Ekim 1923'te Cumhuriyet ilan edilmiş; eğitim, hukuk, ekonomi ve bilim alanlarında çağdaşlaşma devrimleri gerçekleştirilmiştir." };
+    }
+    if (low.includes("istanbul")) {
+        return { text: "🌉 İstanbul, Asya ve Avrupa kıtalarını birbirine bağlayan, 1453'te Fatih Sultan Mehmet tarafından fethedilen dünyanın en önemli tarihi ve kültürel metropollerinden biridir." };
+    }
+    if (low.includes("uzay") || low.includes("gezegen") || low.includes("güneş") || low.includes("kara delik")) {
+        return { text: "🌌 Güneş Sistemimizde 8 gezegen bulunur: Merkür, Venüs, Dünya, Mars, Jüpiter, Satürn, Uranüs ve Neptün. En büyük gezegen Jüpiter'dir; ışığın bile kaçamadığı aşırı yoğun gök cisimlerine ise Kara Delik denir." };
+    }
+    if (low.includes("ışık hızı")) {
+        return { text: "⚡ Boşluktaki ışık hızı saniyede yaklaşık 299.792.458 metredir (yaklaşık 300.000 km/s). Evrendeki bilinen en yüksek hız sınırıdır." };
+    }
+    if (low.includes("dna") || low.includes("hücre")) {
+        return { text: "🧬 DNA (Deoksiribonükleik Asit), tüm canlıların genetik bilgisini taşıyan çift sarmallı moleküldür. Adenin (A), Timin (T), Guanin (G) ve Sitozin (C) bazlarından oluşur." };
+    }
+    if (low.includes("fıkra") || low.includes("espri") || low.includes("şaka")) {
+        const jokes = [
+            "Bilgisayar neden doktora gitmiş? Çünkü virüs kapmış! 💻",
+            "Programcı markete gider, eşi der ki: 'Ekmek al, yumurta varsa 10 tane al.' Programcı eve 10 ekmekle döner: 'Yumurta vardı!' 🥚",
+            "Matematik kitabı neden çok üzgünmüş? Çünkü çok fazla problemi varmış! 📐"
+        ];
+        return { text: jokes[Math.floor(Math.random() * jokes.length)] };
+    }
+    if (low.includes("merhaba") || low.includes("selam") || low === "sa" || low.includes("nasılsın")) {
+        return { text: `Selam ${getCleanDisplayName(userProfileData.username)}! Süperim, senin için buradayım. Bana matematik işlemi çözdürebilir, kod yazdırabilir, bilgi sorabilir veya portalda işlem yaptırabilirsin!` };
+    }
+
+    /* 7. WIKIPEDIA CANLI BİLGİ ÇEKME (AKLA GELEBİLECEK HER KONU İÇİN) */
+    try {
+        const searchTerm = q.replace(/nedir|kimdir|hakkında bilgi|açıkla|anlat|ne demek/gi, "").trim();
+        if (searchTerm.length >= 2) {
+            const wikiRes = await fetch(`https://tr.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(searchTerm)}`);
+            if (wikiRes.ok) {
+                const wData = await wikiRes.json();
+                if (wData.extract && wData.type !== "disambiguation") {
+                    return { text: `📚 ${wData.title}:
+${wData.extract}` };
+                }
+            }
+        }
+    } catch (e) {}
+
+    return {
+        text: `Sorunu analiz ettim ("${q}"):
+• Eğer sayısal bir işlem yaptırmak istiyorsan doğrudan denklemi yazabilirsin (ör: 256 * 14 + 90).
+• Kod örneği için dil adını yazabilirsin (ör: "python döngü yaz").
+• Herhangi bir kavram/kişi/olay için sadece adını veya "X nedir" yazman yeterli; anında bilgi tabanından getiririm!`
+    };
+}
+
+window.sendAIMessage = async function() {
+    const input = document.getElementById("ai-chat-input");
+    const q = (input.value || "").trim();
+    if (!q) return;
+    input.value = "";
+    appendAIMessage(getCleanDisplayName(userProfileData.username), q, true);
+
+    if (!AI_LOCAL_RE.test(q) && await streamAI(q)) return;
+    const res = await generateLocalAIResponse(q);
+    appendAIMessage("🤖 Portal AI Pro", res.text, false, res.code || "");
+};
+
+/* ===================== CANLI YAYIN (WebRTC + Firestore sinyalleşme) ===================== */
+const ST_ICE = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }, { urls: "stun:stun1.l.google.com:19302" }] };
+const stEl = id => document.getElementById(id);
+let liveStreams = [], stListening = false, stRole = null, stHostUid = null, stStream = null, stPeers = {}, stUnsubs = [], stBeat = null;
+let stPC = null, stDC = null, stCtlOn = false, stCtlWho = null, stPending = {}, stQ = [], stMoveAt = 0;
+
+setInterval(() => {
+    if (activeUser && !stListening) {
+        stListening = true;
+        onSnapshot(collection(db, "streams"), snap => {
+            const arr = [];
+            snap.forEach(d => { const x = d.data(); if (x.active) arr.push({ id: d.id, ...x }); });
+            liveStreams = arr; stRefresh();
+        }, err => console.warn("Yayın listesi okunamadı (Firestore kuralları?):", err));
+    }
+    stRefresh();
+}, 3000);
+
+function stLive() { return liveStreams.filter(s => Date.now() - (s.beat || 0) < 45000).sort((a, b) => (a.startedAt || 0) - (b.startedAt || 0)); }
+function stRefresh() {
+    const l = stLive(), b = stEl("st-live-badge");
+    if (b) { b.textContent = l.length ? "🔴 " + l.length + " yayın" : "yayın yok"; b.style.color = l.length ? "#f87171" : "#94a3b8"; }
+    if (stEl("st-hub") && stEl("st-hub").style.display !== "none") stRenderHub();
+}
+function stRenderHub() {
+    const body = stEl("st-hub-body"); if (!body) return; body.innerHTML = "";
+    const l = stLive();
+    if (!l.length) { body.innerHTML = '<div class="st-empty">📡 Şu an canlı yayın yok.<br>İlk yayını sen aç!</div>'; return; }
+    l.forEach((s, i) => {
+        const c = document.createElement("div"); c.className = "st-card" + (i === 0 ? " first" : "");
+        const inf = document.createElement("div");
+        const nm = document.createElement("b"); nm.textContent = "🔴 " + (s.hostName || "Oyuncu") + " yayında";
+        const sm = document.createElement("small"); sm.textContent = i === 0 ? "İlk açılan yayın" : "Canlı yayın";
+        inf.append(nm, sm);
+        const btn = document.createElement("button"); btn.type = "button"; btn.className = "st-btn green";
+        btn.textContent = s.id === activeUser?.uid ? "Odama Dön" : "Katıl";
+        btn.onclick = () => s.id === activeUser?.uid ? stShowRoom() : window.stJoin(s.id);
+        c.append(inf, btn); body.appendChild(c);
+    });
+}
+function stShowHub() { stEl("st-room").style.display = "none"; stEl("st-hub").style.display = "block"; stRenderHub(); }
+function stShowRoom() {
+    stEl("st-hub").style.display = "none"; stEl("st-room").style.display = "block";
+    const host = stRole === "host", live = stLive().find(x => x.id === stHostUid);
+    stEl("st-title").textContent = (host ? getCleanDisplayName(userProfileData.username) : (live?.hostName || "Oyuncu")) + " yayında";
+    const leaveBtn = stEl("st-leave-btn");
+    if (leaveBtn) {
+        leaveBtn.textContent = host ? "Yayını Durdur" : "Ayrıl";
+        leaveBtn.className = "st-btn red";
+        leaveBtn.style.display = "inline-block";
+    }
+    // Kontrol paneli hem yayıncıya hem izleyiciye görünür
+    const ctl = stEl("st-ctl-area");
+    if (ctl) {
+        ctl.className = "";
+        ctl.style.display = "flex";
+    }
+    stRenderCtl();
+}
+window.openStreamHub = function () {
+    if (!activeUser) return;
+    window.switchSection("stream");
+    stRole ? stShowRoom() : stShowHub();
+};
+
+function stSig(to, type, data) {
+    return addDoc(collection(db, "streams", stHostUid, "signals"), { from: activeUser.uid, to, type, data: JSON.stringify(data), t: Date.now() }).catch(e => console.warn(e));
+}
+async function stAddCand(pc, q, c) { if (pc.remoteDescription) { try { await pc.addIceCandidate(c); } catch (e) {} } else q.push(c); }
+async function stFlush(pc, q) { while (q.length) { try { await pc.addIceCandidate(q.shift()); } catch (e) {} } }
+function stListenChat() {
+    stUnsubs.push(onSnapshot(collection(db, "streams", stHostUid, "chat"), snap => {
+        const msgs = []; snap.forEach(d => msgs.push(d.data()));
+        msgs.sort((a, b) => a.t - b.t);
+        const box = stEl("st-chat"); box.innerHTML = "";
+        msgs.slice(-100).forEach(m => { const r = document.createElement("div"); const b = document.createElement("b"); b.textContent = m.name + ": "; r.append(b, document.createTextNode(m.text)); box.appendChild(r); });
+        box.scrollTop = box.scrollHeight;
+    }));
+}
+window.stSendChat = async function () {
+    const i = stEl("st-chat-input"), t = (i.value || "").trim();
+    if (!t || !stHostUid) return; i.value = "";
+    try { await addDoc(collection(db, "streams", stHostUid, "chat"), { uid: activeUser.uid, name: getCleanDisplayName(userProfileData.username), text: t.slice(0, 300), t: Date.now() }); } catch (e) { alert("Mesaj gönderilemedi: " + e.message); }
+};
+
+/* ---- YAYIN AÇAN ---- */
+window.stStart = async function () {
+    if (!activeUser) return;
+    if (stRole) return stShowRoom();
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) return alert("Bu tarayıcı ekran paylaşımını desteklemiyor (telefonlarda genelde çalışmaz). Bilgisayarda Chrome/Edge kullan.");
+    try { stStream = await navigator.mediaDevices.getDisplayMedia({ video: { frameRate: 30 }, audio: true }); }
+    catch (e) { return alert("Ekran paylaşımı başlatılamadı: " + (e.message || e.name)); }
+    stRole = "host"; stHostUid = activeUser.uid;
+    try {
+        const old = await getDocs(collection(db, "streams", stHostUid, "viewers")); old.forEach(d => deleteDoc(d.ref));
+        await setDoc(doc(db, "streams", stHostUid), { hostUid: stHostUid, hostName: getCleanDisplayName(userProfileData.username), active: true, startedAt: Date.now(), beat: Date.now() });
+    } catch (e) { stStream.getTracks().forEach(t => t.stop()); stRole = null; return alert("Yayın başlatılamadı (Firestore kuralları 'streams' koleksiyonuna izin vermiyor olabilir): " + e.message); }
+    stBeat = setInterval(() => updateDoc(doc(db, "streams", stHostUid), { beat: Date.now() }).catch(() => {}), 15000);
+    stStream.getVideoTracks()[0].onended = () => window.stLeave();
+    const v = stEl("st-video"); v.srcObject = stStream; v.muted = true;
+    stShowRoom(); stListenChat();
+    stUnsubs.push(onSnapshot(collection(db, "streams", stHostUid, "viewers"), snap => snap.docChanges().forEach(ch => {
+        if (ch.type === "added") stHostConnect(ch.doc.id, ch.doc.data().name || "İzleyici");
+        if (ch.type === "removed") stHostDrop(ch.doc.id);
+    })));
+    stUnsubs.push(onSnapshot(query(collection(db, "streams", stHostUid, "signals"), where("to", "==", stHostUid)), snap => snap.docChanges().forEach(ch => {
+        if (ch.type === "added") stHostSignal(ch.doc.id, ch.doc.data());
+    })));
+};
+async function stHostConnect(vid, name) {
+    if (stPeers[vid]) return;
+    const pc = new RTCPeerConnection(ST_ICE), peer = { pc, name, q: [], dc: null }; stPeers[vid] = peer;
+    stStream.getTracks().forEach(t => pc.addTrack(t, stStream));
+    peer.dc = pc.createDataChannel("ctl"); peer.dc.onmessage = e => { try { stHostCtl(vid, JSON.parse(e.data)); } catch (x) {} };
+    pc.onicecandidate = e => e.candidate && stSig(vid, "cand", e.candidate.toJSON());
+    pc.onconnectionstatechange = () => { if (pc.connectionState === "failed" || pc.connectionState === "closed") stHostDrop(vid); };
+    const offer = await pc.createOffer(); await pc.setLocalDescription(offer);
+    stSig(vid, "offer", { type: offer.type, sdp: offer.sdp });
+}
+async function stHostSignal(id, s) {
+    deleteDoc(doc(db, "streams", stHostUid, "signals", id)).catch(() => {});
+    const peer = stPeers[s.from]; if (!peer) return;
+    const d = JSON.parse(s.data);
+    try {
+        if (s.type === "answer") { await peer.pc.setRemoteDescription(d); stFlush(peer.pc, peer.q); }
+        else if (s.type === "cand") stAddCand(peer.pc, peer.q, d);
+    } catch (e) { console.warn(e); }
+}
+function stHostDrop(vid) {
+    const p = stPeers[vid]; if (!p) return;
+    try { p.pc.close(); } catch (e) {} delete stPeers[vid]; delete stPending[vid];
+    if (stCtlWho === vid) { stCtlWho = null; stEl("st-remote-cursor").style.display = "none"; }
+    stRenderCtl();
+}
+
+/* ---- KONTROL (yayın sahibinin onayıyla; yalnızca bu portal sayfasını kontrol eder) ---- */
+function stSend(dc, o) { if (dc && dc.readyState === "open") dc.send(JSON.stringify(o)); }
+function stRenderCtl() {
+    const a = stEl("st-ctl-area"); if (!a) return;
+    a.innerHTML = "";
+    a.style.display = "flex";
+    const add = (t, cls, fn) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "st-btn " + (cls || "");
+        b.textContent = t;
+        b.onclick = fn;
+        a.appendChild(b);
+    };
+    const txt = (t, bold) => {
+        const d = document.createElement("div");
+        d.className = bold ? "st-ctl-title" : "";
+        d.style.cssText = bold ? "" : "font-size:11px;color:#94a3b8;line-height:1.4;";
+        d.textContent = t;
+        a.appendChild(d);
+    };
+    if (stRole === "host") {
+        txt("🖱️ Uzaktan Kontrol", true);
+        txt(stCtlWho
+            ? ((stPeers[stCtlWho]?.name || "İzleyici") + " şu an senin portalını kontrol ediyor")
+            : "İzleyici istek atarsa burada onaylarsın");
+        Object.keys(stPending).forEach(vid => {
+            const r = document.createElement("div");
+            r.style.cssText = "font-size:12px;color:#fde68a;margin-top:4px;";
+            r.textContent = "⏳ " + stPending[vid] + " kontrol istiyor";
+            a.appendChild(r);
+            add("✅ İzin Ver — Ekranımı Kontrol Etsin", "green", () => stGrant(vid));
+            add("Reddet", "gray", () => {
+                delete stPending[vid];
+                stSend(stPeers[vid]?.dc, { k: "denied" });
+                stRenderCtl();
+            });
+        });
+        if (stCtlWho) add("⛔ Kontrolü Kes", "red", () => stRevoke());
+    } else if (stRole === "viewer") {
+        txt("🖱️ Uzaktan Kontrol", true);
+        if (stCtlOn) {
+            txt("Aktif: Video üzerinde mouse/tık/klavye yayıncının sayfasına gider");
+            add("⛔ Kontrolü Bırak", "red", () => {
+                stCtlOn = false;
+                stSend(stDC, { k: "release" });
+                stRenderCtl();
+            });
+        } else {
+            txt("İstek at → yayıncı onaylarsa video alanından tıklayarak kontrol edersin");
+            add("🖱️ Cihazı Kontrol Et (İstek Gönder)", "green", () => {
+                if (!stDC || stDC.readyState !== "open") {
+                    alert("Bağlantı henüz hazır değil. Birkaç saniye bekle, tekrar dene.");
+                    return;
+                }
+                stSend(stDC, { k: "req", name: getCleanDisplayName(userProfileData.username) });
+                txt("İstek gönderildi, yayıncının onayı bekleniyor...");
+            });
+        }
+    }
+}
+function stGrant(vid) {
+    if (stCtlWho && stCtlWho !== vid) stSend(stPeers[stCtlWho]?.dc, { k: "revoked" });
+    stCtlWho = vid; delete stPending[vid]; stSend(stPeers[vid]?.dc, { k: "granted" });
+    stEl("st-remote-name").textContent = stPeers[vid]?.name || "İzleyici"; stRenderCtl();
+}
+function stRevoke() { if (stCtlWho) stSend(stPeers[stCtlWho]?.dc, { k: "revoked" }); stCtlWho = null; stEl("st-remote-cursor").style.display = "none"; stRenderCtl(); }
+function stHostCtl(vid, m) {
+    if (m.k === "req") { stPending[vid] = m.name || stPeers[vid]?.name; stRenderCtl(); return; }
+    if (m.k === "release" && stCtlWho === vid) return stRevoke();
+    if (stCtlWho !== vid) return;
+    const x = m.x * innerWidth, y = m.y * innerHeight, cur = stEl("st-remote-cursor");
+    if (m.k === "m" || m.k === "c") { cur.style.display = "block"; cur.style.left = x + "px"; cur.style.top = y + "px"; }
+    const blocked = el => !el || el.closest(".st-host-only,.btn-logout,.admin-pill,.dev-pill");
+    if (m.k === "c") { const el = document.elementFromPoint(x, y); if (blocked(el)) return; if (el.focus) el.focus(); el.click(); }
+    else if (m.k === "w") window.scrollBy(0, m.dy || 0);
+    else if (m.k === "key") {
+        const a = document.activeElement; if (!a || blocked(a)) return;
+        if (a.tagName === "INPUT" || a.tagName === "TEXTAREA") {
+            if (m.key.length === 1) a.value += m.key; else if (m.key === "Backspace") a.value = a.value.slice(0, -1);
+            else if (m.key === "Enter") a.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter", bubbles: true }));
+            a.dispatchEvent(new Event("input", { bubbles: true }));
+        }
+    }
+}
+function stViewerCtl(m) {
+    if (m.k === "granted") { stCtlOn = true; stEl("st-video").focus(); }
+    if (m.k === "denied" || m.k === "revoked") { stCtlOn = false; if (m.k === "denied") alert("Yayıncı kontrol isteğini reddetti."); }
+    stRenderCtl();
+}
+function stNorm(e) {
+    const v = stEl("st-video"), r = v.getBoundingClientRect(), vw = v.videoWidth || r.width, vh = v.videoHeight || r.height;
+    const sc = Math.min(r.width / vw, r.height / vh), w = vw * sc, h = vh * sc, ox = r.left + (r.width - w) / 2, oy = r.top + (r.height - h) / 2;
+    return { x: Math.min(1, Math.max(0, (e.clientX - ox) / w)), y: Math.min(1, Math.max(0, (e.clientY - oy) / h)) };
+}
+(function () {
+    const v = stEl("st-video"); if (!v) return;
+    v.addEventListener("mousemove", e => { if (!stCtlOn || Date.now() - stMoveAt < 40) return; stMoveAt = Date.now(); stSend(stDC, { k: "m", ...stNorm(e) }); });
+    v.addEventListener("click", e => { if (stCtlOn) { v.focus(); stSend(stDC, { k: "c", ...stNorm(e) }); } });
+    v.addEventListener("wheel", e => { if (stCtlOn) { e.preventDefault(); stSend(stDC, { k: "w", dy: e.deltaY }); } }, { passive: false });
+    v.addEventListener("keydown", e => { if (stCtlOn) { e.preventDefault(); stSend(stDC, { k: "key", key: e.key }); } });
+})();
+
+/* ---- İZLEYİCİ ---- */
+window.stJoin = async function (hostUid) {
+    if (stRole) return stShowRoom();
+    stRole = "viewer"; stHostUid = hostUid; stQ = []; stCtlOn = false;
+    const pc = new RTCPeerConnection(ST_ICE); stPC = pc;
+    pc.ontrack = e => { stEl("st-video").srcObject = e.streams[0]; };
+    pc.ondatachannel = e => { stDC = e.channel; stDC.onmessage = ev => { try { stViewerCtl(JSON.parse(ev.data)); } catch (x) {} }; };
+    pc.onicecandidate = e => e.candidate && stSig(hostUid, "cand", e.candidate.toJSON());
+    stShowRoom(); stListenChat();
+    stUnsubs.push(onSnapshot(query(collection(db, "streams", hostUid, "signals"), where("to", "==", activeUser.uid)), snap => snap.docChanges().forEach(async ch => {
+        if (ch.type !== "added") return;
+        const s = ch.doc.data(), d = JSON.parse(s.data); deleteDoc(ch.doc.ref).catch(() => {});
+        try {
+            if (s.type === "offer") { await pc.setRemoteDescription(d); const ans = await pc.createAnswer(); await pc.setLocalDescription(ans); stSig(hostUid, "answer", { type: ans.type, sdp: ans.sdp }); stFlush(pc, stQ); }
+            else if (s.type === "cand") stAddCand(pc, stQ, d);
+        } catch (e) { console.warn(e); }
+    })));
+    stUnsubs.push(onSnapshot(doc(db, "streams", hostUid), d => { if (stRole === "viewer" && (!d.exists() || !d.data().active)) { alert("Yayın sona erdi."); window.stLeave(); } }));
+    try { await setDoc(doc(db, "streams", hostUid, "viewers", activeUser.uid), { name: getCleanDisplayName(userProfileData.username), joinedAt: Date.now() }); }
+    catch (e) { alert("Yayına katılınamadı: " + e.message); window.stLeave(); }
+};
+
+/* ---- ÇIKIŞ / YAYIN DURDUR ---- */
+window.stLeave = async function () {
+    const role = stRole, hostUid = stHostUid; if (!role) return;
+    stRole = null; stHostUid = null; stCtlOn = false; stCtlWho = null; stPending = {};
+    stUnsubs.forEach(u => { try { u(); } catch (e) {} }); stUnsubs = [];
+    clearInterval(stBeat); stEl("st-remote-cursor").style.display = "none";
+    Object.values(stPeers).forEach(p => { try { p.pc.close(); } catch (e) {} }); stPeers = {};
+    if (stStream) { stStream.getTracks().forEach(t => { t.onended = null; t.stop(); }); stStream = null; }
+    if (stPC) { try { stPC.close(); } catch (e) {} stPC = null; } stDC = null;
+    const v = stEl("st-video"); v.srcObject = null; stEl("st-chat").innerHTML = "";
+    try {
+        if (role === "host") await deleteDoc(doc(db, "streams", hostUid));
+        else await deleteDoc(doc(db, "streams", hostUid, "viewers", activeUser.uid));
+    } catch (e) {}
+    stShowHub();
+};
+window.addEventListener("beforeunload", () => { if (stRole === "host" && stHostUid) deleteDoc(doc(db, "streams", stHostUid)).catch(() => {}); });
+
+/* ===================== GERÇEK YAPAY ZEKA (akışlı = anında yanıt) ===================== */
+const AI_HISTORY = [];
+const AI_SYSTEM = "Sen 'Portal AI Pro' adlı, Oyun Portalı'nın gelişmiş yapay zeka asistanısın. Türkçe, doğrudan ve net yanıt ver; önce cevabı söyle, gerekirse sonra açıkla. Kod istendiğinde eksiksiz, çalışan, iyi yapılandırılmış kodu ```dil kod bloğunda ver ve kısaca açıkla. Matematik, bilim, tarih, ödev, çeviri, yaratıcı yazım, programlama, oyun stratejisi dahil her konuda uzman gibi yardımcı ol. Emin olmadığında bunu söyle, uydurma.";
+const AI_LOCAL_RE = /bakiye|skor|param\b|jeton|çevir|dükkan|unvan|çerçeve|görev|basket random|soccer random|slope|stickman|fartnership|yazı tura|saat kaç|^[\d\s+\-*/().,^%!]+$/i;
+function renderRich(c, text) {
+    c.textContent = ""; c.style.whiteSpace = "pre-wrap";
+    text.split(/```/).forEach((part, i) => {
+        if (i % 2 === 0) { if (part.trim()) c.appendChild(document.createTextNode(part.replace(/^\n+|\n+$/g, "") + "\n")); return; }
+        const code = part.replace(/^[^\n]*\n/, "").replace(/\n+$/, "");
+        const w = document.createElement("div"); w.className = "ai-code-wrap";
+        const pre = document.createElement("pre"); pre.className = "ai-code-block"; pre.textContent = code;
+        const cp = document.createElement("button"); cp.type = "button"; cp.className = "ai-copy"; cp.textContent = "Kopyala";
+        cp.onclick = () => { navigator.clipboard && navigator.clipboard.writeText(code); cp.textContent = "Kopyalandı ✓"; setTimeout(() => cp.textContent = "Kopyala", 1500); };
+        w.append(pre, cp); c.appendChild(w);
+    });
+}
+async function streamAI(q) {
+    appendAIMessage("🤖 Portal AI Pro", "▍", false);
+    const box = stEl("ai-chat-messages"), wrap = box.lastElementChild, c = wrap.querySelector(".ai-msg-content");
+    AI_HISTORY.push({ role: "user", content: q });
+    const msgs = [{ role: "system", content: AI_SYSTEM }].concat(AI_HISTORY.slice(-10));
+    let full = "";
+    for (const model of ["openai", "openai-fast"]) {
+        const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 12000);
+        try {
+            const r = await fetch("https://text.pollinations.ai/openai", { method: "POST", headers: { "Content-Type": "application/json" }, signal: ctl.signal, body: JSON.stringify({ model, messages: msgs, stream: true }) });
+            if (!r.ok || !r.body) throw new Error("http");
+            const rd = r.body.getReader(), dec = new TextDecoder(); let buf = "", raf = 0;
+            for (;;) {
+                const { done, value } = await rd.read(); clearTimeout(to); if (done) break;
+                buf += dec.decode(value, { stream: true }); const lines = buf.split("\n"); buf = lines.pop();
+                for (const ln of lines) {
+                    if (!ln.startsWith("data:")) continue; const d = ln.slice(5).trim(); if (d === "[DONE]") continue;
+                    try { const t = JSON.parse(d).choices[0].delta.content; if (t) { full += t; if (!raf) raf = requestAnimationFrame(() => { raf = 0; renderRich(c, full + " ▍"); box.scrollTop = box.scrollHeight; }); } } catch (e) {}
+                }
+            }
+        } catch (e) { clearTimeout(to); }
+        if (full) break;
+    }
+    if (!full) { wrap.remove(); AI_HISTORY.pop(); return false; }
+    renderRich(c, full); box.scrollTop = box.scrollHeight; AI_HISTORY.push({ role: "assistant", content: full }); return true;
+}
 </script>
+<div id="st-remote-cursor"><span id="st-remote-name"></span></div>
 </body>
 </html>
