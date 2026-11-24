@@ -523,6 +523,142 @@ body {
 #avatar-crop-modal { z-index: 2147482000 !important; }
 #avatar-crop-canvas { touch-action: none; cursor: grab; border-radius: 12px; background: #000; max-width: 100%; }
 #avatar-crop-canvas:active { cursor: grabbing; }
+
+/* ===================== PORTAL AI PRO — PREMIUM DRAWER ===================== */
+.ai-launcher{display:none!important}
+.ai-launcher-removed{
+  position:fixed; right:22px; bottom:26px; z-index:1200; display:none; align-items:center; gap:10px;
+  padding:12px 16px 12px 12px; border-radius:16px; cursor:pointer;
+  border:1px solid rgba(168,85,247,.55);
+  background:linear-gradient(135deg,rgba(30,20,60,.96),rgba(10,14,26,.96));
+  color:#fff; font-family:'Manrope',system-ui,sans-serif; font-size:13px; font-weight:800;
+  box-shadow:0 16px 40px rgba(0,0,0,.55),0 0 0 0 rgba(168,85,247,.5); backdrop-filter:blur(12px);
+  animation:aiPulse 4s ease-out infinite;
+}
+@keyframes aiPulse{
+  0%{box-shadow:0 16px 40px rgba(0,0,0,.55),0 0 0 0 rgba(168,85,247,.45)}
+  60%{box-shadow:0 16px 40px rgba(0,0,0,.55),0 0 0 16px rgba(168,85,247,0)}
+  100%{box-shadow:0 16px 40px rgba(0,0,0,.55),0 0 0 0 rgba(168,85,247,0)}
+}
+.ai-launcher:hover{transform:translateY(-2px)}
+.ai-l-ic{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,#a855f7,#22d3ee);box-shadow:0 0 18px rgba(168,85,247,.6);font-size:15px}
+.ai-l-txt{display:flex;flex-direction:column;align-items:flex-start;line-height:1.15}
+.ai-l-txt small{font-size:8.5px;letter-spacing:1.4px;color:#f3c969;font-weight:900}
+
+#ai-chat-modal{display:none;position:fixed;inset:0;z-index:1300;background:transparent}
+#ai-chat-modal.open{display:flex;align-items:center;justify-content:center;padding:20px}
+.ai-scrim{position:absolute;inset:0;background:rgba(3,4,10,.62);backdrop-filter:blur(4px)}
+.ai-drawer{
+  position:relative; width:min(1180px,96vw); height:min(90vh,940px);
+  display:flex; flex-direction:column; overflow:hidden; border-radius:24px;
+  border:1px solid rgba(168,85,247,.34);
+  background:linear-gradient(170deg,#151628 0%,#0a0c16 55%,#08090f 100%);
+  box-shadow:0 40px 90px rgba(0,0,0,.72),0 0 60px rgba(168,85,247,.12);
+  animation:aiIn .34s cubic-bezier(.22,1,.36,1);
+}
+@keyframes aiIn{from{opacity:0;transform:scale(.97) translateY(10px)}to{opacity:1;transform:none}}
+.ai-head{display:flex;align-items:center;gap:11px;padding:14px 15px;background:rgba(255,255,255,.035);border-bottom:1px solid rgba(255,255,255,.07)}
+.ai-avatar{position:relative;width:38px;height:38px;flex:0 0 38px;border-radius:13px;display:grid;place-items:center;font-size:16px;color:#d8d2ff;background:linear-gradient(150deg,#2a1c52,#101a2b);box-shadow:0 0 0 1.5px rgba(168,85,247,.55),0 0 20px rgba(168,85,247,.35)}
+.ai-head-title{display:flex;align-items:center;gap:7px;font-size:14.5px;font-weight:800;color:#fff}
+.ai-pro{font-size:8px;letter-spacing:1.3px;color:#1a1206;background:linear-gradient(135deg,#ffe3a1,#f3c969);padding:2px 5px;border-radius:4px;font-weight:900}
+.ai-head-sub{display:flex;align-items:center;gap:6px;font-size:10.5px;color:#9aa3c0;margin-top:3px}
+.ai-dot{width:6px;height:6px;border-radius:50%;background:#34d399;box-shadow:0 0 8px #34d399}
+.ai-head-actions{margin-left:auto;display:flex;gap:5px}
+.ai-ico{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);color:#cfd5e8;font-size:13px;cursor:pointer;transition:.2s}
+.ai-ico:hover{background:rgba(168,85,247,.25);border-color:rgba(168,85,247,.5);color:#fff}
+
+.ai-main{flex:1;display:flex;min-height:0;position:relative}
+#ai-side{width:232px;background:rgba(0,0,0,.28);border-right:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;flex-shrink:0}
+.ai-new{margin:10px;padding:9px;border-radius:10px;border:1px solid rgba(168,85,247,.3);background:rgba(168,85,247,.12);color:#d9d0ff;font-size:12px;font-weight:700;cursor:pointer}
+.ai-new:hover{background:rgba(168,85,247,.25)}
+#ai-chat-list{flex:1;overflow-y:auto;padding:0 8px 10px;display:flex;flex-direction:column;gap:4px}
+#ai-chat-messages{flex:1;overflow-y:auto;padding:18px 16px 8px;display:flex;flex-direction:column;gap:14px;background:transparent;scroll-behavior:smooth}
+#ai-chat-messages::-webkit-scrollbar,#ai-chat-list::-webkit-scrollbar{width:6px}
+#ai-chat-messages::-webkit-scrollbar-thumb{background:rgba(168,85,247,.35);border-radius:3px}
+
+.ai-msg{display:flex;flex-direction:column;max-width:min(100%,860px);padding:11px 14px;border-radius:14px;font-size:13.5px;line-height:1.62;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.045);color:#e9ecf7;align-self:flex-start;border-top-left-radius:5px;animation:aiMsgIn .24s ease-out}
+@keyframes aiMsgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.ai-msg.user{align-self:flex-end;background:linear-gradient(135deg,rgba(124,58,237,.9),rgba(59,102,246,.9));border-color:rgba(255,255,255,.14);border-radius:14px;border-top-right-radius:5px;color:#fff;box-shadow:0 8px 22px rgba(90,70,220,.28)}
+.ai-sender{font-size:10px;font-weight:900;letter-spacing:.6px;text-transform:uppercase;color:#b7a9ff;margin-bottom:5px}
+.ai-msg.user .ai-sender{color:#e2d9ff}
+.ai-msg-content{font-size:13.5px;color:#eef1fa;line-height:1.62;white-space:pre-wrap;overflow-wrap:anywhere}
+.ai-msg-content h3,.ai-msg-content h4{margin:10px 0 5px;font-size:14px;color:#fff}
+.ai-msg-content ul,.ai-msg-content ol{margin:6px 0 6px 18px;padding:0}
+.ai-msg-content li{margin-bottom:4px}
+.ai-msg-content code{background:rgba(168,85,247,.18);border:1px solid rgba(168,85,247,.22);color:#dcd4ff;padding:1px 5px;border-radius:5px;font-family:ui-monospace,Consolas,monospace;font-size:12px}
+.ai-code-wrap{position:relative;margin:9px 0;border-radius:11px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:#07080f}
+.ai-code-block{margin:0;padding:11px 12px;overflow-x:auto;font-size:11.8px;line-height:1.6;color:#cfd6f5;font-family:ui-monospace,Consolas,monospace;white-space:pre;background:none;border:0}
+.ai-copy{position:absolute;top:6px;right:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#a9b1cc;font-size:10px;font-weight:800;padding:3px 7px;border-radius:6px;cursor:pointer}
+.ai-copy:hover{background:rgba(168,85,247,.3);color:#fff}
+
+.ai-quick{display:flex;gap:7px;padding:6px 14px 8px;overflow-x:auto;scrollbar-width:none}
+.ai-quick::-webkit-scrollbar{display:none}
+.ai-quick button{white-space:nowrap;font-size:11.5px;font-weight:700;padding:7px 11px;border-radius:20px;cursor:pointer;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1);color:#aeb6d0;font-family:inherit}
+.ai-quick button:hover{background:rgba(168,85,247,.22);border-color:rgba(168,85,247,.45);color:#fff}
+
+.ai-composer{padding:8px 14px 12px;border-top:1px solid rgba(255,255,255,.07);background:rgba(6,7,14,.75)}
+.ai-modes{display:flex;gap:5px;margin-bottom:8px}
+.ai-modes button{font-size:10.5px;font-weight:800;padding:4px 10px;border-radius:7px;cursor:pointer;background:transparent;border:1px solid transparent;color:#7f88a6;font-family:inherit}
+.ai-modes button.active{background:rgba(168,85,247,.16);border-color:rgba(168,85,247,.35);color:#c9bdff}
+.ai-input-wrap{display:flex;align-items:center;gap:8px;padding:6px 6px 6px 14px;border-radius:15px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.12)}
+.ai-input-wrap:focus-within{border-color:rgba(168,85,247,.65);box-shadow:0 0 0 3px rgba(168,85,247,.14)}
+#ai-chat-input{flex:1;background:none;border:0;outline:none;color:#fff;font-size:13.5px;padding:6px 0;font-family:inherit}
+#ai-chat-input::placeholder{color:#6f7897}
+.ai-send{width:34px;height:34px;flex:0 0 34px;border-radius:10px;border:0;cursor:pointer;display:grid;place-items:center;background:linear-gradient(135deg,#a855f7,#22d3ee);color:#fff;font-size:14px}
+.ai-send:disabled{opacity:.35;cursor:not-allowed}
+.ai-note{text-align:center;font-size:9.5px;color:#7e88a6;margin-top:7px}
+
+/* hitap sorma */
+.ai-onboard{position:absolute;inset:0;z-index:6;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(7,8,16,.93);backdrop-filter:blur(16px)}
+.ai-onboard.show{display:flex}
+.ai-onboard-card{width:100%;max-width:330px;text-align:center;background:linear-gradient(165deg,#191b30,#0d0f1c);border:1px solid rgba(168,85,247,.42);border-radius:20px;padding:24px 20px;box-shadow:0 24px 60px rgba(0,0,0,.65)}
+.ai-onboard-glyph{width:50px;height:50px;margin:0 auto 12px;border-radius:15px;display:grid;place-items:center;font-size:21px;background:linear-gradient(135deg,#a855f7,#22d3ee);box-shadow:0 0 28px rgba(168,85,247,.5)}
+.ai-onboard-card h2{font-size:17px;margin:0 0 7px;color:#fff}
+.ai-onboard-card p{font-size:11.5px;color:#8e97b3;line-height:1.6;margin:0 0 14px}
+.ai-title-chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:10px}
+.ai-title-chips button{font-size:11px;font-weight:700;padding:6px 10px;border-radius:20px;cursor:pointer;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#b6bdda;font-family:inherit}
+.ai-title-chips button:hover{background:rgba(168,85,247,.24);border-color:rgba(168,85,247,.5);color:#fff}
+.ai-onboard-card input{width:100%;padding:10px 12px;border-radius:11px;text-align:center;font-size:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#fff;outline:none;margin-bottom:6px}
+.ai-onboard-card input:focus{border-color:#22d3ee}
+.ai-title-err{font-size:10.5px;color:#f08a8a;min-height:13px}
+.ai-ok{width:100%;padding:11px;border-radius:11px;border:0;cursor:pointer;font-size:13px;font-weight:900;color:#fff;background:linear-gradient(135deg,#a855f7,#22d3ee);box-shadow:0 8px 22px rgba(168,85,247,.32)}
+
+/* ayarlar */
+.ai-settings{position:absolute;inset:0;z-index:7;display:none;flex-direction:column;padding:18px;background:#080911;overflow-y:auto}
+.ai-settings.show{display:flex}
+@media (max-width:520px){
+  .ai-head{padding:12px 10px;gap:9px}
+  .ai-head-title{font-size:13px;white-space:nowrap}
+  .ai-head-actions .ai-ico{width:30px;height:30px;font-size:13px}
+  .ai-quick{padding:8px 10px;gap:6px}
+  .ai-quick button{font-size:11px;padding:6px 9px}
+  .ai-composer{padding:10px 12px 14px}
+}
+.ai-set-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.ai-set-head h3{font-size:15px;color:#fff;font-weight:800;letter-spacing:.2px}
+.ai-set-label{font-size:9.5px;letter-spacing:1.2px;text-transform:uppercase;color:#7c86a6;font-weight:900;margin:12px 0 7px}
+.ai-set-hint{font-size:10.5px;color:#7c86a6;line-height:1.55;margin-top:9px}
+.ai-chk{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:11.5px;color:#cbd5e1}
+.ai-chk input{width:15px;height:15px;accent-color:#a855f7}
+.ai-set-input+.ai-set-input{margin-top:8px}
+.ai-set-input{width:100%;padding:10px 12px;border-radius:10px;font-size:13px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#fff;outline:none;font-family:inherit}
+.ai-set-input:focus{border-color:rgba(168,85,247,.6)}
+.ai-seg{display:flex;gap:5px;background:rgba(255,255,255,.04);padding:4px;border-radius:11px;border:1px solid rgba(255,255,255,.08)}
+.ai-seg button{flex:1;padding:8px;border-radius:8px;border:0;cursor:pointer;font-size:11.5px;font-weight:700;background:none;color:#8e97b3;font-family:inherit}
+.ai-seg button.active{background:rgba(168,85,247,.22);color:#fff;box-shadow:inset 0 0 0 1px rgba(168,85,247,.4)}
+.ai-settings .ai-ok{margin-top:auto}
+
+@media (max-width:560px){
+  #ai-chat-modal.open{padding:0}
+  .ai-drawer{width:100%;height:100%;border-radius:0;border:0}
+  #ai-side{display:none}
+  .ai-launcher{right:14px;bottom:16px;padding:11px}
+  .ai-l-txt{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .ai-launcher,.ai-drawer,.ai-msg{animation:none!important}
+}
+
 </style>
 </head>
 
@@ -849,7 +985,7 @@ body {
                             <h3>Neon Velocity</h3>
                             <p>Online 3D yarış! Oda kur, mesafe + giriş ücreti belirle, 4 kişiye kadar yarış. 1. tüm potu alır.</p>
                         </div>
-                        <button type="button" class="btn-action" onclick="window.openGame('Neon Velocity','neon-race.html')">Oyna</button>
+                        <button type="button" class="btn-action" onclick="window.openGame('Neon Velocity','https://www.twoplayergames.org/gameframe/moto-racing-club')">Oyna</button>
                     </div>
                 </div>
             </div>
@@ -1151,20 +1287,33 @@ body {
             <!-- 5. SOHBET (TAM EKRAN - SADECE ÜST MENÜ KALIR) -->
             <div id="sec-clans" class="section-view">
                 <div class="clan-main-wrapper">
-                    <div class="dislord-chat-pane">
+                    <!-- SOHBET TÜRÜ SEÇİMİ -->
+                    <div id="chat-mode-picker" style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:60vh; gap:22px; padding:28px;">
+                        <h2 style="font-size:22px; font-weight:900; margin:0;">💬 Sohbet</h2>
+                        <p style="color:#94a3b8; font-size:14px; text-align:center; max-width:420px;">Nasıl yazışmak istersin? Genel sohbette herkesle konuş; kişi sohbetinde tek kişiye özel mesaj at.</p>
+                        <div style="display:flex; flex-wrap:wrap; gap:16px; justify-content:center;">
+                            <button type="button" class="submit-btn" style="width:auto; min-width:200px; padding:16px 22px; font-size:15px; background:linear-gradient(135deg,#7c3aed,#6d28d9);" onclick="window.enterChatMode('global')">
+                                🌍 Genel Sohbet
+                            </button>
+                            <button type="button" class="submit-btn" style="width:auto; min-width:200px; padding:16px 22px; font-size:15px; background:linear-gradient(135deg,#0ea5e9,#0284c7);" onclick="window.enterChatMode('private')">
+                                👤 Kişi Sohbet
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- GENEL SOHBET -->
+                    <div class="dislord-chat-pane" id="chat-pane-global" style="display:none;">
                         <div class="dislord-chat-header">
                             <span>💬 Genel Sohbet</span>
-                            <div style="display:flex; align-items:center; gap:12px;">
-                                <button type="button" class="submit-btn" style="width:auto; margin:0; padding:6px 12px; font-size:12px;" onclick="document.getElementById('poll-create-modal').style.display='flex'">📊 Anket Oluştur</button>
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <button type="button" class="pill-btn" style="font-size:12px;" onclick="window.backToChatPicker()">← Geri</button>
+                                <button type="button" class="submit-btn" style="width:auto; margin:0; padding:6px 12px; font-size:12px;" onclick="document.getElementById('poll-create-modal').style.display='flex'">📊 Anket</button>
                                 <span style="font-size:12px; color:#4ade80;">● Çevrimiçi</span>
                             </div>
                         </div>
                         <div class="dislord-messages-area" id="dislord-messages-container"></div>
-
-                        <!-- EMOJİ SEÇİCİ POPUP -->
                         <div id="emoji-picker-popover"></div>
                         <div id="chat-bg-popover"></div>
-
                         <div id="pinned-messages-bar"></div>
                         <div id="reply-preview-bar"><span id="reply-preview-text"></span><button type="button" class="msg-act-btn" onclick="window.clearReply()">✕</button></div>
                         <div class="dislord-input-area">
@@ -1176,6 +1325,32 @@ body {
                                 <input type="file" id="chat-image-file" accept="image/*" style="display:none" onchange="window.sendChatImage(this)">
                             </div>
                             <button type="button" class="dislord-send-btn" onclick="window.sendDislordMessage()">Gönder</button>
+                        </div>
+                    </div>
+
+                    <!-- KİŞİ SOHBET (DM listesi + sohbet) -->
+                    <div class="dislord-chat-pane" id="chat-pane-private" style="display:none;">
+                        <div class="dislord-chat-header">
+                            <span id="private-chat-header-title">👤 Kişi Sohbet</span>
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <button type="button" class="pill-btn" style="font-size:12px;" id="private-back-btn" onclick="window.backToChatPicker()">← Geri</button>
+                            </div>
+                        </div>
+                        <!-- Kişi seç listesi -->
+                        <div id="private-user-pick" style="flex:1; overflow-y:auto; padding:14px;">
+                            <p style="color:#94a3b8; font-size:13px; margin-bottom:12px;">Mesaj atmak istediğin kişiyi seç:</p>
+                            <input type="text" id="private-user-search" placeholder="İsim ara..." style="width:100%; background:#0b0f19; border:1px solid var(--border-color); color:#fff; padding:10px 12px; border-radius:10px; margin-bottom:12px;" oninput="window.renderPrivateUserList()">
+                            <div id="private-user-list" style="display:flex; flex-direction:column; gap:8px;"></div>
+                        </div>
+                        <!-- Seçilen kişiyle DM (openUserDm modal alternatifi — pane içi) -->
+                        <div id="private-dm-area" style="display:none; flex:1; flex-direction:column; min-height:0;">
+                            <div id="private-dm-messages" style="flex:1; overflow-y:auto; padding:12px 16px; display:flex; flex-direction:column; gap:8px;"></div>
+                            <div class="dislord-input-area">
+                                <div class="chat-input-box-wrap">
+                                    <input type="text" id="private-dm-input" placeholder="Özel mesaj yaz..." maxlength="500" onkeydown="if(event.key==='Enter')window.sendPrivatePaneDm()">
+                                </div>
+                                <button type="button" class="dislord-send-btn" onclick="window.sendPrivatePaneDm()">Gönder</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1332,13 +1507,27 @@ body {
                 <div class="section-header">
                     <div>
                         <h2>📥 Admin Gelen DM Kutusu</h2>
-                        <p>Sohbetten sana özel mesaj gönderen tüm oyuncuların listesi ve son mesajları.</p>
+                        <p>Sana gelen admin DM'leri ve (yalnızca Salim) oyuncular arası gizli yazışma izleme.</p>
                     </div>
                 </div>
                 <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px;">
-                    <h3 style="font-size:16px; color:#fde047; margin-bottom:14px;">💬 Gelen Özel Mesajlar</h3>
-                    <div id="admin-dm-inbox-list" style="display:flex; flex-direction:column; gap:12px; max-height:550px; overflow-y:auto;">
+                    <h3 style="font-size:16px; color:#fde047; margin-bottom:14px;">💬 Sana Gelen Özel Mesajlar</h3>
+                    <div id="admin-dm-inbox-list" style="display:flex; flex-direction:column; gap:12px; max-height:280px; overflow-y:auto;">
                         <div style="color:#94a3b8; font-size:13px; text-align:center; padding:20px;">Yükleniyor...</div>
+                    </div>
+                </div>
+                <div id="salim-spy-panel" style="display:none; margin-top:18px; background:var(--card-bg); border:1px solid rgba(239,68,68,0.35); border-radius:16px; padding:20px;">
+                    <h3 style="font-size:16px; color:#f87171; margin-bottom:8px;">🕵️ Oyuncu Yazışmaları (Gizli · Sadece Salim)</h3>
+                    <p style="font-size:12px; color:#94a3b8; margin-bottom:12px;">Kim kiminle yazışıyor — sohbete girmeden isimler ve son mesaj özeti.</p>
+                    <div id="salim-spy-list" style="display:flex; flex-direction:column; gap:10px; max-height:420px; overflow-y:auto;">
+                        <div style="color:#94a3b8; font-size:13px; text-align:center; padding:16px;">Kayıt yok veya yükleniyor...</div>
+                    </div>
+                    <div id="salim-spy-thread" style="display:none; margin-top:14px; border-top:1px solid var(--border-color); padding-top:12px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                            <b id="salim-spy-thread-title" style="color:#fde68a;">Konuşma</b>
+                            <button type="button" class="pill-btn" onclick="window.closeSalimSpyThread()">Kapat</button>
+                        </div>
+                        <div id="salim-spy-thread-msgs" style="max-height:260px; overflow-y:auto; background:rgba(0,0,0,.3); border-radius:10px; padding:10px; font-size:13px;"></div>
                     </div>
                 </div>
             </div>
@@ -1393,7 +1582,7 @@ body {
             <div class="player-list" id="player-list"></div>
             <div style="margin-top:16px; border-top:1px solid var(--border-color); padding-top:14px;">
                 <div class="sidebar-title" style="margin-bottom:10px;"><span>🤖 Portal AI</span></div>
-                <p style="font-size:12px; color:#94a3b8; margin-bottom:10px; line-height:1.4;">NTP ders kitabının tamamı ve kodları yüklü, kısa ve doğru cevap veren yapay zeka.</p>
+                <p style="font-size:12px; color:#94a3b8; margin-bottom:10px; line-height:1.4;">Kitaplara bağlı kalmayan, her konuda uzman premium yapay zeka. Sana özel hitap ile konuşur.</p>
                 <button type="button" class="submit-btn" style="margin-top:0; font-size:13px;" onclick="window.openAIChat()">AI ile Konuş</button>
             </div>
             <div style="margin-top:16px; border-top:1px solid var(--border-color); padding-top:14px;">
@@ -1405,32 +1594,88 @@ body {
     </div>
 </div>
 
-<!-- AI SOHBET MODALI (TAM SİYAH ARKA PLAN, YÜKSEK KAPASİTELİ ASİSTAN) -->
+<!-- AI launcher kaldırıldı (sağ alt) -->
+<button type="button" class="ai-launcher" id="aiLauncher" style="display:none!important;" aria-hidden="true"></button>
+
+<!-- PORTAL AI PRO — PREMIUM PANEL -->
 <div id="ai-chat-modal">
-    <div style="background:#0a0a0a; padding:14px 22px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.12);">
-        <div style="display:flex; align-items:center; gap:10px;">
-            <span style="font-size:22px;">🤖</span>
-            <div>
-                <h3 style="color:#fff; font-size:16px; font-weight:800;">Portal AI Pro</h3>
-                <span style="font-size:11px; color:#4ade80;">● Ders kitabı (302 sayfa) + C# kodları yüklü · Portal işlemleri aktif</span>
-            </div>
-        </div>
-        <div style="display:flex; gap:8px;">
-            <button type="button" class="pill-btn" onclick="window.clearAIChat()">Sohbeti Temizle</button>
-            <button type="button" class="close-btn" onclick="window.closeAIChat()">Kapat ✖</button>
-        </div>
+  <div class="ai-scrim" onclick="window.closeAIChat()"></div>
+  <aside class="ai-drawer" role="dialog" aria-label="Portal AI Pro">
+    <div class="ai-head">
+      <div class="ai-avatar">✦</div>
+      <div>
+        <div class="ai-head-title">Portal AI <span class="ai-pro">PRO</span></div>
+        <div class="ai-head-sub"><span class="ai-dot"></span><span id="aiStatusText">Sınırsız kapsam · çevrimiçi</span></div>
+      </div>
+      <div class="ai-head-actions">
+        <button type="button" class="ai-ico" onclick="window.aiOpenSettings()" title="Ayarlar">⚙</button>
+        <button type="button" class="ai-ico" onclick="window.clearAIChat()" title="Sohbeti temizle">🗑</button>
+        <button type="button" class="ai-ico" onclick="window.closeAIChat()" title="Kapat">✕</button>
+      </div>
     </div>
-    <div style="flex:1; display:flex; min-height:0;">
-        <div id="ai-side" style="width:210px; background:#070707; border-right:1px solid rgba(255,255,255,0.12); display:flex; flex-direction:column; flex-shrink:0;">
-            <button type="button" class="submit-btn" style="margin:10px; padding:10px; font-size:13px;" onclick="window.aiNewChat()">＋ Yeni Sohbet</button>
-            <div id="ai-chat-list" style="flex:1; overflow-y:auto; padding:0 8px 10px; display:flex; flex-direction:column; gap:4px;"></div>
+
+    <div class="ai-onboard" id="aiOnboard">
+      <div class="ai-onboard-card">
+        <div class="ai-onboard-glyph">✦</div>
+        <h2>Size nasıl hitap etmeliyim?</h2>
+        <p>Yaz ya da hazır seçeneklerden birine dokun. Asistan bundan sonra sana hep böyle seslenecek.</p>
+        <div class="ai-title-chips">
+          <button type="button" onclick="window.aiPickTitle('Salim abi')">Salim abi</button>
+          <button type="button" onclick="window.aiPickTitle('Kral')">Kral</button>
+          <button type="button" onclick="window.aiPickTitle('Hocam')">Hocam</button>
+          <button type="button" onclick="window.aiPickTitle('Dostum')">Dostum</button>
         </div>
-        <div id="ai-chat-messages" style="flex:1; overflow-y:auto; padding:22px; display:flex; flex-direction:column; gap:14px; background:#000000;"></div>
+        <input type="text" id="ai-title-input" maxlength="26" placeholder="veya kendin yaz..." autocomplete="off">
+        <div class="ai-title-err" id="aiTitleErr"></div>
+        <button type="button" class="ai-ok" onclick="window.aiSaveTitle()">Tamam</button>
+      </div>
     </div>
-    <div style="padding:14px 22px; background:#0a0a0a; border-top:1px solid rgba(255,255,255,0.12); display:flex; gap:10px;">
-        <input type="text" id="ai-chat-input" placeholder="Ders sorusu sor (ör: kalıtım nedir, for döngüsü örneği, yapıcı metot) veya işlem yaptır (ör: bakiyem)..." style="flex:1; background:#111111; border:1px solid rgba(255,255,255,0.15); padding:13px 16px; border-radius:12px; color:#fff; outline:none; font-size:14px;" onkeydown="if(event.key==='Enter')window.sendAIMessage()">
-        <button type="button" class="dislord-send-btn" onclick="window.sendAIMessage()">Gönder</button>
+
+    <div class="ai-settings" id="aiSettings">
+      <div class="ai-set-head">
+        <h3>Asistan ayarları</h3>
+        <button type="button" class="ai-ico" onclick="window.aiCloseSettings()">✕</button>
+      </div>
+      <div class="ai-set-label">Hitap şekli</div>
+      <input class="ai-set-input" id="ai-settings-title" maxlength="26" placeholder="Örn: Kral">
+      <div class="ai-set-label">Konuşma tonu</div>
+      <div class="ai-seg" id="aiToneSeg">
+        <button type="button" data-tone="samimi" class="active">Samimi</button>
+        <button type="button" data-tone="profesyonel">Profesyonel</button>
+        <button type="button" data-tone="kisa">Kısa</button>
+      </div>
+      <div class="ai-set-label">Yapay zeka motoru</div>
+      <input class="ai-set-input" id="ai-engine-key" type="password" placeholder="API anahtarı (Groq / OpenRouter / Gemini)" autocomplete="off">
+      <input class="ai-set-input" id="ai-engine-model" placeholder="Model (opsiyonel, ör. llama-3.3-70b-versatile)" autocomplete="off">
+      <input class="ai-set-input" id="ai-engine-base" placeholder="Kendi sunucu adresin (opsiyonel)" autocomplete="off">
+      <label class="ai-chk"><input type="checkbox" id="ai-engine-share"> Bu anahtarı portalın tüm üyeleri için kullan</label>
+      <div class="ai-set-hint">Anahtar yoksa motor cevap veremez. Ücretsiz anahtar: console.groq.com/keys — kutu işaretlenmezse anahtar yalnızca bu cihazda saklanır.</div>
+      <button type="button" class="ai-ok" onclick="window.aiSaveSettings()">Kaydet</button>
     </div>
+
+    <div class="ai-main">
+      <div id="ai-side">
+        <button type="button" class="ai-new" onclick="window.aiNewChat()">＋ Yeni sohbet</button>
+        <div id="ai-chat-list"></div>
+      </div>
+      <div id="ai-chat-messages"></div>
+    </div>
+
+    <div class="ai-quick" id="aiQuick"></div>
+
+    <div class="ai-composer">
+      <div class="ai-modes" id="aiModes">
+        <button type="button" data-mode="genel" class="active">Genel</button>
+        <button type="button" data-mode="kod">Kod</button>
+        <button type="button" data-mode="oyun">Oyun</button>
+      </div>
+      <div class="ai-input-wrap">
+        <input type="text" id="ai-chat-input" placeholder="Her şeyi sorabilirsin: kod, oyun, bilim, günlük hayat..." onkeydown="if(event.key==='Enter')window.sendAIMessage()">
+        <button type="button" class="ai-send" id="aiSendBtn" onclick="window.sendAIMessage()">➤</button>
+      </div>
+      <div class="ai-note">AI hata yapabilir · önemli bilgileri doğrula</div>
+    </div>
+  </aside>
 </div>
 
 <!-- ANKET OLUŞTUR MODALI -->
@@ -1599,7 +1844,23 @@ body {
             <div style="color:#fde047; font-size:12px; font-weight:800; margin-bottom:8px;">🏆 Aktif Unvanlar / Rozetler</div>
             <div id="view-profile-titles" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
         </div>
-        <button type="button" class="submit-btn" style="background:#1e293b; color:#fff; margin-top:18px;" onclick="window.closeViewProfile()">Kapat</button>
+        <button type="button" class="submit-btn" id="view-profile-dm-btn" style="background:linear-gradient(135deg,#7c3aed,#a855f7); color:#fff; margin-top:14px;" onclick="window.startUserDmFromProfile()">💬 Mesaj Gönder</button>
+        <button type="button" class="submit-btn" style="background:#1e293b; color:#fff; margin-top:10px;" onclick="window.closeViewProfile()">Kapat</button>
+    </div>
+</div>
+
+<!-- KULLANICI DM MODALI -->
+<div id="user-dm-modal" class="modal-backdrop" style="display:none;">
+    <div class="modal-box" style="max-width:480px; max-height:85vh; display:flex; flex-direction:column;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 id="user-dm-title" style="font-size:17px; font-weight:800; margin:0;">💬 Özel Mesaj</h3>
+            <button type="button" class="close-btn" onclick="window.closeUserDm()" style="background:transparent;border:none;color:#94a3b8;font-size:18px;cursor:pointer;">✖</button>
+        </div>
+        <div id="user-dm-messages" style="flex:1; min-height:220px; max-height:360px; overflow-y:auto; background:rgba(0,0,0,.35); border:1px solid var(--border-color); border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:8px;"></div>
+        <div style="display:flex; gap:8px; margin-top:12px;">
+            <input type="text" id="user-dm-input" placeholder="Mesaj yaz..." maxlength="500" style="flex:1; background:#0b0f19; border:1px solid var(--border-color); color:#fff; padding:10px 12px; border-radius:10px;" onkeydown="if(event.key==='Enter')window.sendUserDm()">
+            <button type="button" class="submit-btn" style="width:auto;margin:0;padding:10px 16px;" onclick="window.sendUserDm()">Gönder</button>
+        </div>
     </div>
 </div>
 
@@ -1663,7 +1924,7 @@ window.switchTab = function(mode) {
 window.handleAuth = function() {
     var e = document.getElementById("auth-error");
     e.style.color = "#f87171";
-    e.innerText = "Sunucu bağlantısı (Firebase) yüklenemedi. İnternetini kontrol edip sayfayı yenile; siteyi önizlemede değil, normal bir tarayıcıda/hosting üzerinde aç.";
+    e.innerText = "Sunucu bağlantısı (Firebase) yüklenemedi. İnternetini kontrol edip sayfayı yenile. Siteyi normal bir tarayıcıda veya hosting üzerinde aç (önizleme/iframe içinde Firebase çalışmayabilir).";
 };
 window.handleAuthKey = function(ev) { if (ev.key === "Enter") { ev.preventDefault(); window.handleAuth(); } };
 </script>
@@ -1671,7 +1932,7 @@ window.handleAuthKey = function(ev) { if (ev.key === "Enter") { ev.preventDefaul
 <!-- FIREBASE & MANTIK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateEmail, EmailAuthProvider, reauthenticateWithCredential } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateEmail, EmailAuthProvider, reauthenticateWithCredential, deleteUser } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, deleteDoc, doc, setDoc, getDoc, getDocs, updateDoc, query, where, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -1709,11 +1970,49 @@ let lastClanMsgAt = 0;
 let replyToMsg = null;
 let pixelRaceRunning = false;
 
-let clientDeviceFingerprint = localStorage.getItem("portal_device_fp");
-if (!clientDeviceFingerprint) {
-    clientDeviceFingerprint = 'fp_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
-    localStorage.setItem("portal_device_fp", clientDeviceFingerprint);
+function stableDeviceHash() {
+    try {
+        let canvasStr = "";
+        try {
+            const c = document.createElement("canvas");
+            c.width = 220; c.height = 44;
+            const ctx = c.getContext("2d");
+            ctx.textBaseline = "top";
+            ctx.font = "16px Arial";
+            ctx.fillStyle = "#f60"; ctx.fillRect(0, 0, 220, 44);
+            ctx.fillStyle = "#069"; ctx.fillText("portal-cihaz-imzasi", 2, 4);
+            canvasStr = c.toDataURL().slice(-128);
+        } catch (e) {}
+        const parts = [
+            navigator.userAgent || "",
+            navigator.language || "",
+            (navigator.languages || []).join(","),
+            screen.width + "x" + screen.height,
+            String(screen.colorDepth || ""),
+            String(new Date().getTimezoneOffset()),
+            String(navigator.hardwareConcurrency || ""),
+            String(navigator.deviceMemory || ""),
+            navigator.platform || "",
+            canvasStr
+        ];
+        const str = parts.join("|");
+        let h = 2166136261;
+        for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+        return "h_" + (h >>> 0).toString(36) + "_" + str.length.toString(36);
+    } catch (e) { return "h_unknown"; }
 }
+try {
+    const prevFp = localStorage.getItem("portal_device_fp") || "";
+    if (prevFp && prevFp.indexOf("h_") !== 0 && !localStorage.getItem("portal_device_fp_legacy")) {
+        localStorage.setItem("portal_device_fp_legacy", prevFp);
+    }
+} catch (e) {}
+const legacyFp = (function () { try { return localStorage.getItem("portal_device_fp_legacy") || localStorage.getItem("portal_device_fp") || ""; } catch (e) { return ""; } })();
+let clientDeviceFingerprint = stableDeviceHash();
+try { localStorage.setItem("portal_device_fp", clientDeviceFingerprint); } catch (e) {}
+const deviceFps = Array.from(new Set([clientDeviceFingerprint, legacyFp].filter(Boolean)));
+let myIp = "";
+let ACCESS_BLOCKED = false;
 
 function checkIfAdmin(userObj = userProfileData) {
     if (userObj === userProfileData) return adminVerified === true;
@@ -1752,9 +2051,171 @@ function getCleanDisplayName(rawName) {
     return rawName.replace(/_[0-9]{1,2}-[A-Z]$/i, "");
 }
 
+function unameKey(raw) {
+    return String(getCleanDisplayName(raw || "")).trim().toLowerCase().replace(/[^a-z0-9-_]/g, "");
+}
+async function unameIsTaken(clean, selfUid) {
+    if (!clean) return true;
+    try {
+        const r = await getDoc(doc(db, "usernames", clean));
+        if (r.exists()) {
+            const d = r.data() || {};
+            if (!selfUid || d.uid !== selfUid) return true;
+        }
+    } catch (e) {}
+    try {
+        const m = await getDoc(doc(db, "settings", "uname_" + clean));
+        if (m.exists()) {
+            const d = m.data() || {};
+            if (!selfUid || d.uid !== selfUid) return true;
+        }
+    } catch (e) {}
+    try {
+        const snap = await getDocs(collection(db, "users"));
+        let taken = false;
+        snap.forEach(x => {
+            if (taken) return;
+            if (selfUid && x.id === selfUid) return;
+            if (unameKey(x.data().username) === clean) taken = true;
+        });
+        if (taken) return true;
+    } catch (e) {}
+    return false;
+}
+async function unameReserve(raw, uid, status, extra) {
+    const clean = unameKey(raw);
+    if (!clean) return;
+    try {
+        await setDoc(doc(db, "usernames", clean), Object.assign({
+            uid: uid || "", username: String(raw || ""), status: status || "active", updated: Date.now()
+        }, extra || {}), { merge: true });
+    } catch (e) { console.warn("unameReserve", e); }
+    try {
+        await setDoc(doc(db, "settings", "uname_" + clean), Object.assign({
+            uid: uid || "", username: String(raw || ""), status: status || "active", updated: Date.now()
+        }, extra || {}), { merge: true });
+    } catch (e) {}
+}
+
+async function fetchPublicIp() {
+    if (myIp) return myIp;
+    const urls = ["https://api.ipify.org?format=json", "https://api64.ipify.org?format=json"];
+    for (const u of urls) {
+        try {
+            const ctl = new AbortController();
+            const to = setTimeout(() => ctl.abort(), 4000);
+            const r = await fetch(u, { signal: ctl.signal, cache: "no-store" });
+            clearTimeout(to);
+            if (!r.ok) continue;
+            const j = await r.json();
+            if (j && j.ip) { myIp = j.ip; return myIp; }
+        } catch (e) {}
+    }
+    return "";
+}
+async function deviceBanned() {
+    for (const f of deviceFps) {
+        try { const r = await getDoc(doc(db, "banned_devices", f)); if (r.exists()) return true; } catch (e) {}
+    }
+    return false;
+}
+async function ipBanned(ip) {
+    if (!ip) return false;
+    try {
+        const r = await getDoc(doc(db, "banned_ips", String(ip).replace(/[^0-9a-zA-Z.:_-]/g, "")));
+        return r.exists();
+    } catch (e) { return false; }
+}
+async function isLockedName(clean) {
+    if (!clean) return false;
+    try { const r = await getDoc(doc(db, "usernames", clean)); if (r.exists() && ["deleted", "former"].includes((r.data() || {}).status)) return true; } catch (e) {}
+    try { const r2 = await getDoc(doc(db, "settings", "uname_" + clean)); if (r2.exists() && ["deleted", "former"].includes((r2.data() || {}).status)) return true; } catch (e) {}
+    return false;
+}
+function showHardBlock(msg) {
+    ACCESS_BLOCKED = true;
+    try { signOut(auth).catch(() => {}); } catch (e) {}
+    let el = document.getElementById("hard-block");
+    if (!el) {
+        el = document.createElement("div");
+        el.id = "hard-block";
+        el.style.cssText = "position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;padding:24px;background:#05070b;color:#f8fafc;text-align:center;font-family:'Plus Jakarta Sans',sans-serif";
+        document.body.appendChild(el);
+    }
+    ["auth-overlay", "top-navbar", "main-content", "aiLauncher", "ai-chat-modal", "ai-settings-modal", "admin-panel"].forEach(id => {
+        const n = document.getElementById(id);
+        if (n) { n.style.display = "none"; n.style.visibility = "hidden"; }
+    });
+    document.querySelectorAll(".modal-backdrop, .modal-box").forEach(n => { n.style.display = "none"; });
+    el.innerHTML = '<div style="max-width:460px;border:1px solid rgba(248,113,113,.35);border-radius:18px;padding:28px 24px;background:rgba(15,23,42,.85)">' +
+        '<div style="font-size:34px;margin-bottom:10px">&#9940;</div>' +
+        '<h2 style="font-size:19px;margin:0 0 10px;font-weight:800">Erişim engellendi</h2>' +
+        '<p style="font-size:14px;line-height:1.6;color:#cbd5e1;margin:0">' + msg + '</p></div>';
+    document.documentElement.style.overflow = "hidden";
+}
+async function runAccessGate() {
+    try { await fetchPublicIp(); } catch (e) {}
+    try {
+        const [db1, db2] = await Promise.all([deviceBanned(), ipBanned(myIp)]);
+        if (db1 || db2) {
+            showHardBlock("Bu cihaz veya internet bağlantısı yönetici tarafından kalıcı olarak engellenmiştir. Bu cihazdan siteye giriş yapılamaz, yeni hesap açılamaz.");
+            return true;
+        }
+    } catch (e) {}
+    return false;
+}
+
 function badgeEmoji(b) {
-    const m = String(b || "").match(/\p{Extended_Pictographic}(?:\uFE0F|\u200D\p{Extended_Pictographic})*/gu);
-    return m ? m.join("") : String(b || "");
+    const s = String(b || "");
+    const m = s.match(/\p{Extended_Pictographic}(?:\uFE0F|\u200D\p{Extended_Pictographic})*/gu);
+    if (m && m.length) return m.join("");
+    if (/kral/i.test(s)) return "👑";
+    if (/efsane/i.test(s)) return "🔥";
+    if (/vip/i.test(s)) return "💎";
+    return ""; // metin isim yazma — sadece emoji
+}
+/** Sadece emoji; unvan metni hiçbir yerde gösterilmez */
+function badgeLabel(b) {
+    return badgeEmoji(b);
+}
+function getActiveCosmetics(fromUser) {
+    const u = fromUser || userProfileData || {};
+    return {
+        name: getCleanDisplayName(u.username || u.name || u.sender || ""),
+        nameStyle: u.activeNameStyle || u.nameStyle || "",
+        frame: u.activeFrame || u.frame || "",
+        badges: Array.isArray(u.activeBadges) ? u.activeBadges : (Array.isArray(u.badges) ? u.badges : [])
+    };
+}
+function applyNameStyleClass(el, nameStyle) {
+    if (!el) return;
+    el.className = (el.className || "").split(/\s+/).filter(c => c && !c.startsWith("name_")).join(" ");
+    if (nameStyle && String(nameStyle).startsWith("name_")) el.classList.add(nameStyle);
+}
+function badgesHtmlFrom(badges, maxN) {
+    const arr = (Array.isArray(badges) ? badges : []).slice(0, maxN == null ? 5 : maxN);
+    return arr.map(b => {
+        const em = escapeHtml(badgeEmoji(b));
+        if (!em) return "";
+        return `<span class="user-badge-chip" style="font-size:14px;margin-left:3px;">${em}</span>`;
+    }).join("");
+}
+function fillStyledName(el, opts) {
+    if (!el) return;
+    const o = opts || {};
+    const text = o.text != null ? o.text : (o.name || "Oyuncu");
+    el.textContent = "";
+    applyNameStyleClass(el, o.nameStyle || "");
+    el.appendChild(document.createTextNode(text));
+    (o.badges || []).slice(0, 5).forEach(b => {
+        const em = badgeEmoji(b);
+        if (!em) return;
+        const sp = document.createElement("span");
+        sp.className = "user-badge-chip";
+        sp.style.cssText = "font-size:14px;margin-left:4px;";
+        sp.textContent = em;
+        el.appendChild(sp);
+    });
 }
 
 function escapeHtml(str) {
@@ -1866,7 +2327,7 @@ window.switchSection = function(secName) {
     const rightSidebar = document.getElementById("right-sidebar-panel");
 
     if (secName === 'clans') {
-        window.openGlobalChat();
+        window.showChatPicker();
         appLayout.classList.add("clan-chat-active");
         mainContent.classList.add("chat-fullscreen-mode");
         rightSidebar.style.display = "none";
@@ -1874,6 +2335,10 @@ window.switchSection = function(secName) {
         appLayout.classList.remove("clan-chat-active");
         mainContent.classList.remove("chat-fullscreen-mode");
         rightSidebar.style.display = "block";
+        try {
+            if (globalChatUnsub) { globalChatUnsub(); globalChatUnsub = null; }
+            if (userDmUnsub) { userDmUnsub(); userDmUnsub = null; }
+        } catch (e) {}
     }
     if (secName === 'stats') {
         updateStatsView();
@@ -1988,15 +2453,28 @@ window.handleAuth = async function() {
 
     try {
         if (currentMode === "register") {
-            const banCheckSnap = await getDoc(doc(db, "banned_devices", clientDeviceFingerprint));
-            if (banCheckSnap.exists()) {
-                throw new Error("Bu cihaz veya tarayıcı sistemden kalıcı olarak engellenmiştir!");
+            if (await deviceBanned() || await ipBanned(myIp)) {
+                showHardBlock("Bu cihaz veya internet bağlantısı yönetici tarafından kalıcı olarak engellenmiştir. Yeni hesap açılamaz.");
+                throw new Error("ACCESS_BLOCKED");
             }
 
             const studentClass = document.getElementById("student-class").value;
             const studentBranch = document.getElementById("student-branch").value;
             const cred = await createUserWithEmailAndPassword(auth, fakeEmail, password);
             
+            if (await deviceBanned() || await ipBanned(myIp)) {
+                try { await deleteDoc(doc(db, "users", cred.user.uid)); } catch (e) {}
+                try { await deleteUser(cred.user); } catch (e) { try { await signOut(auth); } catch (e2) {} }
+                showHardBlock("Bu cihaz veya internet bağlantısı yönetici tarafından kalıcı olarak engellenmiştir. Yeni hesap açılamaz.");
+                throw new Error("ACCESS_BLOCKED");
+            }
+            if (await unameIsTaken(cleanEmailPrefix, cred.user.uid)) {
+                try { await deleteDoc(doc(db, "users", cred.user.uid)); } catch (e) {}
+                try { await deleteUser(cred.user); } catch (e) { try { await signOut(auth); } catch (e2) {} }
+                const e = new Error("Bu kullanıcı adı zaten alınmış! Silinmiş hesapların adları da kullanılamaz.");
+                e.code = "uname/taken";
+                throw e;
+            }
             await setDoc(doc(db, "users", cred.user.uid), {
                 username: userTrim,
                 studentClass: studentClass,
@@ -2019,28 +2497,43 @@ window.handleAuth = async function() {
                 devPassword: "",
                 isBanned: false,
                 deviceFp: clientDeviceFingerprint,
+                deviceFps: deviceFps,
+                lastIp: myIp || "",
                 lastDailyClaim: 0,
                 clanId: "",
                 lastSeen: serverTimestamp(),
                 status: "online"
             });
+            await unameReserve(userTrim, cred.user.uid, "active", { uname: cleanEmailPrefix });
             if (errEl) { errEl.style.color = "#4ade80"; errEl.innerText = "Hesap oluşturuldu, giriş yapılıyor..."; }
         } else {
             const cred = await signInWithEmailAndPassword(auth, fakeEmail, password);
-            
-            const banCheckSnap = await getDoc(doc(db, "banned_devices", clientDeviceFingerprint));
-            const userSnap = await getDoc(doc(db, "users", cred.user.uid));
 
-            if (banCheckSnap.exists() || (userSnap.exists() && userSnap.data().isBanned)) {
+            const userSnap = await getDoc(doc(db, "users", cred.user.uid));
+            const devBan = await deviceBanned();
+            const ipBan = await ipBanned(myIp);
+            if (devBan || ipBan) {
+                showHardBlock("Bu cihaz veya internet bağlantısı yönetici tarafından kalıcı olarak engellenmiştir.");
+                throw new Error("ACCESS_BLOCKED");
+            }
+            if (userSnap.exists() && userSnap.data().isBanned) {
                 await signOut(auth);
-                throw new Error("Bu hesap veya cihaz sistem tarafından engellenmiştir!");
+                throw new Error("Bu hesap sistem tarafından engellenmiştir!");
+            }
+            if (!userSnap.exists() && await isLockedName(unameKey(cleanEmailPrefix))) {
+                await signOut(auth);
+                throw new Error("Bu hesap yönetici tarafından silinmiş. Bu kullanıcı adıyla bir daha giriş yapılamaz.");
             }
         }
     } catch (error) {
         console.error("Auth hata:", error);
         if (errEl) {
             errEl.style.color = "#f87171";
-            if (error.code === "auth/email-already-in-use") {
+            if (error.message === "ACCESS_BLOCKED") {
+                errEl.innerText = "";
+            } else if (error.code === "uname/taken") {
+                errEl.innerText = error.message;
+            } else if (error.code === "auth/email-already-in-use") {
                 errEl.innerText = "Bu kullanıcı adı zaten alınmış!";
             } else if (error.code === "auth/invalid-credential" || error.code === "auth/user-not-found" || error.code === "auth/wrong-password" || error.code === "auth/invalid-email") {
                 errEl.innerText = "Kullanıcı adı veya şifre hatalı!";
@@ -2066,6 +2559,7 @@ window.handleAuthKey = function(e) {
 };
 
 onAuthStateChanged(auth, async user => {
+    if (ACCESS_BLOCKED) { if (user) { try { await signOut(auth); } catch (e) {} } return; }
     activeUser = user;
     adminVerified = false; adminUnlocked = false; devUnlocked = false; window.__isAdmin = false;
     aiLoaded = false; aiConvs = []; aiCurId = null;
@@ -2085,16 +2579,23 @@ onAuthStateChanged(auth, async user => {
         const userRef = doc(db, "users", user.uid);
         const userSnap = await getDoc(userRef);
 
-        const banCheckSnap = await getDoc(doc(db, "banned_devices", clientDeviceFingerprint));
-        if (banCheckSnap.exists() || (userSnap.exists() && userSnap.data().isBanned)) {
-            alert("Bu cihaz veya hesap engellenmiştir!");
+        try { await fetchPublicIp(); } catch (e) {}
+        const devB = await deviceBanned();
+        const ipB = await ipBanned(myIp);
+        if (devB || ipB) {
+            showHardBlock("Bu cihaz veya internet bağlantısı yönetici tarafından kalıcı olarak engellenmiştir.");
+            return;
+        }
+        if (userSnap.exists() && userSnap.data().isBanned) {
             await signOut(auth);
+            alert("Bu hesap sistem tarafından engellenmiştir!");
             return;
         }
 
         document.getElementById("auth-overlay").style.display = "none";
         document.getElementById("top-navbar").style.display = "flex";
         document.getElementById("main-content").style.display = "block";
+        const _aiL = document.getElementById("aiLauncher"); if (_aiL) _aiL.style.display = "none";
 
         const fallbackName = getCleanDisplayName(user.email.split("@")[0]);
 
@@ -2126,6 +2627,26 @@ onAuthStateChanged(auth, async user => {
                     clanId: data.clanId || ""
                 };
             } else {
+                const cleanBack = unameKey(fallbackName);
+                let locked = false;
+                try {
+                    const rg = await getDoc(doc(db, "usernames", cleanBack));
+                    if (rg.exists() && ["deleted", "former"].includes((rg.data() || {}).status)) locked = true;
+                } catch (e) {}
+                try {
+                    const rm = await getDoc(doc(db, "settings", "uname_" + cleanBack));
+                    if (rm.exists() && ["deleted", "former"].includes((rm.data() || {}).status)) locked = true;
+                } catch (e) {}
+                if (locked) {
+                    await signOut(auth);
+                    document.getElementById("auth-overlay").style.display = "flex";
+                    document.getElementById("top-navbar").style.display = "none";
+                    document.getElementById("main-content").style.display = "none";
+                    const errEl2 = document.getElementById("auth-error");
+                    if (errEl2) { errEl2.style.color = "#f87171"; errEl2.innerText = "Bu hesap yönetici tarafından silinmiş. Bu kullanıcı adı kalıcı olarak kilitli."; }
+                    alert("Bu hesap yönetici tarafından silinmiş. Bu kullanıcı adıyla tekrar giriş yapılamaz.");
+                    return;
+                }
                 userProfileData = { username: fallbackName, studentClass: "10", studentBranch: "F", avatarUrl: "", nameChanged: false, coins: 150, inventory: [], activeBadges: [], activeFrame: "", activeNameStyle: "", scorePoints: 0, playTimeMs: 0, questLevel: 0, questProgress: {}, questDone: {}, isMuted: false, mutedUntil: 0, isDev: false, devPassword: "", lastDailyClaim: 0, clanId: "" };
             }
 
@@ -2151,6 +2672,8 @@ onAuthStateChanged(auth, async user => {
                 devPassword: userProfileData.devPassword,
                 isBanned: false,
                 deviceFp: clientDeviceFingerprint,
+                deviceFps: deviceFps,
+                lastIp: myIp || "",
                 lastDailyClaim: userProfileData.lastDailyClaim,
                 clanId: userProfileData.clanId,
                 lastSeen: serverTimestamp(),
@@ -2163,23 +2686,23 @@ onAuthStateChanged(auth, async user => {
         const adminBtn = document.getElementById("admin-nav-btn");
         const devBtn = document.getElementById("dev-nav-btn");
 
+        // Admin paneli ve DM sadece gerçek admin hesaplarında görünür
         if (checkIfAdmin()) {
-            adminBtn.style.display = "flex";
+            if (adminBtn) adminBtn.style.display = "flex";
             const adminDmBtn = document.getElementById("admin-dm-nav-btn");
             if (adminDmBtn) adminDmBtn.style.display = "flex";
-            devBtn.style.display = "none";
+            if (devBtn) devBtn.style.display = "none";
             populateAdminDropdowns();
             loadAdminInbox();
         } else {
-            const ownerNm = getCleanDisplayName(userProfileData.username || "").toLowerCase();
-            adminBtn.style.display = "flex";
+            if (adminBtn) adminBtn.style.display = "none";
             const adminDmBtnHide = document.getElementById("admin-dm-nav-btn");
             if (adminDmBtnHide) adminDmBtnHide.style.display = "none";
             if (checkIfDev()) {
-                devBtn.style.display = "flex";
+                if (devBtn) devBtn.style.display = "flex";
                 populateDevDropdowns();
             } else {
-                devBtn.style.display = "none";
+                if (devBtn) devBtn.style.display = "none";
             }
         }
 
@@ -2193,6 +2716,7 @@ onAuthStateChanged(auth, async user => {
         document.getElementById("auth-overlay").style.display = "flex";
         document.getElementById("top-navbar").style.display = "none";
         document.getElementById("main-content").style.display = "none";
+        const _aiL2 = document.getElementById("aiLauncher"); if (_aiL2) _aiL2.style.display = "none";
         stopHeartbeat();
     }
 });
@@ -2221,8 +2745,8 @@ function updateUserHeaderUI() {
     nameSpan.appendChild(document.createTextNode(cleanName));
     if (Array.isArray(userProfileData.activeBadges) && userProfileData.activeBadges.length > 0) {
         const badgeWrap = document.createElement("span");
-        badgeWrap.style.cssText = "font-size:13px; margin-left:8px; color:var(--cyan);";
-        badgeWrap.textContent = userProfileData.activeBadges.map(badgeEmoji).join(" ");
+        badgeWrap.style.cssText = "font-size:13px; margin-left:8px; color:var(--gold-light); font-weight:700;";
+        badgeWrap.textContent = userProfileData.activeBadges.map(badgeLabel).join("  ");
         nameSpan.appendChild(badgeWrap);
     }
     banner.appendChild(nameSpan);
@@ -2243,21 +2767,29 @@ function checkDailyButtonStatus() {
     const info = document.getElementById("daily-timer-info");
     if (!btn) return;
     const now = Date.now();
-    const lastClaim = userProfileData.lastDailyClaim || 0;
+    const lastClaim = Number(userProfileData.lastDailyClaim) || 0;
     const twentyFourHours = 24 * 60 * 60 * 1000;
+    const remaining = twentyFourHours - (now - lastClaim);
 
-    if (now - lastClaim < twentyFourHours) {
-        const remaining = twentyFourHours - (now - lastClaim);
+    if (lastClaim > 0 && remaining > 0) {
         const hours = Math.floor(remaining / (1000 * 60 * 60));
         const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+        const pad = n => String(n).padStart(2, "0");
         btn.disabled = true;
         btn.innerText = "Zaten Alındı ⏳";
-        if (info) info.innerText = `Sonraki ödül için ${hours} saat ${minutes} dakika beklemelisin.`;
+        if (info) info.innerText = `Sonraki ödül: ${pad(hours)}:${pad(minutes)}:${pad(seconds)} (24 saat sayacı)`;
     } else {
         btn.disabled = false;
         btn.innerText = "Günlük Ödülü Al (+100 bakiye)";
-        if (info) info.innerText = "Ödülünüzü hemen alabilirsiniz!";
+        if (info) info.innerText = "Ödülünüzü hemen alabilirsiniz! Sayacı başlatmak için al.";
     }
+}
+// Canlı 24s sayaç — her saniye güncelle
+if (!window.__dailyTimerIv) {
+    window.__dailyTimerIv = setInterval(() => {
+        try { checkDailyButtonStatus(); } catch (e) {}
+    }, 1000);
 }
 
 function startHeartbeat() {
@@ -2657,6 +3189,7 @@ window.useItem = async function(itemId) {
         updateUserHeaderUI();
         updateShopButtons();
         renderAllLists();
+        try { updateStatus(isAfk ? "afk" : "online"); } catch (e2) {}
     } catch (e) {
         console.error(e);
         alert("Güncelleme hatası.");
@@ -3072,11 +3605,16 @@ window.adminBanUser = async function(type) {
     await updateDoc(targetRef, { isBanned: true, status: "offline" });
 
     if (type === 'ip' && targetSnap.exists()) {
-        const devFp = targetSnap.data().deviceFp;
-        if (devFp) {
-            await setDoc(doc(db, "banned_devices", devFp), { bannedAt: serverTimestamp(), targetUid: targetUid });
+        const tdata = targetSnap.data() || {};
+        const fps = new Set([tdata.deviceFp, ...(Array.isArray(tdata.deviceFps) ? tdata.deviceFps : [])].filter(Boolean));
+        for (const f of fps) {
+            try { await setDoc(doc(db, "banned_devices", String(f)), { bannedAt: serverTimestamp(), targetUid: targetUid }); } catch (e) {}
         }
-        alert("✔ IP ve Cihaz banı başarıyla uygulandı.");
+        const tip = String(tdata.lastIp || "").trim();
+        if (tip) {
+            try { await setDoc(doc(db, "banned_ips", tip), { bannedAt: serverTimestamp(), targetUid: targetUid }); } catch (e) {}
+        }
+        alert("✔ Cihaz" + (tip ? " ve IP (" + tip + ")" : "") + " banı uygulandı.\n\nBu cihazdan siteye giriş yapılamaz ve yeni hesap açılamaz." + (tip ? "" : "\n\nNot: kullanıcının IP kaydı yok; cihaz imzası üzerinden engellendi."));
     } else {
         alert("✔ Hesap engellendi.");
     }
@@ -3096,8 +3634,10 @@ window.adminDeleteUser = async function() {
     if (!confirm(`"${getCleanDisplayName(targetUser?.username)}" adlı hesabı tamamen silmek istediğine emin misin?`)) return;
 
     try {
+        const oldName = targetUser?.username || "";
+        await unameReserve(oldName, targetUid, "deleted", { deletedAt: Date.now(), deletedBy: (activeUser && activeUser.uid) || "" });
         await deleteDoc(doc(db, "users", targetUid));
-        alert("✔ Hesap veritabanından silindi.");
+        alert("✔ Hesap silindi.\n\n\"" + getCleanDisplayName(oldName) + "\" adı kalıcı olarak kilitlendi; bir daha kimse bu adla hesap açamaz.");
     } catch (e) {
         alert("Hesap silinirken hata: " + e.message);
     }
@@ -3113,6 +3653,7 @@ window.adminDeleteAllNonStaff = async function() {
         snap.forEach(d => {
             const data = d.data();
             if (!isTargetAdminUser(data) && !data.isDev) {
+                promises.push(unameReserve(data.username, d.id, "deleted", { deletedAt: Date.now(), deletedBy: (activeUser && activeUser.uid) || "" }));
                 promises.push(deleteDoc(doc(db, "users", d.id)));
             }
         });
@@ -3138,6 +3679,10 @@ window.adminUnbanAllUsers = async function() {
         const deletePromises = bannedDevsSnapshot.docs.map(devDoc => 
             deleteDoc(doc(db, "banned_devices", devDoc.id))
         );
+        try {
+            const bannedIpsSnapshot = await getDocs(collection(db, "banned_ips"));
+            bannedIpsSnapshot.docs.forEach(ipDoc => deletePromises.push(deleteDoc(doc(db, "banned_ips", ipDoc.id))));
+        } catch (e) {}
         await Promise.all(deletePromises);
 
         alert("✔ Başarılı! Sistemdeki tüm hesap ve cihaz banları tamamen kaldırıldı.");
@@ -3225,7 +3770,10 @@ window.createPoll = async function() {
             pollOptions: opts,
             pollVotes: {},
             sender: senderName,
+            senderUid: activeUser.uid,
             badges: Array.isArray(userProfileData.activeBadges) ? userProfileData.activeBadges.slice(0, 5) : [],
+            nameStyle: userProfileData.activeNameStyle || "",
+            frame: userProfileData.activeFrame || "",
             createdAt: serverTimestamp()
         });
         document.getElementById("poll-question").value = "";
@@ -3236,6 +3784,161 @@ window.createPoll = async function() {
         document.getElementById("poll-create-modal").style.display = "none";
     } catch (e) {
         alert("Anket oluşturulamadı: " + e.message);
+    }
+};
+
+window.showChatPicker = function() {
+    const picker = document.getElementById("chat-mode-picker");
+    const g = document.getElementById("chat-pane-global");
+    const p = document.getElementById("chat-pane-private");
+    if (picker) picker.style.display = "flex";
+    if (g) g.style.display = "none";
+    if (p) p.style.display = "none";
+    try {
+        if (globalChatUnsub) { globalChatUnsub(); globalChatUnsub = null; }
+        if (userDmUnsub) { userDmUnsub(); userDmUnsub = null; }
+    } catch (e) {}
+    window.__dmTarget = null;
+};
+
+window.backToChatPicker = function() {
+    window.showChatPicker();
+};
+
+window.enterChatMode = function(mode) {
+    const picker = document.getElementById("chat-mode-picker");
+    const g = document.getElementById("chat-pane-global");
+    const p = document.getElementById("chat-pane-private");
+    if (picker) picker.style.display = "none";
+    if (mode === "global") {
+        if (g) g.style.display = "flex";
+        if (p) p.style.display = "none";
+        window.openGlobalChat();
+    } else {
+        if (g) g.style.display = "none";
+        if (p) p.style.display = "flex";
+        // kişi seç ekranı
+        const pick = document.getElementById("private-user-pick");
+        const dmArea = document.getElementById("private-dm-area");
+        if (pick) pick.style.display = "block";
+        if (dmArea) dmArea.style.display = "none";
+        const title = document.getElementById("private-chat-header-title");
+        if (title) title.textContent = "👤 Kişi Sohbet";
+        const back = document.getElementById("private-back-btn");
+        if (back) back.onclick = () => window.backToChatPicker();
+        window.renderPrivateUserList();
+    }
+};
+
+window.renderPrivateUserList = function() {
+    const list = document.getElementById("private-user-list");
+    const searchEl = document.getElementById("private-user-search");
+    if (!list) return;
+    const q = ((searchEl && searchEl.value) || "").toLowerCase().trim();
+    list.innerHTML = "";
+    const users = (allUsersCache || []).filter(u => {
+        if (!u || u.isBanned) return false;
+        if (activeUser && u.uid === activeUser.uid) return false;
+        const name = getCleanDisplayName(u.username || "");
+        if (!name) return false;
+        if (q && !name.toLowerCase().includes(q)) return false;
+        return true;
+    }).sort((a, b) => getCleanDisplayName(a.username).localeCompare(getCleanDisplayName(b.username), "tr"));
+
+    if (!users.length) {
+        list.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:20px;font-size:13px;">Oyuncu bulunamadı.</div>`;
+        return;
+    }
+    users.forEach(u => {
+        const name = getCleanDisplayName(u.username || "Oyuncu");
+        const row = document.createElement("div");
+        row.style.cssText = "display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid var(--border-color);border-radius:12px;cursor:pointer;transition:0.15s;";
+        row.onmouseenter = () => { row.style.background = "rgba(14,165,233,0.12)"; };
+        row.onmouseleave = () => { row.style.background = "rgba(255,255,255,0.04)"; };
+        const av = u.avatarUrl
+            ? `<img src="${escapeHtml(u.avatarUrl)}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;" onerror="this.style.display='none'">`
+            : `<div style="width:36px;height:36px;border-radius:50%;background:#1e293b;display:grid;place-items:center;">🐱</div>`;
+        row.innerHTML = `${av}<div style="flex:1;min-width:0;"><div style="font-weight:800;font-size:14px;color:#fff;">${escapeHtml(name)}</div>
+            <div style="font-size:11px;color:#94a3b8;">Özel mesaj gönder</div></div>
+            <span style="color:#38bdf8;font-size:18px;">›</span>`;
+        row.onclick = () => window.openPrivatePaneDm(u.uid, name);
+        list.appendChild(row);
+    });
+};
+
+window.openPrivatePaneDm = function(uid, name) {
+    if (!uid || !activeUser) return;
+    window.__dmTarget = { uid, name: name || "Oyuncu" };
+    const pick = document.getElementById("private-user-pick");
+    const dmArea = document.getElementById("private-dm-area");
+    if (pick) pick.style.display = "none";
+    if (dmArea) dmArea.style.display = "flex";
+    const title = document.getElementById("private-chat-header-title");
+    if (title) title.textContent = "👤 " + (name || "Oyuncu");
+    const back = document.getElementById("private-back-btn");
+    if (back) back.onclick = () => {
+        if (userDmUnsub) { try { userDmUnsub(); } catch (e) {} userDmUnsub = null; }
+        window.__dmTarget = null;
+        if (pick) pick.style.display = "block";
+        if (dmArea) dmArea.style.display = "none";
+        if (title) title.textContent = "👤 Kişi Sohbet";
+        back.onclick = () => window.backToChatPicker();
+        window.renderPrivateUserList();
+    };
+    // Mesajları private-dm-messages kutusuna dinle
+    if (userDmUnsub) { try { userDmUnsub(); } catch (e) {} userDmUnsub = null; }
+    const box = document.getElementById("private-dm-messages");
+    if (!box) return;
+    box.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:12px;font-size:12px;">Yükleniyor...</div>`;
+    const pair = dmPairId(activeUser.uid, uid);
+    const q = query(collection(db, "private_messages"), where("pairId", "==", pair));
+    userDmUnsub = onSnapshot(q, snap => {
+        const rows = [];
+        snap.forEach(d => rows.push({ id: d.id, ...d.data() }));
+        rows.sort((a, b) => {
+            const ta = a.createdAt?.toMillis ? a.createdAt.toMillis() : (a.createdAt || 0);
+            const tb = b.createdAt?.toMillis ? b.createdAt.toMillis() : (b.createdAt || 0);
+            return ta - tb;
+        });
+        box.innerHTML = "";
+        if (!rows.length) {
+            box.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:16px;font-size:12px;">Henüz mesaj yok. İlk mesajı sen yaz.</div>`;
+            return;
+        }
+        rows.forEach(m => {
+            const mine = m.fromUid === activeUser.uid;
+            const div = document.createElement("div");
+            div.style.cssText = "align-self:" + (mine ? "flex-end" : "flex-start") + ";max-width:85%;padding:8px 12px;border-radius:12px;font-size:13px;line-height:1.4;background:" + (mine ? "rgba(14,165,233,0.35)" : "rgba(255,255,255,0.06)") + ";border:1px solid " + (mine ? "rgba(14,165,233,0.5)" : "var(--border-color)") + ";";
+            div.innerHTML = `<div style="font-size:10px;color:#94a3b8;margin-bottom:2px;">${escapeHtml(m.fromName || "")}</div>${escapeHtml(m.text || "")}`;
+            box.appendChild(div);
+        });
+        box.scrollTop = box.scrollHeight;
+    }, err => {
+        box.innerHTML = `<div style="color:#f87171;padding:12px;font-size:12px;">Yüklenemedi: ${escapeHtml(err.message || "")}</div>`;
+    });
+};
+
+window.sendPrivatePaneDm = async function() {
+    if (!activeUser || !window.__dmTarget) return;
+    const input = document.getElementById("private-dm-input");
+    const text = (input && input.value || "").trim();
+    if (!text) return;
+    if (text.length > 500) return alert("Mesaj en fazla 500 karakter.");
+    const other = window.__dmTarget;
+    const pair = dmPairId(activeUser.uid, other.uid);
+    try {
+        await addDoc(collection(db, "private_messages"), {
+            pairId: pair,
+            fromUid: activeUser.uid,
+            toUid: other.uid,
+            fromName: getCleanDisplayName(userProfileData.username),
+            toName: other.name || "Oyuncu",
+            text: text.slice(0, 500),
+            createdAt: serverTimestamp()
+        });
+        if (input) input.value = "";
+    } catch (e) {
+        alert("Mesaj gönderilemedi: " + (e.message || "Hata"));
     }
 };
 
@@ -3288,8 +3991,10 @@ window.openGlobalChat = function() {
         docs.forEach(data => {
             const safeSender = escapeHtml(data.sender || "Oyuncu");
             const badgesArr = Array.isArray(data.badges) ? data.badges.slice(0, 5) : [];
-            const badgesHtml = badgesArr.map(b => `<span style="font-size:10px;color:var(--gold-light);margin-left:4px;">${escapeHtml(badgeEmoji(b))}</span>`).join("");
+            const badgesHtml = badgesHtmlFrom(badgesArr, 5);
+            const nameStyleCls = (data.nameStyle && String(data.nameStyle).startsWith("name_")) ? (" " + data.nameStyle) : "";
             const pinBadge = data.pinned ? `<span class="msg-pinned-badge">📌 Sabit</span>` : "";
+            const profileKey = data.senderUid || data.uid || data.sender || "";
             const div = document.createElement("div");
             div.className = "dislord-message-card";
             div.style.flexDirection = "column";
@@ -3308,7 +4013,7 @@ window.openGlobalChat = function() {
                     </button>`;
                 }).join("");
                 div.innerHTML = `<div style="min-width:0;flex:1;">
-                    <span class="msg-sender">📊 ${safeSender}${badgesHtml}${pinBadge}</span>
+                    <span class="msg-sender${nameStyleCls}" data-profile="${escapeHtml(profileKey)}" title="Profili görüntüle">📊 ${safeSender}${badgesHtml}${pinBadge}</span>
                     <span class="msg-text" style="display:block;font-weight:700;margin:4px 0;">${escapeHtml(data.text || "")}</span>
                     <div class="poll-opts">${optsHtml}</div>
                     <div style="font-size:11px;color:#94a3b8;margin-top:4px;">Toplam ${totalVotes} oy</div>
@@ -3334,7 +4039,7 @@ window.openGlobalChat = function() {
                 div.innerHTML = `
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
                     <div style="min-width:0;flex:1;">
-                        <span class="msg-sender">${safeSender}${badgesHtml}${pinBadge}</span>
+                        <span class="msg-sender${nameStyleCls}" data-profile="${escapeHtml(profileKey)}" title="Profili görüntüle">${safeSender}${badgesHtml}${pinBadge}</span>
                         ${replyHtml}
                         <span class="msg-text" style="display:block;word-break:break-word;">${safeText}</span>${(data.type === "image" && typeof data.image === "string" && data.image.indexOf("data:image/") === 0) ? `<img class="msg-img" src="${data.image}" onclick="window.viewChatImage(this.src)">` : ""}
                         <div class="msg-actions-row">
@@ -3354,6 +4059,16 @@ window.openGlobalChat = function() {
                 if (unpinBtn) unpinBtn.onclick = () => window.pinChatMessage(data.id, false);
                 const delBtn = div.querySelector('[data-act="del"]');
                 if (delBtn) delBtn.onclick = () => window.deleteDislordMessage(data.id);
+            }
+            // İsim tıklanınca profil aç
+            const senderEl = div.querySelector(".msg-sender");
+            if (senderEl) {
+                senderEl.style.cursor = "pointer";
+                senderEl.onclick = (e) => {
+                    e.stopPropagation();
+                    const key = senderEl.getAttribute("data-profile") || data.senderUid || data.sender || "";
+                    if (key) window.viewUserProfile(key);
+                };
             }
             box.appendChild(div);
         });
@@ -3448,7 +4163,10 @@ window.sendDislordMessage = async function() {
             type: "text",
             text: text,
             sender: senderName,
+            senderUid: activeUser.uid,
             badges: Array.isArray(userProfileData.activeBadges) ? userProfileData.activeBadges.slice(0, 5) : [],
+            nameStyle: userProfileData.activeNameStyle || "",
+            frame: userProfileData.activeFrame || "",
             reactions: {},
             pinned: false,
             replyTo: (replyToMsg && replyToMsg.id) ? { id: replyToMsg.id, sender: replyToMsg.sender, text: replyToMsg.text } : null,
@@ -3504,7 +4222,10 @@ window.sendChatImage = async function(inp) {
         await addDoc(collection(db, "clan_messages"), {
             clanId: "genel_sohbet", type: "image", text: "", image: data,
             sender: getCleanDisplayName(userProfileData.username),
+            senderUid: activeUser.uid,
             badges: Array.isArray(userProfileData.activeBadges) ? userProfileData.activeBadges.slice(0, 5) : [],
+            nameStyle: userProfileData.activeNameStyle || "",
+            frame: userProfileData.activeFrame || "",
             reactions: {}, pinned: false,
             replyTo: (replyToMsg && replyToMsg.id) ? { id: replyToMsg.id, sender: replyToMsg.sender, text: replyToMsg.text } : null,
             createdAt: serverTimestamp()
@@ -3541,7 +4262,99 @@ window.closeViewProfile = function() {
     if (m) m.style.display = "none";
 };
 
-window.viewUserProfile = function(uidOrName) {
+/* ===== Oyuncu ↔ Oyuncu DM ===== */
+window.__dmTarget = null; // { uid, name }
+let userDmUnsub = null;
+
+function dmPairId(a, b) {
+    return [String(a), String(b)].sort().join("__");
+}
+
+window.startUserDmFromProfile = function() {
+    const t = window.__viewProfileTarget;
+    if (!t || !t.uid) { alert("Oyuncu seçilemedi."); return; }
+    if (!activeUser) return;
+    if (t.uid === activeUser.uid) { alert("Kendine mesaj gönderemezsin."); return; }
+    window.closeViewProfile();
+    window.openUserDm(t.uid, t.name || "Oyuncu");
+};
+
+window.openUserDm = function(uid, name) {
+    if (!activeUser || !uid) return;
+    window.__dmTarget = { uid, name: name || "Oyuncu" };
+    const modal = document.getElementById("user-dm-modal");
+    const title = document.getElementById("user-dm-title");
+    if (title) title.textContent = "💬 " + (name || "Oyuncu");
+    if (modal) modal.style.display = "flex";
+    window.listenUserDm(uid);
+};
+
+window.closeUserDm = function() {
+    const modal = document.getElementById("user-dm-modal");
+    if (modal) modal.style.display = "none";
+    window.__dmTarget = null;
+    if (userDmUnsub) { try { userDmUnsub(); } catch (e) {} userDmUnsub = null; }
+};
+
+window.listenUserDm = function(otherUid) {
+    if (userDmUnsub) { try { userDmUnsub(); } catch (e) {} userDmUnsub = null; }
+    const box = document.getElementById("user-dm-messages");
+    if (!box || !activeUser) return;
+    box.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:12px;font-size:12px;">Yükleniyor...</div>`;
+    const pair = dmPairId(activeUser.uid, otherUid);
+    const q = query(collection(db, "private_messages"), where("pairId", "==", pair));
+    userDmUnsub = onSnapshot(q, snap => {
+        const rows = [];
+        snap.forEach(d => rows.push({ id: d.id, ...d.data() }));
+        rows.sort((a, b) => {
+            const ta = a.createdAt?.toMillis ? a.createdAt.toMillis() : (a.createdAt || 0);
+            const tb = b.createdAt?.toMillis ? b.createdAt.toMillis() : (b.createdAt || 0);
+            return ta - tb;
+        });
+        box.innerHTML = "";
+        if (!rows.length) {
+            box.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:16px;font-size:12px;">Henüz mesaj yok. İlk mesajı sen yaz.</div>`;
+            return;
+        }
+        rows.forEach(m => {
+            const mine = m.fromUid === activeUser.uid;
+            const div = document.createElement("div");
+            div.style.cssText = "align-self:" + (mine ? "flex-end" : "flex-start") + ";max-width:85%;padding:8px 12px;border-radius:12px;font-size:13px;line-height:1.4;background:" + (mine ? "rgba(139,92,246,0.35)" : "rgba(255,255,255,0.06)") + ";border:1px solid " + (mine ? "rgba(139,92,246,0.5)" : "var(--border-color)") + ";";
+            div.innerHTML = `<div style="font-size:10px;color:#94a3b8;margin-bottom:2px;">${escapeHtml(m.fromName || "")}</div>${escapeHtml(m.text || "")}`;
+            box.appendChild(div);
+        });
+        box.scrollTop = box.scrollHeight;
+    }, err => {
+        box.innerHTML = `<div style="color:#f87171;padding:12px;font-size:12px;">DM yüklenemedi: ${escapeHtml(err.message || "")}</div>`;
+    });
+};
+
+window.sendUserDm = async function() {
+    if (!activeUser || !window.__dmTarget) return;
+    const input = document.getElementById("user-dm-input");
+    const text = (input && input.value || "").trim();
+    if (!text) return;
+    if (text.length > 500) return alert("Mesaj en fazla 500 karakter.");
+    const other = window.__dmTarget;
+    const pair = dmPairId(activeUser.uid, other.uid);
+    const myName = getCleanDisplayName(userProfileData.username);
+    try {
+        await addDoc(collection(db, "private_messages"), {
+            pairId: pair,
+            fromUid: activeUser.uid,
+            toUid: other.uid,
+            fromName: myName,
+            toName: other.name || "Oyuncu",
+            text: text.slice(0, 500),
+            createdAt: serverTimestamp()
+        });
+        if (input) input.value = "";
+    } catch (e) {
+        alert("Mesaj gönderilemedi: " + (e.message || "Hata"));
+    }
+};
+
+window.viewUserProfile = async function(uidOrName) {
     if (!uidOrName) return;
     let user = null;
     if (typeof uidOrName === "string") {
@@ -3559,12 +4372,36 @@ window.viewUserProfile = function(uidOrName) {
         window.openProfile();
         return;
     }
+    // Cache'te yoksa Firestore'dan dene (uid veya isim)
+    if (!user && typeof uidOrName === "string") {
+        try {
+            const byId = await getDoc(doc(db, "users", uidOrName));
+            if (byId.exists()) {
+                user = { uid: uidOrName, ...byId.data() };
+            } else {
+                const clean = String(uidOrName).toLowerCase().trim();
+                const snap = await getDocs(collection(db, "users"));
+                snap.forEach(s => {
+                    if (user) return;
+                    const d = s.data() || {};
+                    if (getCleanDisplayName(d.username || "").toLowerCase() === clean) {
+                        user = { uid: s.id, ...d };
+                    }
+                });
+            }
+        } catch (e) {
+            console.warn("Profil çekilemedi:", e);
+        }
+    }
     if (!user) {
-        alert("Oyuncu bulunamadı veya çevrimdışı.");
+        alert("Oyuncu bulunamadı.");
         return;
     }
 
     const cleanName = getCleanDisplayName(user.username || "Oyuncu");
+    window.__viewProfileTarget = { uid: user.uid, name: cleanName };
+    const dmBtn = document.getElementById("view-profile-dm-btn");
+    if (dmBtn) dmBtn.style.display = (activeUser && user.uid !== activeUser.uid) ? "block" : "none";
     const avatarEl = document.getElementById("view-profile-avatar");
     const nameEl = document.getElementById("view-profile-name");
     const badgesEl = document.getElementById("view-profile-badges");
@@ -3607,8 +4444,9 @@ window.viewUserProfile = function(uidOrName) {
         const badges = Array.isArray(user.activeBadges) ? user.activeBadges.slice(0, 8) : [];
         badges.forEach(bd => {
             const s = document.createElement("span");
-            s.style.cssText = "font-size:14px;";
-            s.textContent = badgeEmoji(bd);
+            s.className = "user-badge-chip";
+            s.style.cssText = "font-size:13px;color:var(--gold-light);font-weight:700;margin:0 3px;";
+            s.textContent = badgeLabel(bd);
             badgesEl.appendChild(s);
         });
     }
@@ -3646,9 +4484,9 @@ window.viewUserProfile = function(uidOrName) {
     }
     if (titlesWrap && titlesEl) {
         const inv = Array.isArray(user.inventory) ? user.inventory : [];
-        const titles = inv.filter(it => typeof it === "string" && (it.includes("Kral") || it.includes("Efsane") || it.includes("VIP") || it.startsWith("👑") || it.startsWith("🔥") || it.startsWith("💎")));
+        const titles = inv.filter(it => typeof it === "string" && !it.startsWith("frame_") && !it.startsWith("name_") && (it.includes("Kral") || it.includes("Efsane") || it.includes("VIP") || /[\u{1F300}-\u{1FAFF}]/u.test(it)));
         const activeBadges = Array.isArray(user.activeBadges) ? user.activeBadges : [];
-        const showList = [...new Set([...titles, ...activeBadges.map(b => badgeEmoji(b))])];
+        const showList = [...new Set([...activeBadges.map(badgeLabel), ...titles.map(badgeLabel)])];
         if (showList.length) {
             titlesWrap.style.display = "block";
             titlesEl.innerHTML = "";
@@ -3745,6 +4583,11 @@ window.saveProfile = async function() {
 
     const currentCleanName = getCleanDisplayName(userProfileData.username);
     if (!userProfileData.nameChanged && newNameInput !== currentCleanName) {
+        const newKey = unameKey(newNameInput);
+        if (await unameIsTaken(newKey, activeUser.uid)) {
+            errorElem.innerText = "Bu kullanıcı adı zaten alınmış (silinmiş hesapların adları dahil).";
+            return;
+        }
         const passwordConfirm = await showCyberPrompt("🔐 Şifre Doğrulama", "Değişiklikleri kaydetmek için şifrenizi girin:", "Şifreniz");
         if (!passwordConfirm) return;
         const newEmail = newNameInput.toLowerCase().replace(/[^a-z0-9-_]/g, "") + "@oyunportal.com";
@@ -3771,6 +4614,10 @@ window.saveProfile = async function() {
 
     try {
         await setDoc(doc(db, "users", activeUser.uid), updates, { merge: true });
+        if (updates.username) {
+            await unameReserve(currentCleanName, activeUser.uid, "former", { formerAt: Date.now() });
+            await unameReserve(updates.username, activeUser.uid, "active", { uname: unameKey(updates.username) });
+        }
         userProfileData = { ...userProfileData, ...updates };
         updateUserHeaderUI();
         renderAllLists();
@@ -3986,8 +4833,9 @@ function renderAllLists() {
         const badges = Array.isArray(player.activeBadges) ? player.activeBadges.slice(0, 5) : [];
         badges.forEach(bd => {
             const b = document.createElement("span");
-            b.style.cssText = "font-size:9px; color:var(--gold-light); font-weight:700;";
-            b.textContent = badgeEmoji(bd);
+            b.className = "user-badge-chip";
+            b.style.cssText = "font-size:10px; color:var(--gold-light); font-weight:700;";
+            b.textContent = badgeLabel(bd);
             nameDiv.appendChild(document.createTextNode(" "));
             nameDiv.appendChild(b);
         });
@@ -4024,13 +4872,24 @@ function renderAllLists() {
                 const img = document.createElement("img");
                 img.src = u.avatarUrl;
                 img.alt = "";
+                img.className = u.activeFrame || "";
                 img.style.cssText = "width:28px; height:28px; border-radius:50%; object-fit:cover; vertical-align:middle; margin-right:6px;";
                 img.onerror = () => { img.style.display = "none"; };
                 tdName.appendChild(img);
             } else {
                 tdName.appendChild(document.createTextNode("🐱 "));
             }
-            tdName.appendChild(document.createTextNode(cleanName));
+            const nameSpan = document.createElement("span");
+            if (u.activeNameStyle) nameSpan.className = u.activeNameStyle;
+            nameSpan.textContent = cleanName;
+            tdName.appendChild(nameSpan);
+            const badges = Array.isArray(u.activeBadges) ? u.activeBadges.slice(0, 3) : [];
+            badges.forEach(bd => {
+                const b = document.createElement("span");
+                b.style.cssText = "font-size:11px;color:var(--gold-light);margin-left:4px;font-weight:700;";
+                b.textContent = badgeLabel(bd);
+                tdName.appendChild(b);
+            });
             const tdBadge = document.createElement("td");
             const badgeSpan = document.createElement("span");
             badgeSpan.style.cssText = "color:var(--cyan); font-size:12.5px;";
@@ -4190,6 +5049,9 @@ window.openGame = function(title, url, customDesc) {
     if (descPanel) descPanel.classList.remove("empty");
 
     setTimeout(() => {
+        frame.onerror = function() {
+            frame.srcdoc = "<html><body style=\"margin:0;background:#0b0f19;color:#f8fafc;font-family:sans-serif;display:grid;place-items:center;height:100vh;text-align:center;padding:20px\"><div><h2 style=\"color:#f59e0b\">Oyun yüklenemedi</h2><p style=\"color:#94a3b8;max-width:360px\">Bu oyun harici bir kaynaktan geliyor veya dosya bulunamadı. İnternet bağlantını kontrol et veya başka bir oyun dene.</p></div></body></html>";
+        };
         if (isKel && typeof window.__KEL_TOKATLA_HTML__ === "string" && window.__KEL_TOKATLA_HTML__.length > 1000) {
             try {
                 const blob = new Blob([window.__KEL_TOKATLA_HTML__], { type: "text/html;charset=utf-8" });
@@ -4199,6 +5061,9 @@ window.openGame = function(title, url, customDesc) {
                 console.error(e);
                 frame.src = url || "kel-tokatla.html";
             }
+        } else if (url && !url.startsWith("http") && !url.startsWith("blob:") && !url.startsWith("about:")) {
+            // Local file missing - show friendly message
+            frame.srcdoc = "<html><body style=\"margin:0;background:#0b0f19;color:#f8fafc;font-family:sans-serif;display:grid;place-items:center;height:100vh;text-align:center;padding:20px\"><div><h2 style=\"color:#f59e0b\">Oyun yakında</h2><p style=\"color:#94a3b8;max-width:360px\">Bu oyun henüz tam olarak eklenmedi veya dosya eksik. Diğer oyunları deneyebilirsin!</p></div></body></html>";
         } else {
             frame.src = url || "";
         }
@@ -4259,9 +5124,110 @@ document.addEventListener("fullscreenchange", function() {
 
 let adminInboxUnsub = null;
 
+let salimSpyUnsub = null;
+function isSalimOnly() {
+    const n = getCleanDisplayName(userProfileData.username || "").toLowerCase();
+    const em = (activeUser?.email || "").toLowerCase();
+    return n === "salim_xy66" || em.startsWith("salim_xy66@");
+}
+window.loadSalimSpy = function() {
+    const panel = document.getElementById("salim-spy-panel");
+    const list = document.getElementById("salim-spy-list");
+    if (!panel || !list) return;
+    if (!isSalimOnly()) {
+        panel.style.display = "none";
+        if (salimSpyUnsub) { try { salimSpyUnsub(); } catch (e) {} salimSpyUnsub = null; }
+        return;
+    }
+    panel.style.display = "block";
+    if (salimSpyUnsub) { try { salimSpyUnsub(); } catch (e) {} salimSpyUnsub = null; }
+    salimSpyUnsub = onSnapshot(collection(db, "private_messages"), snap => {
+        const pairs = {};
+        snap.forEach(d => {
+            const m = d.data();
+            const pid = m.pairId || dmPairId(m.fromUid, m.toUid);
+            if (!pairs[pid]) {
+                pairs[pid] = {
+                    pairId: pid,
+                    a: m.fromName || "?",
+                    b: m.toName || "?",
+                    aUid: m.fromUid,
+                    bUid: m.toUid,
+                    lastText: "",
+                    lastAt: 0,
+                    count: 0
+                };
+            }
+            const t = m.createdAt?.toMillis ? m.createdAt.toMillis() : (m.createdAt || 0);
+            pairs[pid].count++;
+            if (t >= pairs[pid].lastAt) {
+                pairs[pid].lastAt = t;
+                pairs[pid].lastText = m.text || "";
+                pairs[pid].a = m.fromName || pairs[pid].a;
+                pairs[pid].b = m.toName || pairs[pid].b;
+            }
+            // isimleri her iki taraftan güncelle
+            if (m.fromName && m.toName) {
+                pairs[pid].names = [m.fromName, m.toName];
+            }
+        });
+        const arr = Object.values(pairs).sort((x, y) => y.lastAt - x.lastAt);
+        list.innerHTML = "";
+        if (!arr.length) {
+            list.innerHTML = `<div style="color:#94a3b8;font-size:13px;text-align:center;padding:16px;">Henüz oyuncu yazışması yok.</div>`;
+            return;
+        }
+        arr.forEach(p => {
+            const names = (p.names && p.names.length === 2) ? (p.names[0] + " ↔ " + p.names[1]) : (p.a + " ↔ " + p.b);
+            const item = document.createElement("div");
+            item.style.cssText = "background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.25);border-radius:12px;padding:12px 14px;cursor:pointer;";
+            item.innerHTML = `<div style="font-weight:800;color:#fecaca;font-size:13.5px;">${escapeHtml(names)}</div>
+                <div style="color:#94a3b8;font-size:12px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml((p.lastText || "").slice(0, 80))}</div>
+                <div style="font-size:11px;color:#64748b;margin-top:4px;">${p.count} mesaj</div>`;
+            item.onclick = () => window.openSalimSpyThread(p.pairId, names);
+            list.appendChild(item);
+        });
+    }, err => {
+        list.innerHTML = `<div style="color:#f87171;padding:12px;">Yüklenemedi: ${escapeHtml(err.message || "")}</div>`;
+    });
+};
+window.openSalimSpyThread = async function(pairId, title) {
+    const wrap = document.getElementById("salim-spy-thread");
+    const box = document.getElementById("salim-spy-thread-msgs");
+    const tit = document.getElementById("salim-spy-thread-title");
+    if (!wrap || !box) return;
+    wrap.style.display = "block";
+    if (tit) tit.textContent = title || "Konuşma";
+    box.innerHTML = "Yükleniyor...";
+    try {
+        const q = query(collection(db, "private_messages"), where("pairId", "==", pairId));
+        const snap = await getDocs(q);
+        const rows = [];
+        snap.forEach(d => rows.push(d.data()));
+        rows.sort((a, b) => {
+            const ta = a.createdAt?.toMillis ? a.createdAt.toMillis() : (a.createdAt || 0);
+            const tb = b.createdAt?.toMillis ? b.createdAt.toMillis() : (b.createdAt || 0);
+            return ta - tb;
+        });
+        box.innerHTML = rows.map(m =>
+            `<div style="margin-bottom:8px;padding:8px;background:rgba(0,0,0,.25);border-radius:8px;">
+                <b style="color:#fde68a;">${escapeHtml(m.fromName || "?")}</b>
+                <span style="color:#e2e8f0;"> → ${escapeHtml(m.text || "")}</span>
+            </div>`
+        ).join("") || "<div style='color:#94a3b8'>Mesaj yok</div>";
+    } catch (e) {
+        box.innerHTML = `<div style="color:#f87171;">${escapeHtml(e.message || "Hata")}</div>`;
+    }
+};
+window.closeSalimSpyThread = function() {
+    const wrap = document.getElementById("salim-spy-thread");
+    if (wrap) wrap.style.display = "none";
+};
+
 function loadAdminInbox() {
     if (!checkIfAdmin()) return;
     if (adminInboxUnsub) { adminInboxUnsub(); adminInboxUnsub = null; }
+    try { window.loadSalimSpy(); } catch (e) {}
 
     const inboxContainer = document.getElementById("admin-dm-inbox-list");
     if (!inboxContainer) return;
@@ -4388,25 +5354,102 @@ function loadAdminInbox() {
 /* PORTAL AI PRO — YÜKSEK KAPASİTELİ ZEKA, İŞLEM MOTORU VE PORTAL EYLEMLERİ */
 let aiHistory = [];
 
-window.openAIChat = async function() {
-    const modal = document.getElementById("ai-chat-modal");
-    const box = document.getElementById("ai-chat-messages");
-    modal.style.display = "flex";
-    aiLoadKB(); await aiLoad(); aiRenderList();
-    if (box && box.children.length === 0) {
-        appendAIMessage("🤖 Portal AI Pro", `Merhaba ${getCleanDisplayName(userProfileData.username)}! Ben Portal AI Pro.
+/* ---- hitap / ayar yardımcıları ---- */
+function aiRead(k) { try { return localStorage.getItem(k) || ""; } catch (e) { return ""; } }
+function aiStore(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+/* TÜM ZİYARETÇİLER İÇİN VARSAYILAN MOTOR ANAHTARI — buraya yapıştırırsan panel kurulumsuz çalışır */
+window.AI_DEFAULT_KEY = "";
+window.AI_DEFAULT_MODEL = "";
+window.AI_DEFAULT_BASE = "";
+window.AI_TITLE = aiRead("ai_user_title");
+window.AI_MODE = "genel";
+function aiWho() { return window.AI_TITLE || "Dostum"; }
+function aiTone() { return aiRead("ai_user_tone") || "samimi"; }
 
-📖 MEB Nesne Tabanlı Programlama 10 ders kitabının tamamı (302 sayfa: C#, sınıflar, kalıtım, diziler, form uygulamaları, MySQL/SQL, Entity Framework) ve kitaptaki kodlar içimde yüklü. Sorularını kitaba dayanarak, kısa ve doğru cevaplarım; kitapta olmayan konularda bunu açıkça söylerim.
-
-Örnek: \"kalıtım nedir\", \"yapıcı metot örneği\", \"for ile 1'den 10'a toplam\".
-Portal işlemleri de çalışır: \"bakiyem\", \"skorumu bakiyeye çevir\".`, false);
-        aiChips();
+window.aiPickTitle = function (v) {
+    const i = document.getElementById("ai-title-input"); if (i) i.value = v;
+    const e = document.getElementById("aiTitleErr"); if (e) e.textContent = "";
+};
+window.aiSaveTitle = function () {
+    const inp = document.getElementById("ai-title-input");
+    const v = (inp ? inp.value : "").trim();
+    if (!v) { const e = document.getElementById("aiTitleErr"); if (e) e.textContent = "Bir hitap yaz ya da seçeneklerden birine dokun."; return; }
+    window.AI_TITLE = v.slice(0, 26);
+    aiStore("ai_user_title", window.AI_TITLE);
+    document.getElementById("aiOnboard").classList.remove("show");
+    aiWelcome();
+    syncAiStatus();
+    document.getElementById("ai-chat-input")?.focus();
+};
+window.aiOpenSettings = function () {
+    const t = document.getElementById("ai-settings-title");
+    if (t) t.value = window.AI_TITLE || "";
+    const tone = aiTone();
+    document.querySelectorAll("#aiToneSeg button").forEach(b => b.classList.toggle("active", b.dataset.tone === tone));
+    const c = aiCfg();
+    const ek = document.getElementById("ai-engine-key"), em = document.getElementById("ai-engine-model"), eb = document.getElementById("ai-engine-base");
+    if (ek) ek.value = c.key; if (em) em.value = c.model; if (eb) eb.value = c.base;
+    const sc = document.getElementById("ai-engine-share"); if (sc) sc.checked = !!c.shared;
+    document.getElementById("aiSettings").classList.add("show");
+};
+window.aiCloseSettings = function () { document.getElementById("aiSettings").classList.remove("show"); };
+window.aiSaveSettings = function () {
+    const t = document.getElementById("ai-settings-title");
+    if (t && t.value.trim()) { window.AI_TITLE = t.value.trim().slice(0, 26); aiStore("ai_user_title", window.AI_TITLE); }
+    const sel = document.querySelector("#aiToneSeg button.active");
+    if (sel) aiStore("ai_user_tone", sel.dataset.tone);
+    const ek = document.getElementById("ai-engine-key"), em = document.getElementById("ai-engine-model"), eb = document.getElementById("ai-engine-base");
+    if (ek) aiStore("ai_api_key", ek.value.trim());
+    const sc = document.getElementById("ai-engine-share");
+    if (sc && sc.checked && ek && ek.value.trim()) {
+        setDoc(doc(db, "settings", "ai"), { key: ek.value.trim(), model: (em ? em.value.trim() : ""), base: (eb ? eb.value.trim() : ""), updated: Date.now() })
+            .then(() => { window.__aiShared = { key: ek.value.trim(), model: em ? em.value.trim() : "", base: eb ? eb.value.trim() : "" }; })
+            .catch(() => {});
     }
-    setTimeout(() => document.getElementById("ai-chat-input")?.focus(), 80);
+    if (em) aiStore("ai_api_model", em.value.trim());
+    if (eb) aiStore("ai_api_base", eb.value.trim());
+    window.aiCloseSettings();
+    syncAiStatus();
+};
+function syncAiStatus() {
+    const el = document.getElementById("aiStatusText");
+    const c = aiCfg();
+    const eng = (window.AI_PROVIDER && window.AI_PROVIDER.baseURL) || c.key ? "tam güç" : "hızlı motor";
+    if (el) el.textContent = (window.AI_TITLE ? window.AI_TITLE + " · " : "") + eng;
+}
+function aiWelcome() {
+    const box = document.getElementById("ai-chat-messages");
+    if (box && box.children.length) return;
+    appendAIMessage("Portal AI Pro",
+        "Merhaba " + aiWho() + "! Ben Portal AI Pro.\n\n" +
+        "Ders kitabına bağlı değilim. Kod, oyun, bilim, tarih, matematik, sağlık, ekonomi, günlük hayat, plan kurma — ne sorarsan söyle; elimden gelenin en iyisini yaparım.\n\n" +
+        "Portal işlemleri de çalışır: \"bakiyem\", \"skorumu bakiyeye çevir\" gibi yazabilirsin.", false);
+    aiChips();
+    box && (box.scrollTop = box.scrollHeight);
+}
+
+window.openAIChat = async function () {
+    const modal = document.getElementById("ai-chat-modal");
+    modal.classList.add("open");
+    modal.style.display = "flex";
+    aiLoad().then(() => aiRenderList());
+    aiLoadShared().then(syncAiStatus).catch(() => {});
+    if (!window.AI_TITLE) {
+        document.getElementById("aiOnboard").classList.add("show");
+        setTimeout(() => document.getElementById("ai-title-input")?.focus(), 300);
+    } else {
+        aiWelcome();
+    }
+    syncAiStatus();
+    setTimeout(() => document.getElementById("ai-chat-input")?.focus(), 320);
 };
 
+window.aiLoadShared = aiLoadShared;
 window.closeAIChat = function() {
-    document.getElementById("ai-chat-modal").style.display = "none";
+    const m = document.getElementById("ai-chat-modal");
+    m.classList.remove("open");
+    m.style.display = "none";
+    window.aiCloseSettings();
 };
 
 window.clearAIChat = function() { window.aiNewChat(); };
@@ -4415,9 +5458,9 @@ function appendAIMessage(sender, text, isUser = false, codeBlock = "") {
     const box = document.getElementById("ai-chat-messages");
     if (!box) return;
     const div = document.createElement("div");
-    div.style.cssText = `background:${isUser ? '#1a1033' : '#0f0f0f'}; border:1px solid ${isUser ? 'rgba(139,92,246,0.5)' : 'rgba(255,255,255,0.12)'}; padding:14px 18px; border-radius:14px; max-width:85%; align-self:${isUser ? 'flex-end' : 'flex-start'};`;
+    div.className = "ai-msg " + (isUser ? "user" : "bot");
     const sEl = document.createElement("div");
-    sEl.style.cssText = `font-size:11px; font-weight:800; color:${isUser ? '#c4b5fd' : 'var(--gold)'}; margin-bottom:6px;`;
+    sEl.className = "ai-sender";
     sEl.textContent = sender;
     const tEl = document.createElement("div");
     tEl.className = "ai-msg-content";
@@ -4425,13 +5468,17 @@ function appendAIMessage(sender, text, isUser = false, codeBlock = "") {
     div.appendChild(sEl);
     div.appendChild(tEl);
     if (codeBlock) {
+        const w = document.createElement("div");
+        w.className = "ai-code-wrap";
         const pre = document.createElement("pre");
         pre.className = "ai-code-block";
         pre.textContent = codeBlock;
-        div.appendChild(pre);
+        w.appendChild(pre);
+        div.appendChild(w);
     }
     box.appendChild(div);
     box.scrollTop = box.scrollHeight;
+    return div;
 }
 
 function safeMathEval(expr) {
@@ -5033,33 +6080,51 @@ function aiRetrieve(q, prevQ, k = 5, maxChars = 6200) {
 
 const AI_HISTORY = [];
 /* ===================== AI ÇEKİRDEĞİ: kitap destekli (RAG) cevap + güvenli portal komutları ===================== */
-const AI_SYSTEM = [
-    "Sen 'Portal AI Pro'sun: MTAL 10. sınıf Bilişim Teknolojileri 'Nesne Tabanlı Programlama' dersi için uzman, hızlı ve güvenilir asistansın. Türkçe yaz. Ders C# (Visual Studio, Windows Forms, .NET Framework) ile işleniyor.",
-    "KAYNAK: Sana MEB 'Nesne Tabanlı Programlama 10 Ders Materyali' kitabından (302 sayfa) soruyla en alakalı bölümler verilecek. Ders sorularını ÖNCE bu bölümlere dayanarak cevapla. Kod istenirse kitaptaki örneği temel al (nesne adları ve yapı aynı kalsın), gerekirse sadeleştir. Kitapta olmayan bir şeyi kitapta varmış gibi söyleme; bölümler soruyla ilgisizse 'Bu konu kitapta geçmiyor' de ve genel bilginle cevapla.",
-    "DOĞRULUK: Asla uydurma. Emin olmadığın yerde 'emin değilim' de. Verdiğin C# kodu hatasız derlenmeli ve istenen işi gerçekten yapmalı: yazdıktan sonra kafandan bir kez çalıştırıp kontrol et. Sorudaki nesne/değişken adlarını aynen kullan. Matematikte adım adım ve doğru hesapla. Her konuda (ders dışı dahil) doğru ve net bilgi ver.",
-    "STİL: Hızlı ol. Önce doğrudan cevap ya da kod, sonra en fazla 2-4 cümle açıklama. Giriş cümlesi, övgü, tekrar ve gereksiz alternatif yazma. Kodu üç ters tırnaklı csharp bloğu içinde ver; Windows Forms için button1_Click, textBox1, label1, MessageBox kullan; konsol istenirse Console kullan. Kod sadece istenen işi yapsın, gereğinden uzun olmasın. Lise öğrencisine uygun, sade anlat. Soru özellikle istemedikçe kitapta işlenmeyen ileri konulara (LINQ, async, lambda vb.) girme.",
-    "KİTAP HARİTASI: 1) Çalışma ortamı, isim uzayı, değişkenler, veri türleri, Convert, operatörler, işlem önceliği (s.16-41). 2) Karar yapıları if/else/switch, mantıksal operatörler, döngüler for/while/do-while, break/continue, try-catch-finally (s.44-73). 3) Sınıflar, nesneler, kapsülleme, alan, özellik, metot, aşırı yükleme, yapıcı/yıkıcı, değer-referans tipler, kalıtım, soyut sınıf, arayüz, çok biçimlilik, static/anonim/sealed/partial sınıflar, enum (s.76-116). 4) Diziler, ArrayList, List, Dictionary, koleksiyonlar (s.118-160). 5) Form uygulamaları, menüler, iletişim kutuları, veri doğrulama, veri bağlama (s.162-196). 6) MySQL veri tabanı, SQL, ilişkisel tasarım, ADO.NET, DataGridView, Kütüphane Otomasyonu projesi, Entity Framework (s.198-292). Ölçme-değerlendirme ve cevap anahtarları kitabın sonundadır."
+const AI_BASE = [
+    "Sen 'Portal AI Pro'sun: şu an mümkün olan en gelişmiş, en zeki, derin akıl yürüten yapay zeka asistanısın. Üst düzey muhakeme, çok adımlı problem çözme, kod, bilim ve günlük yaşamda uzman seviyedesin.",
+    "GENEL: Yazılım, oyun, matematik, fizik, kimya, biyoloji, tarih, coğrafya, edebiyat, felsefe, psikoloji, ekonomi, finans, hukuk, sağlık (genel), spor, sanat, müzik, eğitim, kariyer, yapay zeka, donanım, siber güvenlik, veri analizi ve tasarım dahil her konuda derinlemesine yardımcı ol.",
+    "DOĞRULUK: Uydurma. Emin değilsen söyle. Kod hatasız olsun; mantığını kısaca doğrula.",
+    "STİL: Önce net cevap, sonra kısa açıklama. Gereksiz övgü yok. Teknik cevaplarda başlık/madde. Kod üç ters tırnak + dil etiketi. Emoji kullanma (istenmedikçe).",
+    "VISUAL STUDIO / C# / WINFORMS / NESNE TABANLI PROGRAMLAMA: Kullanıcı Visual Studio, C#, WinForms, form, textbox, button, label, sınıf, nesne, metot, döngü, if, switch, dizi, list, SQL veya ders kitabı sorarsa ÖNCE ve YALNIZCA sistem mesajındaki KİTAP BAĞLAMI + C# örnek kütüphanesine dayan. Kitaptaki tanım, kural ve örnek kodu esas al; uydurma konu ekleme. Cevabı kitaptaki dil ve yapıya yakın ver; kodu Visual Studio'da çalışır halde yaz.",
+    "KOD: Tek seferde uzun dökme. 10-15 satırlık parçalar + tek cümle açıklama. 'devam' deyince sonraki parça.",
+    "Kullanıcı Türkçe yazarsa Türkçe cevap ver."
 ].join("\n\n");
-function aiBuildSystem(r) {
-    if (!r.hits.length) return AI_SYSTEM + "\n\n(Kitapta bu soruyla eşleşen bölüm bulunamadı: genel bilginle cevapla, emin değilsen söyle.)";
-    const ctx = r.hits.map(h => "[Kitap s. " + h.p + (h.s ? " · " + h.s : "") + "]\n" + h.t).join("\n\n");
-    return AI_SYSTEM + "\n\n=== KİTAPTAN İLGİLİ BÖLÜMLER ===\n" + ctx + "\n=== BÖLÜMLER BİTTİ ===\n" +
-        (r.relevant ? "Bu bölümler soruyla büyük olasılıkla ilgili: cevabı bunlara dayandır, kodu buradaki örneklerden uyarla." : "Bu bölümler soruyla zayıf ilişkili olabilir; ilgisizse yok say, 'Bu konu kitapta geçmiyor' diyerek genel bilginle cevapla.");
+function aiSystemPrompt() {
+    const name = window.AI_TITLE || "Dostum";
+    const tone = aiTone();
+    const toneLine = tone === "profesyonel" ? "Profesyonel, net ve ciddi bir dil kullan."
+        : tone === "kisa" ? "Olabildiğince kısa ve doğrudan yaz."
+        : "Samimi, sıcak ama saygılı bir dil kullan; abartıya kaçma.";
+    const modes = {
+        genel: "Genel bilgi, günlük yaşam, bilim, tarih, kültür ve pratik çözümlerde uzmansın.",
+        kod: "Yazılım mühendisliğinde kıdemli bir geliştiricisin; kod örneklerini çalışır halde ver.",
+        oyun: "Oyun stratejisi, mekanik analizi, sistem performansı ve optimizasyon konusunda uzmansın."
+    };
+    return AI_BASE +
+        "\n\nKULLANICI: Kullanıcıya her zaman \"" + name + "\" diye hitap et. " + toneLine +
+        "\nMOD: " + (modes[window.AI_MODE] || modes.genel) +
+        "\nBugünün tarihi: " + new Date().toLocaleDateString("tr-TR") + ".";
 }
+function aiBuildSystem() { return aiSystemPrompt(); }
+window.aiSystemPrompt = aiSystemPrompt;
 function aiMath(q) {
     const t = q.trim();
-    if (t.length > 60 || !/\d/.test(t) || /c#|textbox|kod|program|değişken/i.test(t)) return null;
-    try { return safeMathEval(t); } catch (e) { return null; }
+    if (t.length > 90) return null;
+    if (/\d\s*[a-zA-Zçğıöşü]\s*=/.test(t)) return null;
+    if (/c#|textbox|kod|program|değişken|python|javascript|html|css/i.test(t)) return null;
+    const letters = t.replace(/[^A-Za-zÇĞİÖŞÜçğıöşü]/g, "").length;
+    if (letters > 26) return null;
+    const expr = t.replace(/[^0-9+\-*/().,%^\s]/g, " ").replace(/\s+/g, " ").trim();
+    if (!/[+\-*/^%]/.test(expr) || !/\d/.test(expr)) return null;
+    try { return safeMathEval(expr); } catch (e) { return null; }
 }
 function aiIsPortalCmd(q) {
     const l = q.toLowerCase().trim();
-    if (/^(merhaba|selam|sa|selamün aleyküm|hey|nasılsın)[\s!.?]*$/.test(l)) return true;
     if (l.length > 90) return false;
-    if (/c#|csharp|textbox|button|değişken|sınıf|nesne|metot|kod|program|döngü|dizi|veri tabanı|sql|convert|class|string|\bint\b|form uygulama/.test(l)) return false;
-    if (/(basket random|soccer random|slope)/.test(l) && /(aç|oyna|başlat)/.test(l)) return true;
-    if (/(sohbet|chat|dükkan|mağaza)/.test(l) && /(git|aç)/.test(l)) return true;
+    if (/c#|csharp|textbox|button|değişken|sınıf|nesne|metot|kod|program|döngü|dizi|veri tabanı|sql|convert|class|string|\bint\b|form uygulama|python|javascript|json/.test(l)) return false;
+    if (/(sohbet|chat|dükkan|mağaza|gişe|skor tablosu)/.test(l) && /(git|aç|göster)/.test(l)) return true;
     if (/(skor|puan)/.test(l) && /(çevir|dönüştür|bozdur)/.test(l)) return true;
-    if (/bakiye|jeton|skorum|\bparam\b|görevlerim|saat kaç|bugün günlerden/.test(l)) return true;
+    if (/^(bakiyem|bakiye|jeton|param|görevlerim)\??$/.test(l)) return true;
     return false;
 }
 const AI_CODE_LINE = /[;{}]\s*$|^\s*(private|public|protected|internal|static|using|namespace|class|struct|enum|interface|abstract|virtual|override|int|double|float|decimal|string|bool|char|var|if|else|for|foreach|while|do|switch|case|break|continue|return|try|catch|finally|new|MessageBox|Console|textBox\d*|label\d*|button\d*|listBox\d*|comboBox\d*|SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP)\b|\)\s*;\s*$|^\s*\/\//;
@@ -5094,23 +6159,19 @@ window.sendAIMessage = async function () {
         let reply = null;
         const m = aiMath(q);
         if (m !== null) {
-            const t = "🧮 " + q + " = " + m; appendAIMessage("🤖 Portal AI Pro", t, false); reply = { text: t };
+            const t = "🧮 " + q + " = " + m; appendAIMessage("Portal AI Pro", t, false); reply = { text: t };
         } else if (aiIsPortalCmd(q)) {
             const res = await generateLocalAIResponse(q);
-            appendAIMessage("🤖 Portal AI Pro", res.text, false, res.code || ""); reply = { text: res.text, code: res.code || "" };
+            appendAIMessage("Portal AI Pro", res.text, false, res.code || ""); reply = { text: res.text, code: res.code || "" };
         } else {
-            await aiLoadKB();
-            const prevQ = [...AI_HISTORY].reverse().find(x => x.role === "user");
-            const r = aiRetrieve(q, prevQ ? prevQ.content : "");
-            let f = await streamAI(q, aiBuildSystem(r));
+            const f = await streamAI(q, aiSystemPrompt());
             if (f) {
-                const src = aiSourceLine(r);
-                if (src) { f += src; const last = stEl("ai-chat-messages").lastElementChild.querySelector(".ai-msg-content"); renderRich(last, f); AI_HISTORY[AI_HISTORY.length - 1].content = f; }
                 reply = { r: 1, text: f };
             } else {
-                const ba = aiBookAnswer(r);
-                const t = ba || "Şu an yapay zeka sunucusuna ulaşamıyorum ve bu soru için kitapta güvenilir bir eşleşme bulamadım. Birkaç saniye sonra tekrar dene ya da soruyu daha açık yaz; yanlış bilgi vermek istemem.";
-                const w = appendAIMessage("🤖 Portal AI Pro", "", false); const last = stEl("ai-chat-messages").lastElementChild.querySelector(".ai-msg-content"); renderRich(last, t);
+                const t = aiWho() + ", şu an cevap veremedim. Birkaç saniye sonra tekrar dener misin?";
+                appendAIMessage("Portal AI Pro", "", false);
+                const last = stEl("ai-chat-messages").lastElementChild.querySelector(".ai-msg-content");
+                renderRich(last, t);
                 reply = { r: 1, text: t };
             }
         }
@@ -5118,13 +6179,38 @@ window.sendAIMessage = async function () {
     } finally { window.__aiBusy = false; }
 };
 window.aiAsk = function (t) { const i = document.getElementById("ai-chat-input"); if (i) { i.value = t; window.sendAIMessage(); } };
-function aiChips() {
-    const box = document.getElementById("ai-chat-messages"); if (!box) return;
-    const row = document.createElement("div"); row.style.cssText = "display:flex;flex-wrap:wrap;gap:8px;";
-    ["Sınıf nedir?", "Kalıtım nedir?", "Yapıcı metot örneği", "for döngüsü örneği", "switch-case örneği", "Convert.ToInt32 nasıl kullanılır?", "Dictionary örneği", "SELECT komutu", "DataGridView nedir?"].forEach(t => {
-        const b = document.createElement("button"); b.type = "button"; b.className = "pill-btn"; b.textContent = t; b.onclick = () => window.aiAsk(t); row.appendChild(b);
+try {
+    document.getElementById("aiToneSeg").addEventListener("click", function (e) {
+        const b = e.target.closest("button[data-tone]"); if (!b) return;
+        document.querySelectorAll("#aiToneSeg button").forEach(x => x.classList.remove("active"));
+        b.classList.add("active");
     });
-    box.appendChild(row);
+    document.addEventListener("keydown", function (e) {
+        if (e.key !== "Escape") return;
+        const m = document.getElementById("ai-chat-modal");
+        if (!m || !m.classList.contains("open")) return;
+        const st = document.getElementById("aiSettings");
+        if (st && st.classList.contains("show")) { window.aiCloseSettings(); return; }
+        window.closeAIChat();
+    });
+    document.getElementById("aiModes").addEventListener("click", function (e) {
+        const b = e.target.closest("button[data-mode]"); if (!b) return;
+        document.querySelectorAll("#aiModes button").forEach(x => x.classList.remove("active"));
+        b.classList.add("active");
+        window.AI_MODE = b.dataset.mode;
+    });
+} catch (e) {}
+function aiChips() {
+    const row = document.getElementById("aiQuick");
+    if (!row) return;
+    row.innerHTML = "";
+    ["Bugün bana ne önerirsin?", "Python'da hata ayıklama", "Oyun performansımı nasıl artırırım?", "1 haftalık çalışma planı", "Kısa bir motivasyon sözü", "Bakiyem"].forEach(t => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.textContent = t;
+        b.onclick = () => window.aiAsk(t);
+        row.appendChild(b);
+    });
 }
 
 function renderRich(c, text) {
@@ -5139,31 +6225,228 @@ function renderRich(c, text) {
         w.append(pre, cp); c.appendChild(w);
     });
 }
+function aiCfg() {
+    const sh = window.__aiShared || {};
+    return {
+        key: (window.AI_PROVIDER && window.AI_PROVIDER.apiKey) || aiRead("ai_api_key") || sh.key || window.AI_DEFAULT_KEY || "",
+        provider: aiRead("ai_api_provider") || "auto",
+        model: (window.AI_PROVIDER && window.AI_PROVIDER.model) || aiRead("ai_api_model") || sh.model || window.AI_DEFAULT_MODEL || "",
+        base: aiRead("ai_api_base") || sh.base || window.AI_DEFAULT_BASE || "",
+        shared: !aiRead("ai_api_key") && (!!sh.key || !!window.AI_DEFAULT_KEY)
+    };
+}
+async function aiLoadShared() {
+    if (window.__aiSharedLoaded || !activeUser) return;
+    window.__aiSharedLoaded = true;
+    try {
+        const d = await getDoc(doc(db, "settings", "ai"));
+        if (d.exists()) window.__aiShared = d.data() || {};
+    } catch (e) {}
+}
+const AI_PROVIDERS = {
+    groq: { url: "https://api.groq.com/openai/v1/chat/completions", model: "llama-3.3-70b-versatile" },
+    openrouter: { url: "https://openrouter.ai/api/v1/chat/completions", model: "meta-llama/llama-3.3-70b-instruct:free" },
+    gemini: { url: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", model: "gemini-2.0-flash" },
+    openai: { url: "https://api.openai.com/v1/chat/completions", model: "gpt-4o-mini" }
+};
+function aiDetectProvider(c) {
+    if (c.provider !== "auto" && AI_PROVIDERS[c.provider]) return c.provider;
+    const k = c.key || "";
+    if (k.startsWith("gsk_")) return "groq";
+    if (k.startsWith("sk-or-")) return "openrouter";
+    if (k.startsWith("AIza")) return "gemini";
+    if (k.startsWith("sk-")) return "openai";
+    return "groq";
+}
+function aiTargets() {
+    const c = aiCfg(), out = [];
+    if (window.AI_PROVIDER && window.AI_PROVIDER.baseURL) {
+        const pb = String(window.AI_PROVIDER.baseURL).replace(/\/+$/, "");
+        out.push({ url: /\/chat\/completions$/.test(pb) ? pb : pb + "/chat/completions", model: window.AI_PROVIDER.model || c.model || "default", key: window.AI_PROVIDER.apiKey || c.key || "", tag: "config" });
+    }
+    if (c.base && /^https?:\/\//.test(c.base)) {
+        const b = c.base.replace(/\/+$/, "");
+        out.push({ url: /\/chat\/completions$/.test(b) ? b : b + "/chat/completions", model: c.model || "default", key: c.key, tag: "custom" });
+    }
+    if (c.key) {
+        const p = aiDetectProvider(c), def = AI_PROVIDERS[p] || AI_PROVIDERS.groq;
+        out.push({ url: def.url, model: c.model || def.model, key: c.key, tag: p });
+    }
+    ["openai-large", "openai", "openai-fast", "mistral"].forEach(m =>
+        out.push({ url: "https://text.pollinations.ai/openai", model: m, key: "", tag: "free" }));
+    return out;
+}
+async function aiStreamOne(t, msgs, onText) {
+    const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 20000);
+    try {
+        const headers = { "Content-Type": "application/json" };
+        if (t.key) headers["Authorization"] = "Bearer " + t.key;
+        if (t.tag === "openrouter") { headers["HTTP-Referer"] = location.origin; headers["X-Title"] = "Portal AI Pro"; }
+        const r = await fetch(t.url, { method: "POST", headers, signal: ctl.signal, body: JSON.stringify({ model: t.model, messages: msgs, stream: true, temperature: 0.7 }) });
+        if (!r.ok || !r.body) { clearTimeout(to); return ""; }
+        const rd = r.body.getReader(), dec = new TextDecoder();
+        let buf = "", full = "", raf = 0;
+        for (;;) {
+            const { done, value } = await rd.read();
+            if (done) break;
+            buf += dec.decode(value, { stream: true });
+            const lines = buf.split("\n");
+            buf = lines.pop();
+            for (const ln of lines) {
+                if (!ln.startsWith("data:")) continue;
+                const d = ln.slice(5).trim();
+                if (!d || d === "[DONE]") continue;
+                try {
+                    const j = JSON.parse(d);
+                    const part = (j.choices && j.choices[0] && j.choices[0].delta && j.choices[0].delta.content) || "";
+                    if (part) { full += part; if (!raf) raf = requestAnimationFrame(() => { raf = 0; onText(full); }); }
+                } catch (e) {}
+            }
+        }
+        return full;
+    } catch (e) { return ""; }
+    finally { clearTimeout(to); }
+}
+let AI_LOCAL_W = null;
+const AI_LOCAL_MAX = 260;
+const AI_LOCAL_SRC = `
+let pipe = null, mod = null, ready = null;
+async function boot() {
+  mod = await import("https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.5.1");
+  mod.env.allowLocalModels = false;
+  let dev = "wasm", dt = "q4";
+  try {
+    if (self.navigator && navigator.gpu) { const ad = await navigator.gpu.requestAdapter(); if (ad) { dev = "webgpu"; dt = "q4f16"; } }
+  } catch (e) {}
+  const opts = { progress_callback: (x) => { if (x && x.status === "progress" && x.progress != null) self.postMessage({ type: "progress", p: Math.round(x.progress) }); } };
+  try {
+    pipe = await mod.pipeline("text-generation", "onnx-community/Qwen2.5-0.5B-Instruct", Object.assign({ device: dev, dtype: dt }, opts));
+  } catch (e) {
+    pipe = await mod.pipeline("text-generation", "onnx-community/Qwen2.5-0.5B-Instruct", Object.assign({ device: "wasm", dtype: "q4" }, opts));
+  }
+  self.postMessage({ type: "ready" });
+}
+ready = boot().catch(e => self.postMessage({ type: "error", msg: String(e).slice(0, 300) }));
+self.onmessage = async (ev) => {
+  const d = ev.data || {};
+  if (d.type !== "gen") return;
+  try {
+    await ready;
+    if (!pipe) return self.postMessage({ type: "error", msg: "pipe" });
+    const st = new mod.TextStreamer(pipe.tokenizer, {
+      skip_prompt: true, skip_special_tokens: true,
+      callback_function: (t) => self.postMessage({ type: "tok", t })
+    });
+    await pipe(d.messages, { max_new_tokens: d.max || 300, do_sample: true, temperature: 0.35, top_p: 0.9, repetition_penalty: 1.15, streamer: st });
+    self.postMessage({ type: "done" });
+  } catch (e) { self.postMessage({ type: "error", msg: String(e).slice(0, 300) }); }
+};
+`;
+function aiLocalWorker() {
+    if (AI_LOCAL_W) return AI_LOCAL_W;
+    const url = URL.createObjectURL(new Blob([AI_LOCAL_SRC], { type: "text/javascript" }));
+    AI_LOCAL_W = new Worker(url, { type: "module" });
+    return AI_LOCAL_W;
+}
+function aiLocalAsk(messages, onTok, onStatus) {
+    return new Promise((resolve) => {
+        let w;
+        try { w = aiLocalWorker(); } catch (e) { resolve(""); return; }
+        let full = "", done = false;
+        const finish = (v) => { if (done) return; done = true; clearTimeout(to); resolve(v); };
+        const to = setTimeout(() => finish(full), 240000);
+        w.onmessage = (ev) => {
+            const d = ev.data || {};
+            if (d.type === "progress") onStatus("motor hazırlanıyor… %" + d.p);
+            else if (d.type === "tok") { full += d.t; onTok(full); }
+            else if (d.type === "done") finish(full);
+            else if (d.type === "error") finish(full);
+        };
+        w.onerror = () => finish(full);
+        w.postMessage({ type: "gen", messages, max: AI_LOCAL_MAX });
+    });
+}
+
+function aiIsVisualStudioTopic(q) {
+    return /visual\s*studio|c\s*#|csharp|winforms?|textbox|button\d*|label\d*|listbox|combobox|messagebox|nesne\s*taban|sınıf\s*yap|class\s*\{|private\s+void|form\s*uygul|windows\s*form|switch\s*-?\s*case|döngü|for\s*\(|while\s*\(|convert\.to|sql\s*select|veri\s*taban/i.test(q || "");
+}
+function aiBuildBookContext(q) {
+    let ctx = "";
+    try {
+        const prev = (AI_HISTORY.slice().reverse().find(m => m.role === "user") || {}).content || "";
+        const r = typeof aiRetrieve === "function" ? aiRetrieve(q, prev, 6, 8000) : null;
+        if (r && r.hits && r.hits.length) {
+            ctx += "\n\n—— KİTAP BAĞLAMI (birincil kaynak) ——\n";
+            r.hits.forEach(h => {
+                ctx += "\n[Kitap s." + h.p + (h.s ? " · " + h.s : "") + "]\n" + String(h.t || "").slice(0, 1800) + "\n";
+            });
+        }
+    } catch (e) {}
+    try {
+        if (typeof CS_SNIPPETS !== "undefined" && Array.isArray(CS_SNIPPETS)) {
+            const matched = CS_SNIPPETS.filter(x => x[0].test(q)).slice(0, 3);
+            if (matched.length) {
+                ctx += "\n\n—— C# / Visual Studio ÖRNEK KÜTÜPHANE ——\n";
+                matched.forEach(x => {
+                    ctx += "\n### " + x[1] + "\n" + x[2] + "\n```csharp\n" + x[3] + "\n```\n";
+                });
+            }
+        }
+    } catch (e) {}
+    return ctx;
+}
 async function streamAI(q, system) {
-    appendAIMessage("🤖 Portal AI Pro", "▍", false);
+    appendAIMessage("Portal AI Pro", "▍", false);
     const box = stEl("ai-chat-messages"), wrap = box.lastElementChild, c = wrap.querySelector(".ai-msg-content");
     AI_HISTORY.push({ role: "user", content: q });
-    const msgs = [{ role: "system", content: system }].concat(AI_HISTORY.slice(-8));
+    // Visual Studio / C# / kitap konularında kitabı zorunlu bağla
+    let sys = system;
+    const bookCtx = aiBuildBookContext(q);
+    if (bookCtx) {
+        if (aiIsVisualStudioTopic(q)) {
+            sys += "\n\nÖNEMLİ: Bu soru Visual Studio / C# / WinForms / ders kitabı ile ilgili. Aşağıdaki KİTAP BAĞLAMI ve örnek kütüphaneyi birincil kaynak kabul et; cevabını bunlara dayandır, uydurma konu ekleme." + bookCtx;
+        } else {
+            sys += "\n\nİlgili kaynak metinler (varsa kullan):" + bookCtx;
+        }
+    }
+    const msgs = [{ role: "system", content: sys }].concat(AI_HISTORY.slice(-16));
+    const targets = aiTargets();
     let full = "";
-    for (const model of ["openai", "openai-fast", "mistral"]) {
-        const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 9000);
+    for (const t of targets) {
+        full = await aiStreamOne(t, msgs, txt => { renderRich(c, txt + " ▍"); box.scrollTop = box.scrollHeight; });
+        if (full) { window.__aiErr = ""; break; }
+    }
+    // API yoksa: VS/C# için doğrudan kitap + snippet yedek
+    if (!full && aiIsVisualStudioTopic(q)) {
         try {
-            const r = await fetch("https://text.pollinations.ai/openai", { method: "POST", headers: { "Content-Type": "application/json" }, signal: ctl.signal, body: JSON.stringify({ model, messages: msgs, stream: true }) });
-            if (!r.ok || !r.body) throw new Error("http");
-            const rd = r.body.getReader(), dec = new TextDecoder(); let buf = "", raf = 0;
-            for (;;) {
-                const { done, value } = await rd.read(); clearTimeout(to); if (done) break;
-                buf += dec.decode(value, { stream: true }); const lines = buf.split("\n"); buf = lines.pop();
-                for (const ln of lines) {
-                    if (!ln.startsWith("data:")) continue; const d = ln.slice(5).trim(); if (d === "[DONE]") continue;
-                    try { const t = JSON.parse(d).choices[0].delta.content; if (t) { full += t; if (!raf) raf = requestAnimationFrame(() => { raf = 0; renderRich(c, full + " ▍"); box.scrollTop = box.scrollHeight; }); } } catch (e) {}
+            if (typeof CS_SNIPPETS !== "undefined") {
+                for (const x of CS_SNIPPETS) {
+                    if (x[0].test(q)) {
+                        full = "📘 " + x[1] + "\n\n" + x[2] + "\n\n```csharp\n" + x[3] + "\n```";
+                        break;
+                    }
                 }
             }
-        } catch (e) { clearTimeout(to); }
-        if (full) break;
+            if (!full) {
+                const r = typeof aiRetrieve === "function" ? aiRetrieve(q, "", 3, 4000) : null;
+                const bookAns = r && typeof aiBookAnswer === "function" ? aiBookAnswer(r) : null;
+                if (bookAns) full = bookAns;
+            }
+        } catch (e) {}
     }
-    if (!full) { wrap.remove(); AI_HISTORY.pop(); return false; }
-    renderRich(c, full); box.scrollTop = box.scrollHeight; AI_HISTORY.push({ role: "assistant", content: full }); return full;
+    if (!full) {
+        try {
+            const localSys = "Sen Portal AI'sın. Kullanıcıya \"" + aiWho() + "\" diye hitap et. Türkçe, kısa ve doğru cevap ver; kod istenirse kısa parçalar halinde yaz." + (bookCtx || "");
+            full = await aiLocalAsk([{ role: "system", content: localSys }, { role: "user", content: q }],
+                txt => { renderRich(c, txt + " ▍"); box.scrollTop = box.scrollHeight; },
+                st => { renderRich(c, st); box.scrollTop = box.scrollHeight; });
+        } catch (e) { full = ""; }
+    }
+    if (!full) { window.__aiErr = aiCfg().key ? "net" : "nokey"; wrap.remove(); AI_HISTORY.pop(); return false; }
+    renderRich(c, full);
+    box.scrollTop = box.scrollHeight;
+    AI_HISTORY.push({ role: "assistant", content: full });
+    return full;
 }
 
 /* ===================== AI SOL SOHBET LİSTESİ (hesaba bağlı) ===================== */
@@ -5202,8 +6485,8 @@ window.aiOpen = function (id) {
     AI_HISTORY.length = 0; aiHistory = [];
     c.msgs.forEach(m => {
         if (m.u) { appendAIMessage(getCleanDisplayName(userProfileData.username), m.text, true); AI_HISTORY.push({ role: "user", content: m.text }); }
-        else if (m.r) { appendAIMessage("🤖 Portal AI Pro", "", false); renderRich(box.lastElementChild.querySelector(".ai-msg-content"), m.text); AI_HISTORY.push({ role: "assistant", content: m.text }); }
-        else { appendAIMessage("🤖 Portal AI Pro", m.text, false, m.code || ""); AI_HISTORY.push({ role: "assistant", content: m.text }); }
+        else if (m.r) { appendAIMessage("Portal AI Pro", "", false); renderRich(box.lastElementChild.querySelector(".ai-msg-content"), m.text); AI_HISTORY.push({ role: "assistant", content: m.text }); }
+        else { appendAIMessage("Portal AI Pro", m.text, false, m.code || ""); AI_HISTORY.push({ role: "assistant", content: m.text }); }
     });
     aiRenderList();
 };
@@ -5500,6 +6783,8 @@ function csFind(q) {
     for (const x of CS_SNIPPETS) if (x[0].test(q)) return { text: "📘 " + x[1] + " — " + x[2], code: x[3] };
     return null;
 }
+
+runAccessGate();
 </script>
 <div id="avatar-crop-modal" class="modal-backdrop">
     <div class="modal-box" style="max-width:340px; text-align:center;">
